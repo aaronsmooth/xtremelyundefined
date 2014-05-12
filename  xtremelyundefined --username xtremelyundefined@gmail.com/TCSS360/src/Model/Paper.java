@@ -76,7 +76,7 @@ public class Paper {
 			this.filePath = filePath;
 		}
 		
-		isAccepted = UNDECIDED;
+		isAccepted = Approval.UNDECIDED;
 		reviewerMap = new HashMap<User, Review>();
 		
 	}

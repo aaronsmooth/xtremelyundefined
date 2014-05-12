@@ -1,6 +1,8 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Paper {
@@ -106,5 +108,37 @@ public class Paper {
 		} else {
 			throw new IllegalArgumentException();
 		}
+	}
+	
+	/**
+	 * Assigns an SPC to this paper
+	 * 
+	 * @param spc the new SPC for this paper
+	 */
+	public void setSPC(User spc) {
+		if (spc != null) {
+			this.spc = spc;
+		} else {
+			throw new IllegalArgumentException();
+		}
+	}
+	
+	/**
+	 * Returns all of the available reviews done 
+	 * on this paper. Resulting list will have
+	 * all nulls removed.
+	 * 
+	 * @return List<Review> all completed reviews.
+	 */
+	public List<Review> getReviews() {
+		List<Review>  ret = new ArrayList<Review>();
+		
+		for (Review rev : reviewerMap.values()) {
+			if (rev != null) {
+				ret.add(rev);
+			}
+		}
+		
+		return ret;
 	}
 }

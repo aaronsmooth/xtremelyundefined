@@ -15,7 +15,7 @@ public class Paper {
 	/**
 	 * Name of the author.
 	 */
-	private String author;
+	private User author;
 	
 	/**
 	 * Title of paper.
@@ -66,15 +66,22 @@ public class Paper {
 	 * @param paperAbstract paper's abstract
 	 * @param filePath local filePath.
 	 */
-	public Paper(String title, String keywords, String paperAbstract, String filePath) {
-		this.title = title;
-		this.keywords = keywords;
-		this.paperAbstract = paperAbstract;
-		this.filePath = filePath;
+	public Paper(User author, String  title, String keywords, String paperAbstract, String filePath) {
+		if (author != null && title != null && keywords != null && 
+				paperAbstract != null && filePath != null) {
+			this.author = author;
+			this.title = title;
+			this.keywords = keywords;
+			this.paperAbstract = paperAbstract;
+			this.filePath = filePath;
+		}
+		
 		isAccepted = UNDECIDED;
 		reviewerMap = new HashMap<User, Review>();
 		
 	}
+	
+	public User 
 	
 	/**
 	 * Sets the PCs acceptance of this paper for the conference

@@ -35,10 +35,12 @@ public class User implements Comparable<User>{
 	 * @param email		String users email. 
 	 */
 	public User(int id, String first, String last, String email) {
-		ID = id;
-		firstName = first;
-		lastName = last;
-		this.email = email;
+		if (first != null && last != null && email != null) {
+			firstName = first;
+			lastName = last;
+			this.email = email;
+		}
+		ID = id;	
 	}
 	
 	/**

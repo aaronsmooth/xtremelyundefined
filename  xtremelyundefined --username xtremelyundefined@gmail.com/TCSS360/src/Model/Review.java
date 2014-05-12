@@ -25,7 +25,8 @@ public class Review {
 		for (int i : rating) { 
 			this.rating[i] = rating[i];
 		}
-		
-		this.summary = summary;
+		if (summary != null) {
+			this.summary = summary;
+		}
 	}
 }

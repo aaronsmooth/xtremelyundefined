@@ -81,7 +81,6 @@ public class Paper {
 		
 	}
 	
-	public User 
 	
 	/**
 	 * Sets the PCs acceptance of this paper for the conference

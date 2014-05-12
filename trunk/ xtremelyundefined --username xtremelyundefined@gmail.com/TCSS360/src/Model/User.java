@@ -1,6 +1,6 @@
 package Model;
 
-public class User {
+public class User implements Comparable<User>{
 	
 	/**
 	 * Unique ID number given to user.
@@ -93,6 +93,20 @@ public class User {
 			}
 		}
 		return false;
-		
 	}
+	
+	/**
+	 * Compares Users by their last name and then by first name
+	 * 
+	 * @param other other User to compareTo
+	 * @return int comparison
+	 */
+	public int compareTo(User other) {
+		if (other.lastName != this.lastName) {
+			return other.lastName.compareTo(this.lastName);
+		} else {
+			return other.firstName.compareTo(this.firstName);
+		}
+	}
+	
 }

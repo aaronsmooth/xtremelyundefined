@@ -69,8 +69,42 @@ public class Paper {
 		this.keywords = keywords;
 		this.paperAbstract = paperAbstract;
 		this.filePath = filePath;
-		isAccepted = UNDECIDED:
+		isAccepted = UNDECIDED;
 		reviewerMap = new HashMap<User, Review>();
 		
+	}
+	
+	/**
+	 * Sets the PCs acceptance of this paper for the conference
+	 * 
+	 * @param decision PC's decision
+	 */
+	public void setAccepted(Approval decision) {
+		isAccepted = decision;
+	}
+	
+	/**
+	 * Returns the PCs decision
+	 * 
+	 * @return Approval the PCs decision
+	 */
+	public Approval getDecision() {
+		return isAccepted;
+	}
+	
+	/**
+	 * Adds a Reviewer, Review pair to the reviewerMap. If the Review is null, 
+	 * this indicates that the reviewer has been assigned but there is no
+	 * review done yet.
+	 * 
+	 * @param reviewer Reviewer either assigned to the paper or who did this review
+	 * @param newReview Review if it is complete. Null otherwise.
+	 */
+	public void review(User reviewer, Review newReview) {
+		if (reviewer != null) {
+			reviewerMap.put(reviewer, newReview);
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 }

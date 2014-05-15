@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Paper {
 	
@@ -67,18 +68,13 @@ public class Paper {
 	 * @param filePath local filePath.
 	 */
 	public Paper(User author, String  title, String keywords, String paperAbstract, String filePath) {
-		if (author != null && title != null && keywords != null && 
-				paperAbstract != null && filePath != null) {
-			this.author = author;
-			this.title = title;
-			this.keywords = keywords;
-			this.paperAbstract = paperAbstract;
-			this.filePath = filePath;
-		}
-		
+		this.author = Objects.requireNonNull(author);
+		this.title = Objects.requireNonNull(title);
+		this.keywords = Objects.requireNonNull(keywords);
+		this.paperAbstract = Objects.requireNonNull(paperAbstract);
+		this.filePath = Objects.requireNonNull(filePath);
 		isAccepted = Approval.UNDECIDED;
-		reviewerMap = new HashMap<User, Review>();
-		
+		reviewerMap = new HashMap<User, Review>();	
 	}
 	
 	

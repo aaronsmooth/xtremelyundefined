@@ -12,5 +12,8 @@ public class ConferenceSystem {
 		FileInputStream  file = new FileInputStream("managementsystem.ser");
 		ObjectInputStream obj = new ObjectInputStream(file);
 		(ManagementSystem) system = obj.readObject();
+		
+		LoginPanel login = new LoginPanel();
+		login.display();
 	}
  }

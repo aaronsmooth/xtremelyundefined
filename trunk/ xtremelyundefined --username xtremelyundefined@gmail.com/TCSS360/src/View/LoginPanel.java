@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -14,6 +15,7 @@ import javax.swing.JTextField;
 
 public class LoginPanel extends JFrame{
     
+
 	/**
 	 * Note:  I have create two array of strings here for the JComboBox
 	 * I made them a field for this LoginPanel so that the panel
@@ -24,28 +26,33 @@ public class LoginPanel extends JFrame{
 	 * for the conference dropbox.
 	 */
 	
-	private String [] roles = { "   ", "PC: Program Chair", "SPC: Sub-Prgram Chair",
+	private String [] roles = { "   -------------------------   ", "PC: Program Chair", "SPC: Sub-Prgram Chair",
 			             "R: Reviewer", "A: Author"};
 	
-	private String [] conference = {"  " ,"Conf 1", "Conf 2", "Conf 3"};
+	private String [] conference = {"   -------------------------   " ,"Conference 1", "Conference 2", "Conference 3"};
 	
 	public LoginPanel(){
 		
 		JPanel loginpanel = new JPanel(), buttonPanel = new JPanel(), welcomePanel = new JPanel();	
 		
-		setLayout(new BorderLayout());
-		add(welcomePanel, BorderLayout.NORTH);
-		add(loginpanel, BorderLayout.CENTER);
-		add(buttonPanel, BorderLayout.SOUTH);
+		//setLayout(new BorderLayout());
+		setLayout(null);
+		setSize(500,350);
+		add(welcomePanel);
+		add(loginpanel);
+		add(buttonPanel);
+		welcomePanel.setBounds(50, 30, 400, 50);
+		loginpanel.setBounds(100, 100, 300, 75);
+		buttonPanel.setBounds(100,190,300,50);
 		
 		//Greetings Panel
 		JLabel greetings = new JLabel("MSEE Conference Wizard");
-		greetings.setFont(new Font("TimesRoman", Font.BOLD, 20));
+		greetings.setFont(new Font("TimesRoman", Font.BOLD, 30));
 		greetings.setForeground(Color.BLACK);
 		welcomePanel.add(greetings);
 		
 		//Login Panel
-		loginpanel.setLayout(new GridLayout(4,2, 5, 5));
+		loginpanel.setLayout(new GridLayout(4,2, 1, 1));
 		loginpanel.add(new JLabel("First Name"));
 		loginpanel.add(new JTextField(16));
 		loginpanel.add(new JLabel("Password"));
@@ -57,8 +64,11 @@ public class LoginPanel extends JFrame{
 		
 		//Button Panel
 		buttonPanel.setLayout(new FlowLayout());
-		buttonPanel.add(new JButton("Login"));
-		buttonPanel.add(new JButton("Forgot Username/Password"));
+		JButton login = new JButton(), forgot = new JButton();
+		login.setIcon(new ImageIcon("View/login.png"));
+		forgot.setIcon(new ImageIcon("View/forgot.png"));
+		buttonPanel.add(login);
+		buttonPanel.add(forgot);
 		//panel.setBorder(BorderFactory.createLineBorder(Color.black));
 	}
 	

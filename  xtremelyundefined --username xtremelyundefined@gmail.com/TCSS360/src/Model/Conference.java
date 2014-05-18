@@ -9,56 +9,56 @@ public class Conference extends Observable {
 	/**
 	 * The location of the conference
 	 */
-	String location;
+	private String location;
 	
 	/**
 	 * The date the conference takes place using
 	 * the format "MM/DD/YYYY"
 	 */
-	String date;
+	private String date;
 	
 	/**
 	 * The last day for papers to be submitted to the conference using
 	 * the format "MM/DD/YYYY" effective 11:59pm PST that night
 	 */
-	String deadline;
+	private String deadline;
 	
 	/**
 	 * The name of this conference
 	 */
-	String name;
+	private String name;
 	
 	/**
 	 * The program chair assigned to this conference
 	 */
-	User pc;
+	private User pc;
 	
 	/**
 	 * The list of sub-program chairs for this conference
 	 */
-	List spc;
+	private List spc;
 	
 	/**
 	 * The list of reviewers for this conference
 	 */
-	List reviewers;
+	private List reviewers;
 	
 	/**
 	 * A map that contains the papers of this conference 
 	 * and the sub-program chair assigned to it.
 	 */
-	Map<Paper, User> spcMap;
+	private Map<Paper, User> spcMap;
 	
 	/**
 	 * A map that contains the papers of this conference 
 	 * and the authors that wrote them.
 	 */
-	Map<Paper, User> authorMap;
+	private Map<Paper, User> authorMap;
 	
 	/**
 	 * The list of papers submitted to this conference
 	 */
-	List papers;
+	private List papers;
 	
 	/**
 	 * This method serves as the constructor for the Conference class.
@@ -75,7 +75,7 @@ public class Conference extends Observable {
 		this.deadline = adeadline;
 		this.pc = apc;
 		this.name = aname;
-		reviewers = new ArrayList();
+		spc = new ArrayList();
 		reviewers = new ArrayList();
 		spcMap = new HashMap<Paper, User>();
 		authorMap = new HashMap<Paper, User>();
@@ -95,6 +95,8 @@ public class Conference extends Observable {
 		if (target != null) {
 			paperFound = true;
 			papers.remove(target);
+			authorMap.remove(target);
+			spcMap.remove(target);
 		}
 		return paperFound;
 	}
@@ -116,8 +118,51 @@ public class Conference extends Observable {
 		}
 		return result;
 	}
-	
+	/**
+	 * This method is used to submit a paper to the conference
+	 * @param a_paper
+	 * @return
+	 */
 	public boolean submitPaper(Paper a_paper) {
+		boolean isSuccess = false;
+		for (Iterator iter = papers.iterator(); iter.hasNext(); ) {
+			Paper current = iter.next();
+			if (current.title == a_paper.title) {	//duplicate paper title, submission failed
+				return isSuccess;
+			}
+		}
+		isSuccess = true;
+		papers.add(a_paper);
+		spcMap.put(a_paper, null);
+		authorMap.put(a_paper, a_paper.author);
+		return isSuccess;
+	}
+	
+	/**
+	 * This method is used to edit a paper
+	 * @param a_paper
+	 * @param b
+	 * @return
+	 */
+	public boolean submitPaper(Paper a_paper, boolean b) {
 		
+	}
+	
+	public Paper getRecommendedPaper() {
+		
+	}
+	
+	/**
+	 * This method finds all papers of this conference authored by a user
+	 * 
+	 * @param a_user The author of papers
+	 * @return A list of Papers this user is the author of
+	 */
+	public List<Paper> getAuthored(User a_user) {
+		List<Paper> myList = new ArrayList<Paper>();
+		for (Iterator iter = papers.iterator(); iter.hasNext(); ) {
+			Paper current = iter.next();
+			if(current.)
+		}
 	}
 }

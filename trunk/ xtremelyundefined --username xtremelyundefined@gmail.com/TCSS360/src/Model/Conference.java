@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 
+import javafx.print.Paper;
+
 public class Conference extends Observable {
 	
 	/**
@@ -162,7 +164,9 @@ public class Conference extends Observable {
 		List<Paper> myList = new ArrayList<Paper>();
 		for (Iterator iter = papers.iterator(); iter.hasNext(); ) {
 			Paper current = iter.next();
-			if(current.)
+			if(current.getAuthor().getUser().getID() == a_user.getID())
+				myList.add(current);
 		}
+		return myList;
 	}
 }

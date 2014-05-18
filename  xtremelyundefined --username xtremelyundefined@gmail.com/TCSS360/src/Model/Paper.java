@@ -152,4 +152,27 @@ public class Paper {
 	public User getAuthor() {
 		return this.author;
 	}
+	
+	/**
+	 * This method checks whether a user is a reviewer assigned to this paper
+	 * 
+	 * @param rev The user to be checked
+	 * @return True if the user is a reviewer assigned to this paper
+	 */
+	public boolean isAReviewer(User rev) {
+		if (reviewerMap.containsKey(rev)) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	/**
+	 * Getter for the Sub-Program Chair of this paper
+	 * 
+	 * @return The user that is the SPC
+	 */
+	public User getSPC() {
+		return this.spc;
+	}
 }

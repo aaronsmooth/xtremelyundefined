@@ -38,12 +38,12 @@ public class Conference extends Observable {
 	/**
 	 * The list of sub-program chairs for this conference
 	 */
-	private List spc;
+	private List<User> spc;
 	
 	/**
 	 * The list of reviewers for this conference
 	 */
-	private List reviewers;
+	private List<User> reviewers;
 	
 	/**
 	 * A map that contains the papers of this conference 
@@ -60,7 +60,7 @@ public class Conference extends Observable {
 	/**
 	 * The list of papers submitted to this conference
 	 */
-	private List papers;
+	private List<Paper> papers;
 	
 	/**
 	 * This method serves as the constructor for the Conference class.
@@ -169,4 +169,56 @@ public class Conference extends Observable {
 		}
 		return myList;
 	}
+	
+	/**
+	 * This method finds all papers assigned to a reviewer
+	 * 
+	 * @param a_user The reviewer to look for
+	 * @return A list of papers this reviewer is to review
+	 */
+	public List<Paper> getPapersToReview(User a_user) {
+		List<Paper> myList = new ArrayList<Paper>();
+		for (Iterator iter = papers.iterator(); iter.hasNext();) {
+			Paper current = iter.next();
+			if (current.isAReviewer(a_user)) {
+				myList.add(current);
+			}
+		}
+		return myList;
+	}
+	
+	/**
+	 * This method finds all papers assigned to a SPC
+	 * 
+	 * @param a_user
+	 * @return
+	 */
+	public List<Paper> getPapersBySPC(User a_user) {
+		List<Paper> myList = new ArrayList<Paper>();
+		for (Iterator iter = papers.iterator(); iter.hasNext();) {
+			Paper current = iter.next();
+			if (a_user == current.getSPC()) {
+				myList.add(current);
+			}
+		}
+		return myList;
+	}
+	
+	/**
+	 * This method makes a deep copy of the list of Sub-Program chairs assigned
+	 * to this conference
+	 * 
+	 * @return A list of the SPC's for this conference
+	 */
+	public List<User> getSPCs() {
+		List<User> myList = new ArrayList<Paper>();
+		for (Iterator iter = spc.iterator(); iter.hasNext(); ){
+			myList.add(new User(iter.getID(), iter.getFirstName(), 
+					iter.getLastName(), iter.getEmail()));
+		}
+		return myList;
+	}
+	
+	
+	
 }

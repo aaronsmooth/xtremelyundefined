@@ -52,6 +52,21 @@ public class User implements Comparable<User>{
 	}
 	
 	/**
+	 * Gets the User first name
+	 * @return first name of user
+	 */
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	/**
+	 * Gets the User last name
+	 * @return last name of user
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+	/**
 	 * Returns this users email address.
 	 * @return String email address
 	 */

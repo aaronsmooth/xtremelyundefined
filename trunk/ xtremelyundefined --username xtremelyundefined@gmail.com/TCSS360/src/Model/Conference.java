@@ -2,6 +2,7 @@ package Model;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Observable;
 
 import javafx.print.Paper;
@@ -83,6 +84,14 @@ public class Conference extends Observable {
 		authorMap = new HashMap<Paper, User>();
 		papers = new ArrayList();
 		
+	}
+	
+	public void setPC(User newPC) {
+		pc = newPC;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	/**
@@ -219,6 +228,8 @@ public class Conference extends Observable {
 		return myList;
 	}
 	
-	
+	public void addReviewer(User reviewer) {
+		reviewers.add(Objects.requireNonNull(reviewer));
+	}
 	
 }

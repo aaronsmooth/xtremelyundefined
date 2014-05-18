@@ -143,4 +143,13 @@ public class Paper {
 		
 		return ret;
 	}
+	
+	/**
+	 * getter for the author of this Paper
+	 * 
+	 * @return The author as a User
+	 */
+	public User getAuthor() {
+		return this.author;
+	}
 }

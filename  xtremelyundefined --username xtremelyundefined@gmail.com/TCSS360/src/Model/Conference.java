@@ -1,11 +1,13 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Observable;
 
-import javafx.print.Paper;
 
 public class Conference extends Observable {
 	
@@ -78,11 +80,11 @@ public class Conference extends Observable {
 		this.deadline = adeadline;
 		this.pc = apc;
 		this.name = aname;
-		spc = new ArrayList();
-		reviewers = new ArrayList();
+		spc = new ArrayList<User>();
+		reviewers = new ArrayList<User>();
 		spcMap = new HashMap<Paper, User>();
 		authorMap = new HashMap<Paper, User>();
-		papers = new ArrayList();
+		papers = new ArrayList<Paper>();
 		
 	}
 	
@@ -100,7 +102,7 @@ public class Conference extends Observable {
 	 * @param title The title of the paper to remove
 	 * @return True if paper was removed successfully
 	 */
-	public boolean removePaper{String title) {
+	public boolean removePaper(String title) {
 		boolean paperFound = false;
 		Paper target = getPaper(title);
 		if (target != null) {
@@ -119,16 +121,18 @@ public class Conference extends Observable {
 	 * @return The paper object that matches the title
 	 */
 	public Paper getPaper(String title) {
-		Paper result;
-		for (Iterator iter = papers.iterator(); iter.hasNext(); ) {
+		Paper result = null;
+		
+		for (Iterator<Paper> iter = papers.iterator(); iter.hasNext(); ) {
 			Paper current = iter.next();
-			if (current.title == title) {
-				result = paper;
+			if (current.getTitle() == title) {
+				result = current;
 				break;
 			}
 		}
 		return result;
 	}
+	
 	/**
 	 * This method is used to submit a paper to the conference
 	 * @param a_paper
@@ -136,32 +140,30 @@ public class Conference extends Observable {
 	 */
 	public boolean submitPaper(Paper a_paper) {
 		boolean isSuccess = false;
-		for (Iterator iter = papers.iterator(); iter.hasNext(); ) {
+		for (Iterator<Paper> iter = papers.iterator(); iter.hasNext(); ) {
 			Paper current = iter.next();
-			if (current.title == a_paper.title) {	//duplicate paper title, submission failed
+			if (current.getTitle() == a_paper.getTitle()) {	//duplicate paper title, submission failed
 				return isSuccess;
 			}
 		}
 		isSuccess = true;
 		papers.add(a_paper);
 		spcMap.put(a_paper, null);
-		authorMap.put(a_paper, a_paper.author);
+		authorMap.put(a_paper, a_paper.getAuthor());
 		return isSuccess;
 	}
 	
+	/*
 	/**
 	 * This method is used to edit a paper
 	 * @param a_paper
 	 * @param b
 	 * @return
-	 */
+	 
 	public boolean submitPaper(Paper a_paper, boolean b) {
 		
 	}
-	
-	public Paper getRecommendedPaper() {
-		
-	}
+	*/
 	
 	/**
 	 * This method finds all papers of this conference authored by a user
@@ -171,9 +173,9 @@ public class Conference extends Observable {
 	 */
 	public List<Paper> getAuthored(User a_user) {
 		List<Paper> myList = new ArrayList<Paper>();
-		for (Iterator iter = papers.iterator(); iter.hasNext(); ) {
+		for (Iterator<Paper> iter = papers.iterator(); iter.hasNext(); ) {
 			Paper current = iter.next();
-			if(current.getAuthor().getUser().getID() == a_user.getID())
+			if(current.getAuthor().getID() == a_user.getID())
 				myList.add(current);
 		}
 		return myList;
@@ -187,7 +189,7 @@ public class Conference extends Observable {
 	 */
 	public List<Paper> getPapersToReview(User a_user) {
 		List<Paper> myList = new ArrayList<Paper>();
-		for (Iterator iter = papers.iterator(); iter.hasNext();) {
+		for (Iterator<Paper> iter = papers.iterator(); iter.hasNext();) {
 			Paper current = iter.next();
 			if (current.isAReviewer(a_user)) {
 				myList.add(current);
@@ -204,7 +206,7 @@ public class Conference extends Observable {
 	 */
 	public List<Paper> getPapersBySPC(User a_user) {
 		List<Paper> myList = new ArrayList<Paper>();
-		for (Iterator iter = papers.iterator(); iter.hasNext();) {
+		for (Iterator<Paper> iter = papers.iterator(); iter.hasNext();) {
 			Paper current = iter.next();
 			if (a_user == current.getSPC()) {
 				myList.add(current);
@@ -220,10 +222,11 @@ public class Conference extends Observable {
 	 * @return A list of the SPC's for this conference
 	 */
 	public List<User> getSPCs() {
-		List<User> myList = new ArrayList<Paper>();
-		for (Iterator iter = spc.iterator(); iter.hasNext(); ){
-			myList.add(new User(iter.getID(), iter.getFirstName(), 
-					iter.getLastName(), iter.getEmail()));
+		List<User> myList = new ArrayList<User>();
+		for (Iterator<User> iter = spc.iterator(); iter.hasNext(); ){
+			User current = iter.next();
+			myList.add(new User(current.getID(), current.getFirstName(), 
+					current.getLastName(), current.getEmail()));
 		}
 		return myList;
 	}

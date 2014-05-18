@@ -175,4 +175,8 @@ public class Paper {
 	public User getSPC() {
 		return this.spc;
 	}
+	
+	public String getTitle(){
+		return title;
+	}
 }

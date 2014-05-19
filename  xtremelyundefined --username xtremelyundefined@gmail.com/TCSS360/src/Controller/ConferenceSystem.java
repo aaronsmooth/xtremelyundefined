@@ -21,12 +21,12 @@ import View.LoginPanel;
 
 public class ConferenceSystem {
 
-	public static final String FILE = "/src/managementsystem.ser";
+	public static final String FILE = "src/managementsystem.ser";
 	
 	public static void main(String[] args) {
 		
 		ManagementSystem system = new ManagementSystem();
-		Path serializedFile = FileSystems.getDefault().getPath(FILE);	
+		Path src = FileSystems.getDefault().getPath(FILE);	
 
 		try{
 			FileInputStream  in = new FileInputStream(FILE);
@@ -36,7 +36,9 @@ public class ConferenceSystem {
 		} catch (IOException | ClassNotFoundException e) {
 			System.out.println("There was an error opening data file.");
 		}
-		
+		for (User u : system.getUsers()) {
+			System.out.println(u);
+		}
 		LoginPanel login = new LoginPanel();
 		login.display();
 	}

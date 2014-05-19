@@ -13,19 +13,33 @@ import Model.Conference;
 import Model.ManagementSystem;
 import Model.User;
 
+/**
+ * This class takes the specially formatted CSV file and initially populates
+ * a ManagementSystem with conferences and Users and then serializes it.
+ * 
+ * @author TeamXtremelyUndefined
+ *
+ */
 public class Startup {
 
-	public static final String CSV = "/Users/mitchellalpert/Documents/TCSS360/TCSS360/src/UsersWithRolesExport.csv.txt";
-	public static final String FILE = "/Users/mitchellalpert/Documents/TCSS360/TCSS360/src/managementsystem.ser";
+	/**
+	 * Path for source file
+	 */
+	public static final String src = "src/UsersWithRolesExport.csv.txt";
+	
+	/**
+	 * Path for dest file
+	 */
+	public static final String dest = "src/managementsystem.ser";
 
 	public static void main(String[] args) {
 
-		Path data = FileSystems.getDefault().getPath(CSV);
+		Path data = FileSystems.getDefault().getPath(src);
 
 		ManagementSystem system = populateSystem(data);
 		
 		try{
-			FileOutputStream out = new FileOutputStream(FILE);
+			FileOutputStream out = new FileOutputStream(dest);
 			ObjectOutputStream obj = new ObjectOutputStream(out);
 			obj.writeObject(system);
 			obj.close();

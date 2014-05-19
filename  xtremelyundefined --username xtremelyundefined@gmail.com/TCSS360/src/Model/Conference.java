@@ -89,16 +89,31 @@ public class Conference extends Observable implements Serializable{
 		
 	}
 	
+	/**
+	 * Adds an SPC to the conference
+	 * 
+	 * @param newSPC the SPC to add
+	 */
 	public void addSPC(User newSPC) {
 		if (!spc.contains(newSPC)) {
-			spc.add(newSPC);
+			reviewers.add(Objects.requireNonNull(newSPC));
 		}
 	}
 	
+	/**
+	 * Sets a new PC for this conference.
+	 * 
+	 * @param newPC PC to add
+	 */
 	public void setPC(User newPC) {
 		pc = newPC;
 	}
 	
+	/**
+	 * Returns the name of this conference.
+	 * 
+	 * @return String the name of the conference
+	 */
 	public String getName() {
 		return name;
 	}
@@ -238,10 +253,19 @@ public class Conference extends Observable implements Serializable{
 		return myList;
 	}
 	
+	/**
+	 * Adds a reviewer to the list of reviewers.
+	 * 
+	 * @param reviewer User to add as reviewer
+	 */
 	public void addReviewer(User reviewer) {
 		reviewers.add(Objects.requireNonNull(reviewer));
 	}
 	
+	@Override
+	/**
+	 * <@inheritDoc>
+	 */
 	public String toString() {
 		return name + ": " + " \n\tPC:" + pc + " \n\tSPCs: " + spc + " \n\tReviewers: " + reviewers;
 	}

@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.Observable;
 
 
-public class Conference extends Observable {
+public class Conference extends Observable implements Cloneable{
 	
 	/**
 	 * The location of the conference
@@ -86,6 +86,14 @@ public class Conference extends Observable {
 		authorMap = new HashMap<Paper, User>();
 		papers = new ArrayList<Paper>();
 		
+	}
+	
+	@Override
+	public Conference clone(){
+		Conference clone = new Conference(this.location, this.date, this.deadline, this.pc, this.name);
+		clone.spc = this.getSPCs();
+		clone.reviewers = this.reviewers;
+		return clone;
 	}
 	
 	public void setPC(User newPC) {

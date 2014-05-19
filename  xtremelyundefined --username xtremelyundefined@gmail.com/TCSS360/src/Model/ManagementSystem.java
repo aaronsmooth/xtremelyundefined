@@ -10,8 +10,8 @@ public class ManagementSystem implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 3328234716102456578L;
-	public List<User> users;
-	private List<Conference> conferences;
+	private List<User> users;
+	public List<Conference> conferences;
 	
 	public ManagementSystem(){
 		users = new ArrayList<User>();
@@ -20,6 +20,17 @@ public class ManagementSystem implements Serializable{
 	
 	public void addUser(User user) {
 		users.add(user);
+	}
+	
+	public List<User> getUsers(){
+		List<User> ret = new ArrayList<User>();
+		
+		//copy list to return
+		for (User u : users) {
+			ret.add(new User(u.getID(), u.getFirstName(), u.getLastName(), u.getEmail()));
+		}
+		
+		return ret;
 	}
 	
 	public void addConference(Conference conf) {
@@ -33,6 +44,18 @@ public class ManagementSystem implements Serializable{
 		}
 		
 		return null;
+	}
+	
+	public List<Conference> getConferences() {
+		List<Conference> ret = new ArrayList<Conference>();
+		
+		//copy list to return
+		for (Conference c : conferences) {
+			ret.add(c.clone());
+		}
+		
+		return ret;
+		
 	}
 	public boolean hasConference(String title) {
 		

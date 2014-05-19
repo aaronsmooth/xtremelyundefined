@@ -10,13 +10,14 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
 
+import Model.Conference;
 import Model.ManagementSystem;
 import Model.User;
 
 public class Startup {
 
 	public static final String CSV = "/Users/mitchellalpert/Documents/TCSS360/TCSS360/src/UsersWithRolesExport.csv.txt";
-	public static final String FILE = "/src/managementsystem.ser";
+	public static final String FILE = "/Users/mitchellalpert/Documents/TCSS360/TCSS360/src/managementsystem.ser";
 
 	public static void main(String[] args) {
 
@@ -24,65 +25,69 @@ public class Startup {
 
 		ManagementSystem system = populateSystem(data);
 
+		for(Conference c : system.conferences) {
+			System.out.println(c);
+		}
 		try{
-			FileOutputStream out = new FileOutputStream(FILE);
-			ObjectOutputStream obj = new ObjectOutputStream(out);
-			obj.writeObject(system);
-			obj.close();
+			Files.createFile(data);
+//			FileOutputStream out = new FileOutputStream(FILE);
+//			ObjectOutputStream obj = new ObjectOutputStream(out);
+//			obj.writeObject(system);
+//			obj.close();
 		} catch (IOException e) {
 			System.out.println("Error opening file");
 		}
-		for (User s : system.users){
-			System.err.println(s);
-		}
+		
+//		for (User s : system.getUsers()){
+//			System.err.println(s);
+//		}
 	}
 	
 	public static ManagementSystem populateSystem(Path filePath) {
 		int id;
 		User currentUser;
-		String firstName, lastName, email, conferenceTitle, conferenceDesc;
-
+		String firstName, lastName, email, confTitle, confDesc;
+		Conference conf = null;
+		
 		ManagementSystem system = new ManagementSystem();
 
 		try{
 			List<String> csv = Files.readAllLines(filePath, Charset.defaultCharset());
 
 			for (String s : csv) {
-				System.out.println(s);
-				Scanner line = new Scanner(s).useDelimiter(",");
-
-				if (line.hasNextInt()) {
-					id = line.nextInt();
-					firstName = line.next();
-					lastName = line.next();
-					email = line.next();
+				String[] line = s.split(",");
+				try{
+					id = Integer.valueOf(line[0]);
+					firstName = line[1];
+					lastName = line[2];
+					email = line[3];
 					currentUser = new User(id, firstName, lastName, email);
 					system.addUser(currentUser);
-					/*	if (line.hasNext()) {//has Conference info
-							line.next(); //skip conference ID
-							conferenceTitle = line.next();
-							conferenceDesc = line.next();
-							if (!system.hasConference(conferenceTitle)) {
-								system.addConference(new Conference("", "", "",null,conferenceTitle ));
-							}
-							line.next(); //skip RoleID
-							switch (line.next()) {
-							case "Program Chair" :
-								system.getConference(conferenceTitle).setPC(currentUser);
-								break;
-							case "Reviewer" :
-								system.getConference(conferenceTitle).addReviewer(currentUser);
-								break;
-							case "SubProgram Chair":
-								system.getConference(conferenceTitle).setPC(currentUser);
-								break;
-							default:
-								break;			
-							}
-						}*/
-				}			
-			}
+					if (line.length > 4) { //has a conference association
+						confTitle = line[5];
 
+						if (!system.hasConference(confTitle)){
+							conf = new Conference("","","",null, confTitle);
+							system.addConference(conf);
+						}
+						switch (line[8]) {
+						case "Program Chair" :
+							conf.setPC(currentUser);
+							break;
+						case "Reviewer" :
+							conf.addReviewer(currentUser);
+							break;
+						case "SubProgram Chair":
+							conf.setPC(currentUser);
+							break;
+						default:
+							break;			
+						}
+					}
+				} catch (NumberFormatException e) {
+					//do nothing and go to next line
+				}
+			}			
 		} catch (IOException e) {
 			System.out.println("There was an error opening " + filePath.toString());
 		}

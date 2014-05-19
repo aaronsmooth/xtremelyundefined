@@ -36,10 +36,13 @@ public class ConferenceSystem {
 		} catch (IOException | ClassNotFoundException e) {
 			System.out.println("There was an error opening data file.");
 		}
-
+		startGUI();
+		
+	}
+	
+	public static void startGUI() {
+		MainFrame window = new MainFrame();
 		LoginPanel login = new LoginPanel();
 		login.display();
 	}
-	
-	
  }

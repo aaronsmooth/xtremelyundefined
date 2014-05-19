@@ -36,9 +36,7 @@ public class ConferenceSystem {
 		} catch (IOException | ClassNotFoundException e) {
 			System.out.println("There was an error opening data file.");
 		}
-		for (User u : system.getUsers()) {
-			System.out.println(u);
-		}
+
 		LoginPanel login = new LoginPanel();
 		login.display();
 	}

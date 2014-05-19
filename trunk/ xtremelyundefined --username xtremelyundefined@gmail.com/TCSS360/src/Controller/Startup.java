@@ -25,12 +25,12 @@ public class Startup {
 	/**
 	 * Path for source file
 	 */
-	public static final String src = "src/SupportingData/UsersWithRolesExport.csv.txt";
+	public static final String src = "src/supportingFiles/UsersWithRolesExport.csv.txt";
 	
 	/**
 	 * Path for dest file
 	 */
-	public static final String dest = "src/SupportingData/managementsystem.ser";
+	public static final String dest = "src/supportingFiles/managementsystem.ser";
 
 	public static void main(String[] args) {
 

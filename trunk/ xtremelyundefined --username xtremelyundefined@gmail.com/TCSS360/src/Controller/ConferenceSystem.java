@@ -21,7 +21,7 @@ import View.LoginPanel;
 
 public class ConferenceSystem {
 
-	public static final String FILE = "src/SupportingData/managementsystem.ser";
+	public static final String FILE = "src/supportingFiles/managementsystem.ser";
 	
 	public static void main(String[] args) {
 		

@@ -57,8 +57,6 @@ public class LoginPanel extends JPanel{
 		loginpanel.setLayout(new GridLayout(4,2, 1, 1));
 		loginpanel.add(new JLabel("First Name"));
 		loginpanel.add(new JTextField(16));
-		loginpanel.add(new JLabel("Password"));
-		loginpanel.add(new JTextField(16));
 		loginpanel.add(new JLabel("Role"));
 		loginpanel.add(new JComboBox(roles));
 		loginpanel.add(new JLabel("Conference"));
@@ -66,11 +64,9 @@ public class LoginPanel extends JPanel{
 		
 		//Button Panel
 		buttonPanel.setLayout(new FlowLayout());
-		JButton login = new JButton(), forgot = new JButton();
+		JButton login = new JButton()
 		login.setIcon(new ImageIcon("src/View/login.png"));
-		forgot.setIcon(new ImageIcon("src/View/forgot.png"));
 		buttonPanel.add(login);
-		buttonPanel.add(forgot);
 		//panel.setBorder(BorderFactory.createLineBorder(Color.black));
 	}
 	

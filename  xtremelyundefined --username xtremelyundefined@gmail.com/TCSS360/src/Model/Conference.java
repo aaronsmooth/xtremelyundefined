@@ -88,6 +88,12 @@ public class Conference extends Observable{
 		
 	}
 	
+	public void addSPC(User newSPC) {
+		if (!spc.contains(newSPC)) {
+			spc.add(newSPC);
+		}
+	}
+	
 	public void setPC(User newPC) {
 		pc = newPC;
 	}
@@ -233,6 +239,10 @@ public class Conference extends Observable{
 	
 	public void addReviewer(User reviewer) {
 		reviewers.add(Objects.requireNonNull(reviewer));
+	}
+	
+	public String toString() {
+		return name + ": " + " \n\tPC:" + pc + " \n\tSPCs: " + spc + " \n\tReviewers: " + reviewers;
 	}
 	
 }

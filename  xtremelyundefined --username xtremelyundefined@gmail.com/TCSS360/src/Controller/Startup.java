@@ -24,8 +24,8 @@ public class Startup {
 		Path data = FileSystems.getDefault().getPath(CSV);
 
 		ManagementSystem system = populateSystem(data);
-
-		for(Conference c : system.conferences) {
+		
+		for (Conference c : system.conferences) {
 			System.out.println(c);
 		}
 		try{
@@ -37,10 +37,6 @@ public class Startup {
 		} catch (IOException e) {
 			System.out.println("Error opening file");
 		}
-		
-//		for (User s : system.getUsers()){
-//			System.err.println(s);
-//		}
 	}
 	
 	public static ManagementSystem populateSystem(Path filePath) {
@@ -54,21 +50,30 @@ public class Startup {
 		try{
 			List<String> csv = Files.readAllLines(filePath, Charset.defaultCharset());
 
-			for (String s : csv) {
-				String[] line = s.split(",");
+			for (String str : csv) {
+				String[] line = str.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+				for (int i = 0; i < line.length; i++) {
+					line[i] = line[i].replaceAll("\"", "");
+				}
 				try{
 					id = Integer.valueOf(line[0]);
-					firstName = line[1];
-					lastName = line[2];
-					email = line[3];
-					currentUser = new User(id, firstName, lastName, email);
-					system.addUser(currentUser);
+					if (!system.hasUser(id)) {
+						firstName = line[1];
+						lastName = line[2];
+						email = line[3];
+						currentUser = new User(id, firstName, lastName, email);
+						system.addUser(currentUser);
+					} else {
+						currentUser = system.getUser(id);
+					}
 					if (line.length > 4) { //has a conference association
 						confTitle = line[5];
 
 						if (!system.hasConference(confTitle)){
 							conf = new Conference("","","",null, confTitle);
 							system.addConference(conf);
+						} else {
+							conf = system.getConference(confTitle);
 						}
 						switch (line[8]) {
 						case "Program Chair" :
@@ -78,7 +83,7 @@ public class Startup {
 							conf.addReviewer(currentUser);
 							break;
 						case "SubProgram Chair":
-							conf.setPC(currentUser);
+							conf.addSPC(currentUser);
 							break;
 						default:
 							break;			

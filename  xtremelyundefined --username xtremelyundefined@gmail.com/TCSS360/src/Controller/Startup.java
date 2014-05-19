@@ -14,46 +14,50 @@ import Model.ManagementSystem;
 import Model.User;
 
 public class Startup {
-	
-	public static final String CSV = "/Users/mitchellalpert/Documents/TCSS360/TCSS360/src/UsersWithRolesExport.csv.txt";
 
-	
+	public static final String CSV = "/Users/mitchellalpert/Documents/TCSS360/TCSS360/src/UsersWithRolesExport.csv.txt";
+	public static final String FILE = "/src/managementsystem.ser";
+
 	public static void main(String[] args) {
 
 		Path data = FileSystems.getDefault().getPath(CSV);
-		
-		if (Files.notExists(serializedFile)) {
-			system = populateSystem(data);
+
+		ManagementSystem system = populateSystem(data);
+
+		try{
 			FileOutputStream out = new FileOutputStream(FILE);
 			ObjectOutputStream obj = new ObjectOutputStream(out);
 			obj.writeObject(system);
 			obj.close();
+		} catch (IOException e) {
+			System.out.println("Error opening file");
 		}
 		for (User s : system.users){
 			System.err.println(s);
 		}
-		
-		public static ManagementSystem populateSystem(Path filePath) {
-			int id;
-			User currentUser;
-			String firstName, lastName, email, conferenceTitle, conferenceDesc;
-			
-			ManagementSystem system = new ManagementSystem();
+	}
+	
+	public static ManagementSystem populateSystem(Path filePath) {
+		int id;
+		User currentUser;
+		String firstName, lastName, email, conferenceTitle, conferenceDesc;
 
-			try{
-				List<String> csv = Files.readAllLines(filePath, Charset.defaultCharset());
-				
-				for (String s : csv) {
-					System.out.println(s);
-					Scanner line = new Scanner(s).useDelimiter(",");
-					
-					if (line.hasNextInt()) {
-						id = line.nextInt();
-						firstName = line.next();
-						lastName = line.next();
-						email = line.next();
-						currentUser = new User(id, firstName, lastName, email);
-						system.addUser(currentUser);
+		ManagementSystem system = new ManagementSystem();
+
+		try{
+			List<String> csv = Files.readAllLines(filePath, Charset.defaultCharset());
+
+			for (String s : csv) {
+				System.out.println(s);
+				Scanner line = new Scanner(s).useDelimiter(",");
+
+				if (line.hasNextInt()) {
+					id = line.nextInt();
+					firstName = line.next();
+					lastName = line.next();
+					email = line.next();
+					currentUser = new User(id, firstName, lastName, email);
+					system.addUser(currentUser);
 					/*	if (line.hasNext()) {//has Conference info
 							line.next(); //skip conference ID
 							conferenceTitle = line.next();
@@ -78,13 +82,12 @@ public class Startup {
 						}*/
 				}			
 			}
-				
-			} catch (IOException e) {
-				System.out.println("There was an error opening " + filePath.toString());
-			}
-			
-			return system;
-		}
-	}
 
+		} catch (IOException e) {
+			System.out.println("There was an error opening " + filePath.toString());
+		}
+
+		return system;
+	}
 }
+

@@ -22,6 +22,19 @@ public class ManagementSystem implements Serializable{
 		users.add(user);
 	}
 	
+	public User getUser(int id) {
+		for (User u : users) {
+			if (u.getID() == id) {
+				return u;
+			}
+		}
+		return null;
+	}
+	
+	public boolean hasUser(int id) {
+		return users.contains(getUser(id));
+	}
+	
 	public List<User> getUsers(){
 		List<User> ret = new ArrayList<User>();
 		
@@ -40,27 +53,16 @@ public class ManagementSystem implements Serializable{
 	public Conference getConference(String title) {
 		
 		for (Conference c : conferences ) {
-			if (c.getName() == title) return c;
+			if (c.getName().equals(title)) return c;
 		}
 		
 		return null;
 	}
 	
-	public List<Conference> getConferences() {
-		List<Conference> ret = new ArrayList<Conference>();
-		
-		//copy list to return
-		for (Conference c : conferences) {
-			ret.add(c.clone());
-		}
-		
-		return ret;
-		
-	}
 	public boolean hasConference(String title) {
 		
 		for (Conference c : conferences) {
-			if (c.getName() == title) return true;
+			if (c.getName().equals(title)) return true;
 		}		
 		
 		return false;

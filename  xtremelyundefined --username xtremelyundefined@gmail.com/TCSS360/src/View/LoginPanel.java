@@ -64,7 +64,7 @@ public class LoginPanel extends JPanel{
 		
 		//Button Panel
 		buttonPanel.setLayout(new FlowLayout());
-		JButton login = new JButton()
+		JButton login = new JButton();
 		login.setIcon(new ImageIcon("src/View/login.png"));
 		buttonPanel.add(login);
 		//panel.setBorder(BorderFactory.createLineBorder(Color.black));

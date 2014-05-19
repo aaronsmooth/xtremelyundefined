@@ -10,7 +10,7 @@ public class ManagementSystem implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 3328234716102456578L;
-	private List<User> users;
+	public List<User> users;
 	private List<Conference> conferences;
 	
 	public ManagementSystem(){

@@ -1,5 +1,7 @@
 package View;
 
-public class MainFrame {
+import javax.swing.JPanel;
+
+public class MainFrame extends JPanel{
 
 }

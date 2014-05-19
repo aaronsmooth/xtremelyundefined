@@ -18,6 +18,7 @@ import Model.Conference;
 import Model.ManagementSystem;
 import Model.User;
 import View.LoginPanel;
+import View.MainFrame;
 
 public class ConferenceSystem {
 

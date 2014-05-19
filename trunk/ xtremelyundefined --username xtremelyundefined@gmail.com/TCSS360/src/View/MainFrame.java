@@ -3,6 +3,7 @@ package View;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class MainFrame extends JFrame{
 	
 	JPanel display;

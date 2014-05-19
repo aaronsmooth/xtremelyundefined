@@ -3,8 +3,10 @@ package Model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class ManagementSystem implements Serializable{
+public class ManagementSystem implements Serializable, Observer{
 
 	/**
 	 * serialVersionID for unique serialization
@@ -20,6 +22,16 @@ public class ManagementSystem implements Serializable{
 	 * List of all conferences available.
 	 */
 	private List<Conference> conferences;
+	
+	/**
+	 * Current user logged in.
+	 */
+	private User currentUser;
+	
+	/**
+	 * Current conference.
+	 */
+	private Conference currentConferece;
 	
 	/**
 	 * Public constructor that initializes fields.
@@ -118,5 +130,11 @@ public class ManagementSystem implements Serializable{
 		}		
 		
 		return false;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 }

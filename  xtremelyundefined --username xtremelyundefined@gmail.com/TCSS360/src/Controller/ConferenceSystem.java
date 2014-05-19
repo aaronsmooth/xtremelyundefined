@@ -20,21 +20,27 @@ import Model.User;
 
 public class ConferenceSystem {
 
-	public static final String FILE = "managementsystem.ser";
+	public static final String SAVE = "/src/managementsystem.ser";
+	public static final String CSV = "/Users/mitchellalpert/Documents/TCSS360/TCSS360/src/UsersWithRolesExport.csv.txt";
 	
-	public void main(String[] args) {
+	public static void main(String[] args) {
 		
-		ManagementSystem system;
-		Path serializedFile = FileSystems.getDefault().getPath(FILE);
+		ManagementSystem system = new ManagementSystem();
+		Path serializedFile = FileSystems.getDefault().getPath(SAVE);
+		Path data = FileSystems.getDefault().getPath(CSV);
+
 		try{
 			if (Files.notExists(serializedFile)) {
-				system = populateSystem(serializedFile);
-				FileOutputStream out = new FileOutputStream(FILE);
+				system = populateSystem(data);
+				FileOutputStream out = new FileOutputStream(SAVE);
 				ObjectOutputStream obj = new ObjectOutputStream(out);
 				obj.writeObject(system);
 				obj.close();
 			}
-			FileInputStream  in = new FileInputStream(FILE);
+			for (User s : system.users){
+				System.err.println(s);
+			}
+			FileInputStream  in = new FileInputStream(SAVE);
 			ObjectInputStream obj = new ObjectInputStream(in);
 			system = (ManagementSystem) obj.readObject();
 			obj.close();
@@ -52,12 +58,14 @@ public class ConferenceSystem {
 		String firstName, lastName, email, conferenceTitle, conferenceDesc;
 		
 		ManagementSystem system = new ManagementSystem();
-		
+
 		try{
 			List<String> csv = Files.readAllLines(filePath, Charset.defaultCharset());
 			
 			for (String s : csv) {
+				System.out.println(s);
 				Scanner line = new Scanner(s).useDelimiter(",");
+				
 				if (line.hasNextInt()) {
 					id = line.nextInt();
 					firstName = line.next();
@@ -65,15 +73,15 @@ public class ConferenceSystem {
 					email = line.next();
 					currentUser = new User(id, firstName, lastName, email);
 					system.addUser(currentUser);
-					line.next(); //skip conference ID
-					conferenceTitle = line.next();
-					conferenceDesc = line.next();
-					if (conferenceTitle != "" 
-							&& !system.hasConference(conferenceTitle)) {
-						system.addConference(new Conference("", "", "",null,conferenceTitle ));
-					}
-					line.next(); //skip RoleID
-					switch (line.next()) {
+				/*	if (line.hasNext()) {//has Conference info
+						line.next(); //skip conference ID
+						conferenceTitle = line.next();
+						conferenceDesc = line.next();
+						if (!system.hasConference(conferenceTitle)) {
+							system.addConference(new Conference("", "", "",null,conferenceTitle ));
+						}
+						line.next(); //skip RoleID
+						switch (line.next()) {
 						case "Program Chair" :
 							system.getConference(conferenceTitle).setPC(currentUser);
 							break;
@@ -85,9 +93,10 @@ public class ConferenceSystem {
 							break;
 						default:
 							break;			
-					}
-				}			
-			}
+						}
+					}*/
+			}			
+		}
 			
 		} catch (IOException e) {
 			System.out.println("There was an error opening " + filePath.toString());

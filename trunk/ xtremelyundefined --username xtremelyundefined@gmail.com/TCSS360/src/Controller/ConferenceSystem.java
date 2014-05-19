@@ -17,6 +17,7 @@ import java.util.Scanner;
 import Model.Conference;
 import Model.ManagementSystem;
 import Model.User;
+import View.LoginPanel;
 
 public class ConferenceSystem {
 

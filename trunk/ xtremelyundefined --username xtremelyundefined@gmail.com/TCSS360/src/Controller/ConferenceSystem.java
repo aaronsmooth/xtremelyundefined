@@ -43,7 +43,6 @@ public class ConferenceSystem {
 	
 	public static void startGUI() {
 		MainFrame window = new MainFrame();
-		LoginPanel login = new LoginPanel();
-		login.display();
+		
 	}
  }

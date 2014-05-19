@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
-public class LoginPanel extends JFrame{
+public class LoginPanel extends JPanel{
     
 
 	/**

@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,7 +10,7 @@ import java.util.Objects;
 import java.util.Observable;
 
 
-public class Conference extends Observable{
+public class Conference extends Observable implements Serializable{
 	
 	/**
 	 * The location of the conference

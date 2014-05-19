@@ -8,7 +8,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Scanner;
 
 import Model.Conference;
 import Model.ManagementSystem;
@@ -25,17 +24,13 @@ public class Startup {
 
 		ManagementSystem system = populateSystem(data);
 		
-		for (Conference c : system.conferences) {
-			System.out.println(c);
-		}
 		try{
-			Files.createFile(data);
-//			FileOutputStream out = new FileOutputStream(FILE);
-//			ObjectOutputStream obj = new ObjectOutputStream(out);
-//			obj.writeObject(system);
-//			obj.close();
+			FileOutputStream out = new FileOutputStream(FILE);
+			ObjectOutputStream obj = new ObjectOutputStream(out);
+			obj.writeObject(system);
+			obj.close();
 		} catch (IOException e) {
-			System.out.println("Error opening file");
+			System.out.println(e);
 		}
 	}
 	
@@ -51,6 +46,7 @@ public class Startup {
 			List<String> csv = Files.readAllLines(filePath, Charset.defaultCharset());
 
 			for (String str : csv) {
+				//thanks SO 1757065
 				String[] line = str.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 				for (int i = 0; i < line.length; i++) {
 					line[i] = line[i].replaceAll("\"", "");

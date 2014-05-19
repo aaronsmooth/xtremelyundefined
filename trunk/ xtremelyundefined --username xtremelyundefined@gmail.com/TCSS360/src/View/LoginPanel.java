@@ -67,19 +67,13 @@ public class LoginPanel extends JPanel{
 		//Button Panel
 		buttonPanel.setLayout(new FlowLayout());
 		JButton login = new JButton(), forgot = new JButton();
-		login.setIcon(new ImageIcon("View/login.png"));
-		forgot.setIcon(new ImageIcon("View/forgot.png"));
+		login.setIcon(new ImageIcon("src/View/login.png"));
+		forgot.setIcon(new ImageIcon("src/View/forgot.png"));
 		buttonPanel.add(login);
 		buttonPanel.add(forgot);
 		//panel.setBorder(BorderFactory.createLineBorder(Color.black));
 	}
 	
-	public void display(){
-		setTitle("MSEE Login");
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
-		pack();
-	}
+	
 	
 }

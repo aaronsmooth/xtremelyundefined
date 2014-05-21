@@ -1,3 +1,5 @@
+package View;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -7,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.AbstractBorder;
 
 
-public class SPCPanel {
+public class SPCPanel extends JPanel{
 	private String SPC = "JOE SCHMOE";
 
 	public SPCPanel(){

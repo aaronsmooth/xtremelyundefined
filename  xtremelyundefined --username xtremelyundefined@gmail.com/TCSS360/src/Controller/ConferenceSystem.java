@@ -22,7 +22,7 @@ import Model.ManagementSystem;
 import Model.User;
 import View.LoginPanel;
 import View.MainFrame;
-import View.SubmissionBox;
+import View.SelectBox;
 
 public class ConferenceSystem {
 
@@ -47,5 +47,6 @@ public class ConferenceSystem {
 	
 	public static void startGUI() {
 		MainFrame window = new MainFrame();
+		window.add(new SelectBox());
 	}
  }

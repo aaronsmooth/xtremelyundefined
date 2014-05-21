@@ -10,12 +10,20 @@ import javax.swing.JPanel;
 public class SelectBox extends JFrame {
 	
 	public SelectBox() {
-		this.add(createPanel());
+		super();
+		add(createPanel());
+		pack();
 		setVisible(true);
 	}
 
 	private JPanel createPanel() {
-		return new JPanel();
+		JPanel panel = new JPanel();
+		panel.add(createSelectOptions());
+		return panel;
+	}
+	
+	private JComboBox<Object> createSelectOptions(){
+		return new JComboBox<Object>();
 	}
 
 }

@@ -39,7 +39,7 @@ public class ConferenceSystem {
 			system = (ManagementSystem) obj.readObject();
 			obj.close();
 		} catch (IOException | ClassNotFoundException e) {
-			System.out.println("There was an error opening data file.");
+			System.out.println(e);
 		}
 		startGUI(system);
 		
@@ -47,6 +47,5 @@ public class ConferenceSystem {
 	
 	public static void startGUI(ManagementSystem system) {
 		MainFrame window = new MainFrame();
-		window.add(new SelectBox<User>(system.getConference().getReviewers()));
 	}
  }

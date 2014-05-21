@@ -18,6 +18,7 @@ public class ConferenceTest  {
 	private Paper ppr;
 	private Paper ppr2;
 	private User usr;
+	private User usr2;
 	
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
@@ -25,11 +26,10 @@ public class ConferenceTest  {
 	@Before
 	public void setUp() throws Exception {
 		usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
+		usr2 = new User(56, "jon", "doe", "doe@gmail.com");
 		ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath");
 		ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath");
-		conf = new Conference("alocation", "adate", "adeadline", null, "aname");
-		
-		
+		conf = new Conference("alocation", "adate", "adeadline", null, "aname");	
 	}
 
 	@Test
@@ -48,8 +48,20 @@ public class ConferenceTest  {
 	}
 	
 	public void addReviewerTest() {
+		conf.addReviewer(usr);
+		conf.addReviewer(usr2);
 		
+		assertSame(conf.getReviewers().get(0), usr);
+		assertSame(conf.getReviewers().get(1), usr2);
+		
+		assertTrue(conf.getReviewers().size() == 2);
+		
+		conf.addReviewer(usr);
+		assertTrue(conf.getReviewers().size() == 2);	
 	}
+	
+	
+	
 	
 
 }

@@ -2,6 +2,7 @@ package Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -87,7 +88,7 @@ public class ManagementSystem implements Serializable, Observer{
 		for (User u : users) {
 			ret.add(new User(u.getID(), u.getFirstName(), u.getLastName(), u.getEmail()));
 		}
-		
+		Collections.sort(ret);
 		return ret;
 	}
 	
@@ -136,12 +137,8 @@ public class ManagementSystem implements Serializable, Observer{
 		return currentConference;
 	}
 	
-	public List<String> getConferences() {
-		List<String> names = new ArrayList<String>();
-		for (Conference c : conferences) {
-			names.add(c.getName());
-		}
-		return names;
+	public List<Conference> getConferences() {
+		return conferences;
 	}
 
 	@Override

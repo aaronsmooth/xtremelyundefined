@@ -25,7 +25,7 @@ import View.MainFrame;
 import View.SelectBox;
 
 public class ConferenceSystem {
-
+	
 	public static final String FILE = "src/supportingFiles/managementsystem.ser";
 	
 	public static void main(String[] args) {
@@ -47,6 +47,6 @@ public class ConferenceSystem {
 	
 	public static void startGUI(ManagementSystem system) {
 		MainFrame window = new MainFrame();
-		SelectBox<String> sb = new SelectBox<String>(system.getConferences());
+		SelectBox<User> sb = new SelectBox<User>(system.getUsers());
 	}
  }

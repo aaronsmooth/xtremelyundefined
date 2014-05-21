@@ -31,7 +31,7 @@ public class ManagementSystem implements Serializable, Observer{
 	/**
 	 * Current conference.
 	 */
-	private Conference currentConferece;
+	private Conference currentConference;
 	
 	/**
 	 * Public constructor that initializes fields.
@@ -130,6 +130,10 @@ public class ManagementSystem implements Serializable, Observer{
 		}		
 		
 		return false;
+	}
+	
+	public Conference getConference() {
+		return currentConference;
 	}
 
 	@Override

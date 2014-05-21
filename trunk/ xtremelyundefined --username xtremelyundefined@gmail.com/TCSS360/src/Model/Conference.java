@@ -13,6 +13,11 @@ import java.util.Observable;
 public class Conference extends Observable implements Serializable{
 	
 	/**
+	 * ID used for unique serialization
+	 */
+	private static final long serialVersionUID = -6376784954447084287L;
+
+	/**
 	 * The location of the conference
 	 */
 	private String location;

@@ -135,6 +135,10 @@ public class ManagementSystem implements Serializable, Observer{
 	public Conference getConference() {
 		return currentConference;
 	}
+	
+	public List<Conference> getConferences() {
+		return conferences;
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {

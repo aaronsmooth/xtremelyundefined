@@ -167,6 +167,9 @@ public class Conference extends Observable implements Serializable{
 	 */
 	public boolean submitPaper(Paper a_paper) {
 		boolean isSuccess = false;
+		if (a_paper == null) {
+			throw new IllegalArgumentException();
+		}
 		for (Iterator<Paper> iter = papers.iterator(); iter.hasNext(); ) {
 			Paper current = iter.next();
 			if (current.getTitle() == a_paper.getTitle()) {	//duplicate paper title, submission failed

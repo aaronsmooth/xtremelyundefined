@@ -136,8 +136,12 @@ public class ManagementSystem implements Serializable, Observer{
 		return currentConference;
 	}
 	
-	public List<Conference> getConferences() {
-		return conferences;
+	public List<String> getConferences() {
+		List<String> names = new ArrayList<String>();
+		for (Conference c : conferences) {
+			names.add(c.getName());
+		}
+		return names;
 	}
 
 	@Override

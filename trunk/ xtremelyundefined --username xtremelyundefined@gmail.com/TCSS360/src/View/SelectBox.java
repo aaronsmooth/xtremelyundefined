@@ -1,6 +1,9 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -17,34 +20,33 @@ public class SelectBox<T> extends JFrame {
 	public SelectBox (List<T> objs) {
 		super();
 		setTitle("Please make a selection:");
-		JPanel panel = createPanel();
-		panel.add(createSelectOptions(objs), BorderLayout.CENTER);
-		for (JButton btn : createButtons()) {
-			panel.add(btn, BorderLayout.SOUTH);
-		}
+		add(createPanel(objs));
 		setLocationRelativeTo(null); //put in middle of screen
 		pack();
 		setVisible(true);
 	}
 
-	private JPanel createPanel() {
+	private JPanel createPanel(List<T> objs) {
 		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		JPanel cPanel = new JPanel();
+		JPanel sPanel = new JPanel();
+		sPanel.setLayout(new FlowLayout());
+		panel.add(createSelectOptions(objs));	
+		sPanel.add(new JButton("Submit"));
+		sPanel.add(new JButton("Cancel"));
+		add(cPanel, BorderLayout.CENTER);
+		add(sPanel, BorderLayout.SOUTH);
+		panel.setPreferredSize(new Dimension(300,100));
 		return panel;
 	}
 	
 	private JComboBox<T> createSelectOptions(List<T> list){
 		JComboBox<T> options = new JComboBox<T>();
-		for (Object obj : list) {
-			options.addItem((T) obj);
+		for (int i = 0; i < list.size(); i++) {
+			options.addItem(list.get(i));
 		}
-		return new JComboBox<T>();
-	}
-	
-	private JButton[] createButtons() {
-		JButton[] buttons = new JButton[2];
-		buttons[0] = new JButton("Submit");
-		buttons[1] = new JButton("Cancel");
-		return buttons;
+		return options;
 	}
 	
 

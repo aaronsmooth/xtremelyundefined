@@ -14,11 +14,15 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
 import Model.Conference;
 import Model.ManagementSystem;
 import Model.User;
 import View.LoginPanel;
 import View.MainFrame;
+import View.SubmissionBox;
 
 public class ConferenceSystem {
 
@@ -43,6 +47,5 @@ public class ConferenceSystem {
 	
 	public static void startGUI() {
 		MainFrame window = new MainFrame();
-		
 	}
  }

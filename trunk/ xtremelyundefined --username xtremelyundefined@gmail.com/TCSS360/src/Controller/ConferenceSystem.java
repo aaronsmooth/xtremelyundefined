@@ -47,6 +47,6 @@ public class ConferenceSystem {
 	
 	public static void startGUI(ManagementSystem system) {
 		MainFrame window = new MainFrame();
-		SelectBox<User> sb = new SelectBox<User>(system.getUsers());
+		SelectBox<User> sb = new SelectBox<User>(system.getUsers(), "SPCs");
 	}
  }

@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -29,33 +30,43 @@ public class SelectBox<T> extends JFrame {
 	 * the toString() of all the objects in objs
 	 * 
 	 * @param objs List of objects for the combo box
+	 * @param name name of thing being chosen 
 	 */
-	public SelectBox (List<T> objs) {
+	public SelectBox (List<T> objs, String name) {
 		super();
 		type = objs.get(0).getClass().toString();
-		setTitle("Please make a selection:");
-		add(createPanel(objs));
+		setTitle("Make a Selection");
+		add(createPanel(objs, name));
 		setLocationRelativeTo(null); //put in middle of screen
-		pack();
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setResizable(false);
+		pack();		
 		setVisible(true);
 	}
 
-	private JPanel createPanel(List<T> objs) {
+	private JPanel createPanel(List<T> objs, String name) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
-		JPanel cPanel = new JPanel();
+		
+		JPanel nPanel = new JPanel();
+		nPanel.add(new JLabel("Please choose from the following list of " + name + ": "));
+		panel.add(nPanel, BorderLayout.NORTH);
+		
+		JPanel cPanel = new JPanel(new FlowLayout());	
+		choice = (createSelectOptions(objs));
+		cPanel.add(choice);
+		panel.add(cPanel);
+		
 		JPanel sPanel = new JPanel();
 		sPanel.setLayout(new FlowLayout());
-		choice = (createSelectOptions(objs));
-		panel.add(choice);
-		JButton btn = new JButton("Submit");
+		JButton btn = new JButton("Select");
 		btn.addActionListener(new ButtonListener());
 		sPanel.add(btn);
 		btn = new JButton("Cancel");
 		btn.addActionListener(new ButtonListener());
 		sPanel.add(btn);;
-		add(cPanel, BorderLayout.CENTER);
-		add(sPanel, BorderLayout.SOUTH);
+		panel.add(sPanel, BorderLayout.SOUTH);
+		
 		panel.setPreferredSize(new Dimension(300,100));
 		return panel;
 	}

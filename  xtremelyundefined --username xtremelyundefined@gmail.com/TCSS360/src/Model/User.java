@@ -94,8 +94,7 @@ public class User implements Comparable<User>, Serializable{
 	 * <@inheritDoc>
 	 */
 	public String toString(){
-		return getID() + ":" + getName() + ", " + getEmail();
-		
+		return getName();
 	}
 	
 	@Override

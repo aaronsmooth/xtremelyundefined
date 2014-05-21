@@ -282,7 +282,6 @@ public class Conference extends Observable implements Serializable{
 	 * <@inheritDoc>
 	 */
 	public String toString() {
-		return name + ": " + " \n\tPC:" + pc + " \n\tSPCs: " + spc + " \n\tReviewers: " + reviewers;
+		return name;
 	}
-	
 }

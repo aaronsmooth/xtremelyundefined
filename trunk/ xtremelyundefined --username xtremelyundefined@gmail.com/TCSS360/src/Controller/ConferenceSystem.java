@@ -41,12 +41,12 @@ public class ConferenceSystem {
 		} catch (IOException | ClassNotFoundException e) {
 			System.out.println("There was an error opening data file.");
 		}
-		startGUI();
+		startGUI(system);
 		
 	}
 	
-	public static void startGUI() {
+	public static void startGUI(ManagementSystem system) {
 		MainFrame window = new MainFrame();
-		window.add(new SelectBox());
+		window.add(new SelectBox<User>(system.getConference().getReviewers()));
 	}
  }

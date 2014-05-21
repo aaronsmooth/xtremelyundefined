@@ -262,6 +262,16 @@ public class Conference extends Observable implements Serializable{
 		reviewers.add(Objects.requireNonNull(reviewer));
 	}
 	
+	/**
+	 * Returns list of reviewers
+	 * 
+	 * @return List<Users> list of reviewers assigned to this 
+	 * 	conference.
+	 */
+	public List<User> getReviewers() {
+		return reviewers;
+	}
+	
 	@Override
 	/**
 	 * <@inheritDoc>

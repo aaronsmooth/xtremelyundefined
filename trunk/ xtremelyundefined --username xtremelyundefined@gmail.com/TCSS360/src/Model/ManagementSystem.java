@@ -1,5 +1,7 @@
 package Model;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,7 +9,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-public class ManagementSystem implements Serializable, Observer{
+public class ManagementSystem extends Observable implements Serializable, PropertyChangeListener{
 
 	/**
 	 * serialVersionID for unique serialization
@@ -141,9 +143,20 @@ public class ManagementSystem implements Serializable, Observer{
 		return conferences;
 	}
 
+	/**
+	 * Listens for a property change on the current user and/or the
+	 * current conference. Updates observers when these values change.
+	 */
 	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getPropertyName().equals("user")) {
+			currentUser = getUser((int) evt.getNewValue());
+		} else if (evt.getPropertyName().equals("conference")) {
+			currentConference = getConference((String) evt.getNewValue());
+		}
+		setChanged();
+		notifyObservers();
 		
 	}
+
 }

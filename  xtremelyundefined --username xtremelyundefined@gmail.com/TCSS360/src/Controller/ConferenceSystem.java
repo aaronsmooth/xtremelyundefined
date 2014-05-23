@@ -23,6 +23,7 @@ import Model.User;
 import View.LoginPanel;
 import View.MainFrame;
 import View.SelectBox;
+import View.SubmitReview;
 
 public class ConferenceSystem {
 	
@@ -46,7 +47,7 @@ public class ConferenceSystem {
 	}
 	
 	public static void startGUI(ManagementSystem system) {
-		MainFrame window = new MainFrame();
-		SelectBox<User> sb = new SelectBox<User>(system.getUsers(), "SPCs");
+		MainFrame window = new MainFrame(system);
+		SubmitReview sr = new SubmitReview(null, null);
 	}
  }

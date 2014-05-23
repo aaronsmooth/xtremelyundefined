@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
@@ -15,8 +16,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.TransferHandler;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
 
 import Model.User;
 
@@ -31,7 +36,7 @@ public class SubmitReview extends JFrame {
 		super();
 		//this.setTitle("Recommendation Form: " + thepaper.getTitle()); 
 		this.add(createPanel());
-		this.setResizable(false);
+		//this.setResizable(false);
 		setLocationRelativeTo(null);
 		pack();
 		setVisible(true);
@@ -63,9 +68,14 @@ public class SubmitReview extends JFrame {
 		JTextArea txt = new JTextArea(TEXT_HEIGHT, TEXT_WIDTH);
 		txt.setEditable(true);
 		txt.setMaximumSize(new Dimension(TEXT_WIDTH, TEXT_HEIGHT));
+		txt.setLineWrap(true);
 		txt.setWrapStyleWord(true);
-		txt.setBorder(BorderFactory.createEtchedBorder());
-		cP2.add(txt);
+		JScrollPane scroll = new JScrollPane(txt);
+		scroll.setBorder(BorderFactory.createEtchedBorder());
+		scroll.setPreferredSize(new Dimension(300, 150));
+		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		cP2.add(scroll);
 		cPanel.add(cP1, BorderLayout.NORTH);
 		cPanel.add(cP2, BorderLayout.CENTER);
 	

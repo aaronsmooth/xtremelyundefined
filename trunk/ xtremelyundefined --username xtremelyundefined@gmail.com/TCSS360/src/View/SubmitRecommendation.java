@@ -18,6 +18,7 @@ import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -43,7 +44,6 @@ public class SubmitRecommendation extends JFrame {
 	public SubmitRecommendation(Paper thepaper) {
 		super();
 		paper = thepaper;
-		reviewer = thereviewer;
 		this.setTitle("Recommendation Form: " + thepaper.getTitle()); 
 		this.add(createPanel());
 		this.setResizable(false);
@@ -91,6 +91,19 @@ public class SubmitRecommendation extends JFrame {
 	
 		
 		JButton submit = new JButton("Submit");
+		submit.addActionListener(new ActionListener (){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (btng.getSelection() != null && !txt.getText().equals("")) {
+					paper.setRating(Integer.valueOf(((JButton) btng.getSelection()).getText()));
+					paper.setRationale(txt.getText());
+					
+				} else {
+					JOptionPane msg = new JOptionPane("You need to select a rating and enter a rationale for your decision.", JOptionPane.OK_OPTION);
+				}
+			}
+			
+		});
 		JButton cancel = new JButton("Cancel");
 		sPanel.add(submit);
 		sPanel.add(cancel);
@@ -100,21 +113,6 @@ public class SubmitRecommendation extends JFrame {
 		panel.add(nPanel, BorderLayout.NORTH);
 		setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
 		return panel;
-	}
-	
-	private class SubmitAction implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			JButton rating;
-			if (btng.getSelection() != null ) {
-				(JButton) btng.getSelection();
-				
-			}
-			
-			
-		}
-		
 	}
 }
 

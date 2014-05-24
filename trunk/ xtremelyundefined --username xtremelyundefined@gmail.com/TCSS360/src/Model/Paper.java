@@ -46,7 +46,7 @@ public class Paper {
 	/**
 	 * The summary recommendation from the SPC
 	 */
-	private String spcSummary;
+	private String spcRationale;
 	
 	/**
 	 * If this paper has been accepted by the PC
@@ -123,6 +123,24 @@ public class Paper {
 		} else {
 			throw new IllegalArgumentException();
 		}
+	}
+	
+	/**
+	 * Sets the rating given to the paper by its SPC.
+	 * 
+	 * @param rating the rating by the SPC
+	 */
+	public void setRating(int the_rating) {
+		spcRating = the_rating;
+	}
+	
+	/**
+	 * Sets the recommendation rationale given by the SPC
+	 * 
+	 * @param rationale the rationale given by the SPC
+	 */
+	public void setRationale(String the_rationale) {
+		spcRationale = the_rationale;
 	}
 	
 	/**

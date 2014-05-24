@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 
 import Model.Conference;
 import Model.ManagementSystem;
+import Model.Paper;
 import Model.User;
 import View.LoginPanel;
 import View.MainFrame;

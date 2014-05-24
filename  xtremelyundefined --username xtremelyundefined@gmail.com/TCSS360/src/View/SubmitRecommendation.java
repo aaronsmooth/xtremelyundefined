@@ -2,8 +2,10 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,6 +26,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
@@ -105,6 +108,13 @@ public class SubmitRecommendation extends JFrame {
 			
 		});
 		JButton cancel = new JButton("Cancel");
+		cancel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
+				frm.dispose();
+			}
+		});
 		sPanel.add(submit);
 		sPanel.add(cancel);
 		

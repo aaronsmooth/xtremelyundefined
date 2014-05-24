@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import Model.Paper;
 import Model.Review;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -98,11 +99,13 @@ public class SubmitRecommendation extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (btng.getSelection() != null && !txt.getText().equals("")) {
-					paper.setRating(Integer.valueOf(((JButton) btng.getSelection()).getText()));
+					paper.setRating(Integer.valueOf(((AbstractButton) btng.getSelection()).getText()));
 					paper.setRationale(txt.getText());
-					
+					Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
+					frm.dispose();
 				} else {
 					JOptionPane msg = new JOptionPane("You need to select a rating and enter a rationale for your decision.", JOptionPane.OK_OPTION);
+					msg.setVisible(true);
 				}
 			}
 			

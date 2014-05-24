@@ -48,6 +48,5 @@ public class ConferenceSystem {
 	
 	public static void startGUI(ManagementSystem system) {
 		MainFrame window = new MainFrame(system);
-		SubmitRecommendation sr = new SubmitRecommendation(null, null);
 	}
  }

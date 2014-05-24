@@ -23,7 +23,7 @@ import Model.User;
 import View.LoginPanel;
 import View.MainFrame;
 import View.SelectBox;
-import View.SubmitReview;
+import View.SubmitRecommendation;
 
 public class ConferenceSystem {
 	
@@ -48,6 +48,6 @@ public class ConferenceSystem {
 	
 	public static void startGUI(ManagementSystem system) {
 		MainFrame window = new MainFrame(system);
-		SubmitReview sr = new SubmitReview(null, null);
+		SubmitRecommendation sr = new SubmitRecommendation(null, null);
 	}
  }

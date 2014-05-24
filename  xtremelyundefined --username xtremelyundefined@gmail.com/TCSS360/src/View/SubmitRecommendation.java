@@ -4,13 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import Model.Paper;
+import Model.Review;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,17 +30,23 @@ import javax.swing.border.EtchedBorder;
 import Model.User;
 
 @SuppressWarnings("serial")
-public class SubmitReview extends JFrame {
+public class SubmitRecommendation extends JFrame {
 	public static final int TEXT_HEIGHT = 30;
 	public static final int TEXT_WIDTH = 30;
 	public static final int WINDOW_HEIGHT = 300;
 	public static final int WINDOW_WIDTH = 500;
 	
-	public SubmitReview(Paper thepaper, User thereviewer) {
+	private Paper paper;
+	private ButtonGroup btng;
+	private JTextArea txt;
+	
+	public SubmitRecommendation(Paper thepaper) {
 		super();
-		//this.setTitle("Recommendation Form: " + thepaper.getTitle()); 
+		paper = thepaper;
+		reviewer = thereviewer;
+		this.setTitle("Recommendation Form: " + thepaper.getTitle()); 
 		this.add(createPanel());
-		//this.setResizable(false);
+		this.setResizable(false);
 		setLocationRelativeTo(null);
 		pack();
 		setVisible(true);
@@ -52,7 +62,7 @@ public class SubmitReview extends JFrame {
 		JPanel cPanel = new JPanel();
 		cPanel.setLayout(new BorderLayout());
 		
-		ButtonGroup btng = new ButtonGroup();
+		btng = new ButtonGroup();
 		nPanel.add(new JLabel("Summary Recommendation:"));
 		
 		for (int i = 5; i >= 1; i--) {
@@ -65,7 +75,7 @@ public class SubmitReview extends JFrame {
 		JPanel cP2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JLabel msg1 = new JLabel("Rationale for Recommendation:");
 		cP1.add(msg1);
-		JTextArea txt = new JTextArea(TEXT_HEIGHT, TEXT_WIDTH);
+		txt = new JTextArea(TEXT_HEIGHT, TEXT_WIDTH);
 		txt.setEditable(true);
 		txt.setMaximumSize(new Dimension(TEXT_WIDTH, TEXT_HEIGHT));
 		txt.setLineWrap(true);
@@ -90,6 +100,21 @@ public class SubmitReview extends JFrame {
 		panel.add(nPanel, BorderLayout.NORTH);
 		setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
 		return panel;
+	}
+	
+	private class SubmitAction implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JButton rating;
+			if (btng.getSelection() != null ) {
+				(JButton) btng.getSelection();
+				
+			}
+			
+			
+		}
+		
 	}
 }
 

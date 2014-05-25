@@ -100,8 +100,11 @@ public class Conference extends Observable implements Serializable{
 	 * @param newSPC the SPC to add
 	 */
 	public void addSPC(User newSPC) {
+		if (newSPC == null) {
+			throw new IllegalArgumentException();
+		}
 		if (!spc.contains(newSPC)) {
-			reviewers.add(Objects.requireNonNull(newSPC));
+			spc.add(Objects.requireNonNull(newSPC));
 		}
 	}
 	
@@ -111,6 +114,9 @@ public class Conference extends Observable implements Serializable{
 	 * @param newPC PC to add
 	 */
 	public void setPC(User newPC) {
+		if (newPC == null) {
+			throw new IllegalArgumentException();
+		}
 		pc = newPC;
 	}
 	
@@ -131,6 +137,9 @@ public class Conference extends Observable implements Serializable{
 	 */
 	public boolean removePaper(String title) {
 		boolean paperFound = false;
+		if (title == null) {
+			throw new IllegalArgumentException();
+		}
 		Paper target = getPaper(title);
 		if (target != null) {
 			paperFound = true;
@@ -149,7 +158,9 @@ public class Conference extends Observable implements Serializable{
 	 */
 	public Paper getPaper(String title) {
 		Paper result = null;
-		
+		if (title == null) {
+			throw new IllegalArgumentException();
+		}
 		for (Iterator<Paper> iter = papers.iterator(); iter.hasNext(); ) {
 			Paper current = iter.next();
 			if (current.getTitle() == title) {
@@ -183,30 +194,23 @@ public class Conference extends Observable implements Serializable{
 		return isSuccess;
 	}
 	
-	/*
-	/**
-	 * This method is used to edit a paper
-	 * @param a_paper
-	 * @param b
-	 * @return
-	 
-	public boolean submitPaper(Paper a_paper, boolean b) {
-		
-	}
-	*/
-	
 	/**
 	 * This method finds all papers of this conference authored by a user
+	 * and makes a deep copy of them all to return
 	 * 
 	 * @param a_user The author of papers
 	 * @return A list of Papers this user is the author of
 	 */
 	public List<Paper> getAuthored(User a_user) {
+		if (a_user == null) {
+			throw new IllegalArgumentException();
+		}
 		List<Paper> myList = new ArrayList<Paper>();
 		for (Iterator<Paper> iter = papers.iterator(); iter.hasNext(); ) {
 			Paper current = iter.next();
-			if(current.getAuthor().getID() == a_user.getID())
+			if(current.getAuthor().getID() == a_user.getID()) {
 				myList.add(current);
+			}
 		}
 		return myList;
 	}
@@ -218,6 +222,9 @@ public class Conference extends Observable implements Serializable{
 	 * @return A list of papers this reviewer is to review
 	 */
 	public List<Paper> getPapersToReview(User a_user) {
+		if (a_user == null) {
+			throw new IllegalArgumentException();
+		}
 		List<Paper> myList = new ArrayList<Paper>();
 		for (Iterator<Paper> iter = papers.iterator(); iter.hasNext();) {
 			Paper current = iter.next();
@@ -235,6 +242,9 @@ public class Conference extends Observable implements Serializable{
 	 * @return
 	 */
 	public List<Paper> getPapersBySPC(User a_user) {
+		if (a_user == null) {
+			throw new IllegalArgumentException();
+		}
 		List<Paper> myList = new ArrayList<Paper>();
 		for (Iterator<Paper> iter = papers.iterator(); iter.hasNext();) {
 			Paper current = iter.next();
@@ -267,7 +277,12 @@ public class Conference extends Observable implements Serializable{
 	 * @param reviewer User to add as reviewer
 	 */
 	public void addReviewer(User reviewer) {
+		if (reviewer == null) {
+			throw new IllegalArgumentException();
+		}
+		if (!reviewers.contains(reviewer)) {
 		reviewers.add(Objects.requireNonNull(reviewer));
+		}
 	}
 	
 	/**

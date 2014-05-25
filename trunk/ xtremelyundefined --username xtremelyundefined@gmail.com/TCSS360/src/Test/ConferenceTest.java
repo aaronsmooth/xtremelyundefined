@@ -33,7 +33,7 @@ public class ConferenceTest  {
 	}
 
 	@Test
-	public void submitPaperTest() {
+	public void PaperTest() {
 		assertTrue(conf.submitPaper(ppr));
 		assertTrue(conf.submitPaper(ppr2));
 		
@@ -46,7 +46,7 @@ public class ConferenceTest  {
 		conf.submitPaper(null);
 		
 	}
-	
+	@Test
 	public void addReviewerTest() {
 		conf.addReviewer(usr);
 		conf.addReviewer(usr2);
@@ -57,11 +57,53 @@ public class ConferenceTest  {
 		assertTrue(conf.getReviewers().size() == 2);
 		
 		conf.addReviewer(usr);
-		assertTrue(conf.getReviewers().size() == 2);	
+		assertTrue(conf.getReviewers().size() == 2);
+		
+		exception.expect(IllegalArgumentException.class);
+		conf.addReviewer(null);
+	}
+	@Test
+	public void addSPCTest() {
+		conf.addSPC(usr);;
+		conf.addSPC(usr2);;
+		
+		assertSame(conf.getSPCs().get(0).getID(), usr.getID());
+		assertSame(conf.getSPCs().get(1).getID(), usr2.getID());
+		
+		conf.addSPC(usr);
+		assertTrue(conf.getSPCs().size() == 2);
+		
+		exception.expect(IllegalArgumentException.class);
+		conf.addSPC(null);
+	}
+	@Test
+	public void setPCTest() {
+		exception.expect(IllegalArgumentException.class);
+		conf.setPC(null);
+	}
+	@Test
+	public void removePaperTest() {
+		conf.submitPaper(ppr);
+		
+		assertFalse(conf.removePaper(ppr2.getTitle()));
+		assertTrue(conf.removePaper(ppr.getTitle()));
+		
+		exception.expect(IllegalArgumentException.class);
+		conf.removePaper(null);
 	}
 	
+	@Test
+	public void getAuthoredTest() {
+		assertTrue(conf.submitPaper(ppr));
+		assertTrue(conf.submitPaper(ppr2));
+		
+		assertSame(conf.getAuthored(usr).get(0), ppr);
+		assertSame(conf.getAuthored(usr).get(1), ppr2);
+	}
 	
-	
-	
+	@Test
+	public void getPapersToReviewTest() {
+		
+	}
 
 }

@@ -25,7 +25,7 @@ public class MainFrame extends JFrame implements Observer{
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width/2 - 1200/2, dim.height/2 - 800/2); // center the window frame.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		display = new LoginPanel();
+		display = new AuthorPanel();
 		this.add(display);
 		//pack(); //---> needs to be disable because I am not using a default layout manager.
 		setVisible(true);

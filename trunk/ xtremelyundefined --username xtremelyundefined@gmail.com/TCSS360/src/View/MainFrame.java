@@ -1,5 +1,7 @@
 package View;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,12 +20,14 @@ public class MainFrame extends JFrame implements Observer{
 	Conference currentConference;
 	
 	public MainFrame(ManagementSystem system){
-		setTitle("MSEE Login");
-		setLocationRelativeTo(null);
+		setTitle("MSEE");
+		setSize(1200,800); // setting the window size as permanent.
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		setLocation(dim.width/2 - 1200/2, dim.height/2 - 800/2); // center the window frame.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		display = new LoginPanel();
 		this.add(display);
-		pack();
+		//pack(); //---> needs to be disable because I am not using a default layout manager.
 		setVisible(true);
 	}
 

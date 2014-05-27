@@ -238,7 +238,7 @@ public class ReviewerPanel extends JPanel {
 	    panelManuscript.add(Date1, gridDate1);
 	    
 	    JLabel Review1 = new JLabel(" ");
-	    Review1.setIcon(new ImageIcon("src/review.png"));
+	    Review1.setIcon(new ImageIcon("src/supportingFiles/review.png"));
 	    Review1.setBorder(brdr);
 	    GridBagConstraints gridReview1 = new GridBagConstraints();
 	    gridReview1.insets = new Insets(0, 0, 5, 5);
@@ -247,7 +247,7 @@ public class ReviewerPanel extends JPanel {
 	    panelManuscript.add(Review1, gridReview1);
 	    
 	    JLabel Edit1 = new JLabel(" ");
-	    Edit1.setIcon(new ImageIcon("src/edit.png"));
+	    Edit1.setIcon(new ImageIcon("src/supportingFiles/edit.png"));
 	    Edit1.setBorder(brdr);
 	    GridBagConstraints gridEdit1 = new GridBagConstraints();
 	    gridEdit1.insets = new Insets(0, 0, 5, 5);

@@ -99,10 +99,11 @@ public class AuthorPanel extends JPanel {
 	}
 	
 	/**
+	 * Creates a panel to display the manuscript and submit new paper button.
 	 * 
-	 * @param brdr
-	 * @param p
-	 * @return
+	 * @param brdr necessary border styles for JLabel and JPanel.
+	 * @param p panel that contains all the manuscript submitted by the user.
+	 * @return a panel.
 	 */
 	public JPanel bottomPanel(AbstractBorder brdr, JPanel p){
 		JPanel bottomPanel = new JPanel();
@@ -157,9 +158,10 @@ public class AuthorPanel extends JPanel {
 	}
 	
 	/**
+	 * Creates a panel where all the manuscript submitted by user will be displayed.
 	 * 
-	 * @param brdr
-	 * @return
+	 * @param brdr necesary border styles for JLabel and JPanels.
+	 * @return a panel.
 	 */
 	public JPanel manuscript(AbstractBorder brdr){
 		

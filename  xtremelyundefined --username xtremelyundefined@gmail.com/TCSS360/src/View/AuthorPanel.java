@@ -1,5 +1,7 @@
 package View;
 
+//import TextBubbleBorder;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -7,6 +9,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -133,12 +137,51 @@ public class AuthorPanel extends JPanel {
 	    gbc_separator1.gridx = 0;
 	    gbc_separator1.gridy = 1;
 		
-	    JLabel submitPaper = new JLabel("Submit New Paper");
+	    final JLabel submitPaper = new JLabel("Submit New Paper");
 		submitPaper.setFont(new Font("TimesRoman", Font.BOLD, 15));
 		submitPaper.setForeground(Color.BLACK);
 		submitPaper.setHorizontalAlignment(SwingConstants.CENTER);
 		submitPaper.setBorder(brdr);
-		
+		submitPaper.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				submitPaper.setForeground(Color.BLUE);
+				//bottomPanel = bottomPanel(brdr, manuscript(brdr));
+				AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
+				  submitPaper.setBorder(brdr);
+				repaint();
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				submitPaper.setForeground(Color.BLACK);
+				//bottomPanel = bottomPanel(brdr, manuscript(brdr));
+				AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
+				  submitPaper.setBorder(brdr);
+				repaint();				
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				
+			}
+			
+		});
 		JPanel submitPanel = new JPanel();
 		submitPanel.setLayout(new GridLayout(2,1));
 		submitPanel.add(separator1, gbc_separator1);
@@ -246,9 +289,46 @@ public class AuthorPanel extends JPanel {
 	    gridDate1.gridy = i+2;
 	    panelManuscript.add(Date1, gridDate1);
 	    
-	    JLabel Review1 = new JLabel(" ");
+	    final JLabel Review1 = new JLabel(" ");
 	    Review1.setIcon(new ImageIcon("src/supportingFiles/review.png"));
 	    Review1.setBorder(brdr);
+	    Review1.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+		  AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
+		  Review1.setBorder(brdr);		
+				repaint();
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
+				  Review1.setBorder(brdr);		
+						repaint();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
 	    GridBagConstraints gridReview1 = new GridBagConstraints();
 	    gridReview1.insets = new Insets(0, 0, 5, 5);
 	    gridReview1.gridx = 2;

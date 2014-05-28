@@ -91,6 +91,7 @@ public class LoginPanel extends JPanel {
 			public void focusLost(FocusEvent e) {
 				for (User usr : users){
 					if (usr.getEmail().equalsIgnoreCase(email.getText())){
+						System.out.println( ((JTextField) e.getSource()).getText().equalsIgnoreCase(usr.getEmail()));
 						currentUser = usr;
 					}
 				}

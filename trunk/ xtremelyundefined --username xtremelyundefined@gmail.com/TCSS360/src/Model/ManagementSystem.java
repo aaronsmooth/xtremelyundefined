@@ -158,5 +158,13 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 		notifyObservers();
 		
 	}
+	
+	public void setUser(User usr) {
+		currentUser = usr;
+	}
+	
+	public void setConference(Conference cnf) {
+		currentConference = cnf;
+	}
 
 }

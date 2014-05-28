@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
@@ -26,7 +28,7 @@ import Model.User;
 
 
 @SuppressWarnings("serial")
-public class LoginPanel extends JPanel implements PropertyChangeListener{
+public class LoginPanel extends JPanel {
     
 
 	/**
@@ -48,16 +50,16 @@ public class LoginPanel extends JPanel implements PropertyChangeListener{
 	private List<Conference> conferences;
 	private JTextField email;
 	private User currentUser;
-	private JComboBox<String> confName;
+	private JComboBox<Conference> currentConference;
 	private JComboBox<String> role;
 	
-	public LoginPanel(ManagementSystem system){
+	public LoginPanel(final ManagementSystem system){
 		
 		JPanel loginpanel = new JPanel(), buttonPanel = new JPanel(), welcomePanel = new JPanel();	
-		this.system = system;
 		users = system.getUsers();
 		conferences = system.getConferences();
 		currentUser = null;
+		currentConference = new JComboBox<Conference>();
 		//setLayout(new BorderLayout());
 		setLayout(null);
 		setSize(500,350);
@@ -78,31 +80,42 @@ public class LoginPanel extends JPanel implements PropertyChangeListener{
 		loginpanel.setLayout(new GridLayout(4,2, 1, 1));
 		loginpanel.add(new JLabel("Email Address"));
 		email = new JTextField(16);
-		email.addPropertyChangeListener(this);
-		email.addFocusListener( new FocusListener(){
+		email.addFocusListener(new FocusListener(){
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				confName.removeAllItems();
-				role.removeAllItems();
-				role.addItem("Author");
+
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				for (User usr : users) {
-					if ( ((JTextField) e.getSource()).getText().equalsIgnoreCase(usr.getEmail())){
+				for (User usr : users){
+					if (usr.getEmail().equalsIgnoreCase(email.getText())){
 						currentUser = usr;
-						firePropertyChange("userdropdown", null, currentUser);
 					}
 				}
-			}
-			
+				for (Conference cnf : conferences) {
+					if (cnf.hasUser(currentUser)) {
+						currentConference.addItem(cnf);
+					}
+				}
+			}					
 		});
 		loginpanel.add(email);
 		loginpanel.add(new JLabel("Conference"));
-		confName = new JComboBox<String>();
-		loginpanel.add(confName);
+		currentConference = new JComboBox<Conference>();
+		currentConference.addActionListener(new ActionListener(){
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (String rle : ((Conference)currentConference.getSelectedItem()).getRoles(currentUser)) {
+					role.addItem(rle);
+				}
+
+			}
+
+		});
+		loginpanel.add(currentConference);
 		loginpanel.add(new JLabel("Role"));
 		role = new JComboBox<String>();
 		role.addItem("Author");
@@ -112,77 +125,20 @@ public class LoginPanel extends JPanel implements PropertyChangeListener{
 		//Button Panel
 		buttonPanel.setLayout(new FlowLayout());
 		JButton login = new JButton();
+		login.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				system.setConference((Conference) currentConference.getSelectedItem());
+				system.setUser(currentUser);
+				firePropertyChange("user", null, role.getSelectedItem());
+			}
+			
+		});
 		login.setIcon(new ImageIcon("src/View/login.png"));
 		buttonPanel.add(login);
 		//panel.setBorder(BorderFactory.createLineBorder(Color.black));
 	}
-	
-	private String[] getAttendedConferences(){
-		ArrayList<String> names = new ArrayList<String>();
-		
-		for (Conference cnf : conferences) {
-			ArrayList<User> users = new ArrayList<User>();
-			users.addAll(cnf.getSPCs());
-			users.add(cnf.getPC());
-			users.addAll(cnf.getReviewers());
-			if (users.contains(currentUser)){
-				names.add(cnf.getName());
-			}
-		}
-		
-		String[] ret = new String[names.size()];
-		for (int i = 0; i < names.size(); i++) {
-			ret[i] = names.get(i);
-		}
-		return ret;
-	}
-	
-	private String[] getRoles(String confName) {
-		User currentuser = null;
-		Conference conference = null;
-		List<String> roles = new ArrayList<String>();
-		
-		for (User usr : users) {
-			if (email.equals(usr.getEmail())){
-				currentuser = usr;
-				break;
-			}
-		}
-		
-		for (Conference cnf : conferences) {
-			if (confName.equals(cnf.getName())){
-				conference = cnf;
-				break;
-			}
-		}
-		
-		if (currentuser == conference.getPC()) {
-			roles.add("Program Chair");
-		}
-		for (User spc : conference.getSPCs()) {
-			if (currentuser == spc) roles.add("Subprogram Chair");
-		}
-		for (User rev : conference.getReviewers()){
-			if (currentuser == rev) roles.add("Reviewer");
-		}
-		
-		String[] ret = new String[roles.size()];
-		for (int i = 0; i < roles.size(); i++) {
-			ret[i] = roles.get(i);
-		}
-		return ret;
-	}
 
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		
-		if (evt.getNewValue() instanceof User){
-			for (String name : getAttendedConferences()) {
-				confName.addItem(name);
-			}
-		}
-		
-	}
-	
-	
+
 }

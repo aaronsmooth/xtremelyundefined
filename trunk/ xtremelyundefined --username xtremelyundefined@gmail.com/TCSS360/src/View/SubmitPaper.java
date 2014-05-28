@@ -39,8 +39,10 @@ public class SubmitPaper extends JFrame {
 	private JButton cancel, submit, chooseFile, removeFile;
 	private MyActionListener listener = new MyActionListener();
 	JFileChooser fileChooser = new JFileChooser();
-
+	private static User the_author;
+	
 	public SubmitPaper(User the_author) {
+		this.the_author = the_author;
 		buildUI();
 	}
 
@@ -51,8 +53,8 @@ public class SubmitPaper extends JFrame {
 	}
 
 	public void buildUI() {
-		nameField = new JTextField();
-		emailField = new JTextField();
+		nameField = new JTextField(the_author.getName());
+		emailField = new JTextField(the_author.getEmail());
 		paperTopicField = new JTextField();
 		paperTitleField = new JTextField();
 		keywordField = new JTextField();
@@ -182,6 +184,6 @@ public class SubmitPaper extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new SubmitPaper(null).setVisible(true);
+		new SubmitPaper(new User(1,"Joe","Schmoe","test@test,com")).setVisible(true);
 	}
 }

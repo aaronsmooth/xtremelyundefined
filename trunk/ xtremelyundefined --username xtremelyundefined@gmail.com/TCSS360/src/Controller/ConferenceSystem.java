@@ -55,7 +55,7 @@ public class ConferenceSystem {
 		Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath");
 		Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath");
 		Conference conf = new Conference("alocation", "adate", "adeadline", null, "aname");
-		SubmitReview rev = new SubmitReview(ppr);
+		SubmitReview rev = new SubmitReview(ppr, usr);
 
 	}
  }

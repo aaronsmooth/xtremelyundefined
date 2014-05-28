@@ -50,6 +50,12 @@ public class ConferenceSystem {
 	
 	public static void startGUI(ManagementSystem system) {
 		MainFrame window = new MainFrame(system);
+		User usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
+		User usr2 = new User(56, "jon", "doe", "doe@gmail.com");
+		Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath");
+		Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath");
+		Conference conf = new Conference("alocation", "adate", "adeadline", null, "aname");
+		SubmitReview rev = new SubmitReview(ppr);
 
 	}
  }

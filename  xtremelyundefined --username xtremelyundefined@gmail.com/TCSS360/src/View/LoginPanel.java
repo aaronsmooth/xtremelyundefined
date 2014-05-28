@@ -5,6 +5,12 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,8 +20,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Model.Conference;
+import Model.ManagementSystem;
+import Model.User;
 
-public class LoginPanel extends JPanel{
+
+@SuppressWarnings("serial")
+public class LoginPanel extends JPanel implements PropertyChangeListener{
     
 
 	/**
@@ -28,15 +39,25 @@ public class LoginPanel extends JPanel{
 	 * for the conference dropbox.
 	 */
 	
-	private String [] roles = { "   -------------------------   ", "PC: Program Chair", "SPC: Sub-Prgram Chair",
-			             "R: Reviewer", "A: Author"};
+//	private String [] roles = { "   -------------------------   ", "PC: Program Chair", "SPC: Sub-Prgram Chair",
+//			             "R: Reviewer", "A: Author"};
+//	
+//	private String [] conference = {"   -------------------------   " ,"Conference 1", "Conference 2", "Conference 3"};
+	private ManagementSystem system;
+	private List<User> users;
+	private List<Conference> conferences;
+	private JTextField email;
+	private User currentUser;
+	private JComboBox<String> confName;
+	private JComboBox<String> role;
 	
-	private String [] conference = {"   -------------------------   " ,"Conference 1", "Conference 2", "Conference 3"};
-	
-	public LoginPanel(){
+	public LoginPanel(ManagementSystem system){
 		
 		JPanel loginpanel = new JPanel(), buttonPanel = new JPanel(), welcomePanel = new JPanel();	
-		
+		this.system = system;
+		users = system.getUsers();
+		conferences = system.getConferences();
+		currentUser = null;
 		//setLayout(new BorderLayout());
 		setLayout(null);
 		setSize(500,350);
@@ -55,12 +76,38 @@ public class LoginPanel extends JPanel{
 		
 		//Login Panel
 		loginpanel.setLayout(new GridLayout(4,2, 1, 1));
-		loginpanel.add(new JLabel("First Name"));
-		loginpanel.add(new JTextField(16));
-		loginpanel.add(new JLabel("Role"));
-		loginpanel.add(new JComboBox(roles));
+		loginpanel.add(new JLabel("Email Address"));
+		email = new JTextField(16);
+		email.addPropertyChangeListener(this);
+		email.addFocusListener( new FocusListener(){
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				confName.removeAllItems();
+				role.removeAllItems();
+				role.addItem("Author");
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				for (User usr : users) {
+					if ( ((JTextField) e.getSource()).getText().equalsIgnoreCase(usr.getEmail())){
+						currentUser = usr;
+						firePropertyChange("userdropdown", null, currentUser);
+					}
+				}
+			}
+			
+		});
+		loginpanel.add(email);
 		loginpanel.add(new JLabel("Conference"));
-		loginpanel.add(new JComboBox(conference));
+		confName = new JComboBox<String>();
+		loginpanel.add(confName);
+		loginpanel.add(new JLabel("Role"));
+		role = new JComboBox<String>();
+		role.addItem("Author");
+		loginpanel.add(role);
+		
 		
 		//Button Panel
 		buttonPanel.setLayout(new FlowLayout());
@@ -70,6 +117,72 @@ public class LoginPanel extends JPanel{
 		//panel.setBorder(BorderFactory.createLineBorder(Color.black));
 	}
 	
+	private String[] getAttendedConferences(){
+		ArrayList<String> names = new ArrayList<String>();
+		
+		for (Conference cnf : conferences) {
+			ArrayList<User> users = new ArrayList<User>();
+			users.addAll(cnf.getSPCs());
+			users.add(cnf.getPC());
+			users.addAll(cnf.getReviewers());
+			if (users.contains(currentUser)){
+				names.add(cnf.getName());
+			}
+		}
+		
+		String[] ret = new String[names.size()];
+		for (int i = 0; i < names.size(); i++) {
+			ret[i] = names.get(i);
+		}
+		return ret;
+	}
+	
+	private String[] getRoles(String confName) {
+		User currentuser = null;
+		Conference conference = null;
+		List<String> roles = new ArrayList<String>();
+		
+		for (User usr : users) {
+			if (email.equals(usr.getEmail())){
+				currentuser = usr;
+				break;
+			}
+		}
+		
+		for (Conference cnf : conferences) {
+			if (confName.equals(cnf.getName())){
+				conference = cnf;
+				break;
+			}
+		}
+		
+		if (currentuser == conference.getPC()) {
+			roles.add("Program Chair");
+		}
+		for (User spc : conference.getSPCs()) {
+			if (currentuser == spc) roles.add("Subprogram Chair");
+		}
+		for (User rev : conference.getReviewers()){
+			if (currentuser == rev) roles.add("Reviewer");
+		}
+		
+		String[] ret = new String[roles.size()];
+		for (int i = 0; i < roles.size(); i++) {
+			ret[i] = roles.get(i);
+		}
+		return ret;
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		
+		if (evt.getNewValue() instanceof User){
+			for (String name : getAttendedConferences()) {
+				confName.addItem(name);
+			}
+		}
+		
+	}
 	
 	
 }

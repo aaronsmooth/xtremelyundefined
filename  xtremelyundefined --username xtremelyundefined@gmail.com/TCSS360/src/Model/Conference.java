@@ -302,4 +302,8 @@ public class Conference extends Observable implements Serializable{
 	public String toString() {
 		return name;
 	}
+	
+	public User getPC() {
+		return pc;
+	}
 }

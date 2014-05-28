@@ -111,13 +111,7 @@ public class SubmitRecommendation extends JFrame {
 			
 		});
 		JButton cancel = new JButton("Cancel");
-		cancel.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
-				frm.dispose();
-			}
-		});
+		cancel.addActionListener(new CloseAction());
 		sPanel.add(submit);
 		sPanel.add(cancel);
 		

@@ -121,6 +121,7 @@ public class SubmitReview extends JFrame {
 		JButton submit = new JButton("Submit");
 		submit.addActionListener(new SubmitAction());
 		JButton cancel = new JButton("Cancel");
+		cancel.addActionListener(new CloseAction());
 		panel.add(submit);
 		panel.add(cancel);
 		return panel;
@@ -358,48 +359,52 @@ public class SubmitReview extends JFrame {
 		txt.setEditable(false);
 		txt.setBackground(bkg);
 		return txt;
-		
+
 	}
-	
+
 	private class SubmitAction implements ActionListener {
 		boolean allChosen = true;
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			for (ButtonGroup bg : btngroups) {
-				if (bg.getSelection() == null) {
-					allChosen = false;
-				} 
-			}
-			for (JTextArea t : comments) {
-				if (t.getText().equals("")) {
-					allChosen = false;
-				}
-			}
-			if (!allChosen){
-				JOptionPane.showMessageDialog((Component) e.getSource(), "You need to select a rating and "
-						+ "enter a rationale each one of your ratings.");
-
-			}  else {
-				List<Integer> scores = new ArrayList<Integer>();
-				List<String> author = new ArrayList<String>();
-				
+			int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to submit your review?", 
+					"Confirm Submission", JOptionPane.OK_CANCEL_OPTION);
+			if (confirm == 0) {
 				for (ButtonGroup bg : btngroups) {
-					scores.add( Integer.valueOf(btngroups.get(i).getSelection().getActionCommand()));
+
+					if (bg.getSelection() == null) {
+						allChosen = false;
+					} 
 				}
-				String spcOnly = comments.get(0).getText();
-				for (int i = 1; i < comments.size(); i++) {
-					author.add(comments.get(i).getText());
+				for (JTextArea t : comments) {
+					if (t.getText().equals("")) {
+						allChosen = false;
+					}
 				}
-				paper.review(currentUser, new Review(scores, spcOnly, author));
-				firePropertyChange(paper.getTitle(), paper, currentUser);
-				Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
-				frm.dispose();
+				if (!allChosen){
+					JOptionPane.showMessageDialog(null, "You need to select a rating and "
+							+ "enter a rationale each one of your ratings.");
+
+				}  else {
+					List<Integer> scores = new ArrayList<Integer>();
+					List<String> author = new ArrayList<String>();
+
+					for (ButtonGroup bg : btngroups) {
+						scores.add( Integer.valueOf(bg.getSelection().getActionCommand()));
+					}
+					String spcOnly = comments.get(0).getText();
+					for (int i = 1; i < comments.size(); i++) {
+						author.add(comments.get(i).getText());
+					}
+					paper.review(currentUser, new Review(scores, spcOnly, author));
+					firePropertyChange(paper.getTitle(), paper, currentUser);
+					Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
+					frm.dispose();
+				}
+
 			}
-			
+
 		}
-		
-		
-		
+
 	}
 }

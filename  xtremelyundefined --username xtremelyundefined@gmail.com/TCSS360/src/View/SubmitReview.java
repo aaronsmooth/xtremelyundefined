@@ -45,11 +45,11 @@ public class SubmitReview extends JFrame {
 	private List<JTextArea> comments;
 	
 	
-	private String instructions = "Instructions to Reviewers: \n "
+	private String instructions = "Instructions to Reviewers:\n\n "
 			+ "Please provide a numeric rating on a 5-point scale for each question,along with a brief \n "
 			+ "rationale for each numeric rating. In doing so, please discuss both the strengths and \n"
 			+ "the weaknesses of each paper so that the editorsand authors can understand your reasoning. \n"
-			+ "Please phrase your reviews politely; even \'bad\' papers represent a lot of work on the part \n"
+			+ "\nPlease phrase your reviews politely; even \'bad\' papers represent a lot of work on the part \n"
 			+ "of the authors. The review may be the basis for further revisions of the paper or the work \n"
 			+ "that the paper reports. We all know how hurtful a needlessly negative review can be, \n"
 			+ "and how helpful a positive one can be; please try to bear that in mind when \n"
@@ -63,7 +63,7 @@ public class SubmitReview extends JFrame {
 		currentUser = theuser;
 		btngroups = new ArrayList<ButtonGroup>();
 		comments = new ArrayList<JTextArea>();
-		JOptionPane.showMessageDialog(this, instructions);
+		JOptionPane.showMessageDialog(null, instructions);
 		initializePrompts();
 		setTitle("Submit a Review for " + paper.getTitle());
 		FlowLayout lyout = new FlowLayout();
@@ -72,6 +72,7 @@ public class SubmitReview extends JFrame {
 		pane.add(createCenterPane());
 		add(pane);
 		setLocationRelativeTo(null);
+		setResizable(false);
 		pack();
 		setVisible(true);
 	}

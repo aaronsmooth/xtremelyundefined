@@ -25,6 +25,7 @@ import View.LoginPanel;
 import View.MainFrame;
 import View.SelectBox;
 import View.SubmitRecommendation;
+import View.SubmitReview;
 
 public class ConferenceSystem {
 	
@@ -49,5 +50,6 @@ public class ConferenceSystem {
 	
 	public static void startGUI(ManagementSystem system) {
 		MainFrame window = new MainFrame(system);
+
 	}
  }

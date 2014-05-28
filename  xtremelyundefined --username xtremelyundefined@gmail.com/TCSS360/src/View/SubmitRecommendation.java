@@ -58,7 +58,7 @@ public class SubmitRecommendation extends JFrame {
 	
 	public JPanel createPanel() {
 		
-		JPanel panel = new JPanel();
+		final JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		
 		JPanel sPanel = new JPanel();
@@ -70,7 +70,8 @@ public class SubmitRecommendation extends JFrame {
 		nPanel.add(new JLabel("Summary Recommendation:"));
 		
 		for (int i = 5; i >= 1; i--) {
-			JRadioButton btn = new JRadioButton("[" + Integer.toString(i) + "]");
+			JRadioButton btn = new JRadioButton(Integer.toString(i));
+			btn.setActionCommand(btn.getText());
 			btng.add(btn);
 			nPanel.add(btn);
 		}
@@ -99,13 +100,12 @@ public class SubmitRecommendation extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (btng.getSelection() != null && !txt.getText().equals("")) {
-					paper.setRating(Integer.valueOf(((AbstractButton) btng.getSelection()).getText()));
+					paper.setRating(Integer.valueOf(((ButtonModel) btng.getSelection()).getActionCommand()));
 					paper.setRationale(txt.getText());
 					Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
 					frm.dispose();
 				} else {
-					JOptionPane msg = new JOptionPane("You need to select a rating and enter a rationale for your decision.", JOptionPane.OK_OPTION);
-					msg.setVisible(true);
+					JOptionPane.showMessageDialog(panel, "You need to select a rating and enter a rationale for your decision.");
 				}
 			}
 			

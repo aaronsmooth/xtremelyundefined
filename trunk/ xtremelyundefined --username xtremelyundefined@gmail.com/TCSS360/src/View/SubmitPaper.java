@@ -184,6 +184,11 @@ public class SubmitPaper extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new SubmitPaper(new User(1,"Joe","Schmoe","test@test,com")).setVisible(true);
+	       /* system = (ManagementSystem) obj.readObject();
+   		   User usr = system.getUser(id);
+   		   new SubmitPaper(usr);*/
+		 
+		 
+		new SubmitPaper(new User(the_author.getID(),the_author.getFirstName(),the_author.getLastName(),the_author.getEmail())).setVisible(true);
 	}
 }

@@ -21,8 +21,11 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 
+import Model.Paper;
 import Model.User;
 
 public class SubmitPaper extends JFrame {
@@ -176,7 +179,9 @@ public class SubmitPaper extends JFrame {
 				fileChooserField.setText("");
 			}
 			if (cmd.equals(SUBMIT)) {
-				
+				FileInputStream fis = new FileInputStream(f);
+			    ObjectInputStream ois = new ObjectInputStream(fis);
+			    Paper paper = (Paper)ois.readObject();
 			}
 
 		}

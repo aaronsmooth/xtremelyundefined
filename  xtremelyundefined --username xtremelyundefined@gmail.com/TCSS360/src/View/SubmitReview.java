@@ -2,6 +2,7 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -9,6 +10,9 @@ import java.awt.GridBagLayout;
 import java.awt.ScrollPane;
 import java.awt.TextArea;
 import java.awt.Toolkit;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +27,11 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 
 import Model.Paper;
+import Model.Review;
+import Model.User;
 
 @SuppressWarnings("serial")
 public class SubmitReview extends JFrame {
@@ -33,8 +40,10 @@ public class SubmitReview extends JFrame {
 	private static final int LAST_QUESTION = 21;
 	
 	private Paper paper;
+	private User currentUser;
 	private List<ButtonGroup> btngroups;
 	private List<JTextArea> comments;
+	
 	
 	private String instructions = "Instructions to Reviewers: \n "
 			+ "Please provide a numeric rating on a 5-point scale for each question,along with a brief \n "
@@ -48,9 +57,10 @@ public class SubmitReview extends JFrame {
 	
 	private String[] prompts = new String[34]; //number of prompts needed
 	
-	public SubmitReview(Paper thepaper) {
+	public SubmitReview(Paper thepaper, User theuser) {
 		super();
 		paper = thepaper;
+		currentUser = theuser;
 		btngroups = new ArrayList<ButtonGroup>();
 		comments = new ArrayList<JTextArea>();
 		JOptionPane.showMessageDialog(this, instructions);
@@ -109,6 +119,7 @@ public class SubmitReview extends JFrame {
 	private JPanel createSouthPanel() {
 		JPanel panel = new JPanel(new FlowLayout());
 		JButton submit = new JButton("Submit");
+		submit.addActionListener(new SubmitAction());
 		JButton cancel = new JButton("Cancel");
 		panel.add(submit);
 		panel.add(cancel);
@@ -347,6 +358,48 @@ public class SubmitReview extends JFrame {
 		txt.setEditable(false);
 		txt.setBackground(bkg);
 		return txt;
+		
+	}
+	
+	private class SubmitAction implements ActionListener {
+		boolean allChosen = true;
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			for (ButtonGroup bg : btngroups) {
+				if (bg.getSelection() == null) {
+					allChosen = false;
+				} 
+			}
+			for (JTextArea t : comments) {
+				if (t.getText().equals("")) {
+					allChosen = false;
+				}
+			}
+			if (!allChosen){
+				JOptionPane.showMessageDialog((Component) e.getSource(), "You need to select a rating and "
+						+ "enter a rationale each one of your ratings.");
+
+			}  else {
+				List<Integer> scores = new ArrayList<Integer>();
+				List<String> author = new ArrayList<String>();
+				
+				for (ButtonGroup bg : btngroups) {
+					scores.add( Integer.valueOf(btngroups.get(i).getSelection().getActionCommand()));
+				}
+				String spcOnly = comments.get(0).getText();
+				for (int i = 1; i < comments.size(); i++) {
+					author.add(comments.get(i).getText());
+				}
+				paper.review(currentUser, new Review(scores, spcOnly, author));
+				firePropertyChange(paper.getTitle(), paper, currentUser);
+				Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
+				frm.dispose();
+			}
+			
+		}
+		
+		
 		
 	}
 }

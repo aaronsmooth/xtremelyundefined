@@ -178,22 +178,22 @@ public class SubmitPaper extends JFrame {
 			if (cmd.equals(REMOVE)) {
 				fileChooserField.setText("");
 			}
-			if (cmd.equals(SUBMIT)) {
+		/*	if (cmd.equals(SUBMIT)) {
 				FileInputStream fis = new FileInputStream(f);
 			    ObjectInputStream ois = new ObjectInputStream(fis);
 			    Paper paper = (Paper)ois.readObject();
-			}
+			}*/
 
 		}
 
 	}
 
-	public static void main(String[] args) {
+	//public static void main(String[] args) {
 	       /* system = (ManagementSystem) obj.readObject();
    		   User usr = system.getUser(id);
    		   new SubmitPaper(usr);*/
 		 
 		 
-		new SubmitPaper(new User(the_author.getID(),the_author.getFirstName(),the_author.getLastName(),the_author.getEmail())).setVisible(true);
-	}
+	//	new SubmitPaper(new User(the_author.getID(),the_author.getFirstName(),the_author.getLastName(),the_author.getEmail())).setVisible(true);
+	//}
 }

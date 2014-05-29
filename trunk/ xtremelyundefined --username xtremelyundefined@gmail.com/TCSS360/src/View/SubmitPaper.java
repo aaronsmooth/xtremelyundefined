@@ -25,6 +25,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import Model.Conference;
 import Model.Paper;
 import Model.User;
 
@@ -37,15 +38,19 @@ public class SubmitPaper extends JFrame {
 	public static final int FIELD_HIGH = 1;
 
 	private JTextField nameField, emailField, paperTopicField, paperTitleField,
-			keywordField, fileChooserField;
+	keywordField, fileChooserField;
 	private JTextArea abstractField;
 	private JButton cancel, submit, chooseFile, removeFile;
 	private MyActionListener listener = new MyActionListener();
 	JFileChooser fileChooser = new JFileChooser();
-	private static User the_author;
+
+	private User the_author;
+	private Conference the_conf;
+	private Paper uploaded_paper;
 	
-	public SubmitPaper(User the_author) {
+	public SubmitPaper(Conference conf, User the_author) {
 		this.the_author = the_author;
+		this.the_conf = conf;
 		buildUI();
 	}
 
@@ -173,27 +178,36 @@ public class SubmitPaper extends JFrame {
 				if (c == JFileChooser.APPROVE_OPTION) {
 					File f = fileChooser.getSelectedFile();
 					fileChooserField.setText(f.getAbsolutePath());
+
+					FileInputStream fis = null;
+					ObjectInputStream ois = null;
+					try {
+						fis = new FileInputStream(f);
+						ois = new ObjectInputStream(fis);
+						uploaded_paper = (Paper)ois.readObject();
+
+					} catch (Exception ex) {
+						// Handle what happens if file not found or read error or deserialize error
 				}
+			}
+			if (cmd.equals(SUBMIT)) {
+				the_conf.submitPaper(uploaded_paper);
 			}
 			if (cmd.equals(REMOVE)) {
 				fileChooserField.setText("");
 			}
-		/*	if (cmd.equals(SUBMIT)) {
-				FileInputStream fis = new FileInputStream(f);
-			    ObjectInputStream ois = new ObjectInputStream(fis);
-			    Paper paper = (Paper)ois.readObject();
-			}*/
 
 		}
 
 	}
 
 	//public static void main(String[] args) {
-	       /* system = (ManagementSystem) obj.readObject();
+	/* system = (ManagementSystem) obj.readObject();
    		   User usr = system.getUser(id);
    		   new SubmitPaper(usr);*/
-		 
-		 
+
+
 	//	new SubmitPaper(new User(the_author.getID(),the_author.getFirstName(),the_author.getLastName(),the_author.getEmail())).setVisible(true);
 	//}
+	}
 }

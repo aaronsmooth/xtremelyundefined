@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 import java.awt.Component;
@@ -18,6 +19,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -192,6 +194,8 @@ public class SubmitPaper extends JFrame {
 			}
 			if (cmd.equals(SUBMIT)) {
 				the_conf.submitPaper(uploaded_paper);
+				Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
+				frm.dispose();
 			}
 			if (cmd.equals(REMOVE)) {
 				fileChooserField.setText("");

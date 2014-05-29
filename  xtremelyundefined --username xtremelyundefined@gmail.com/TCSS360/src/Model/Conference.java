@@ -315,8 +315,8 @@ public class Conference extends Observable implements Serializable{
 		List<String> ret = new ArrayList<String>();
 		
 		if (getReviewers().contains(usr)) ret.add("Reviewer");
-		if (getSPCs().contains(usr)) ret.add("SPC");
-		if (usr == this.pc) ret.add("PC");
+		if (getSPCs().contains(usr)) ret.add("SubProgram Chair");
+		if (usr == this.pc) ret.add("Program Chair");
 		
 		return ret;
 	}

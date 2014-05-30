@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 import Model.Conference;
+import Model.ManagementSystem;
 import Model.Paper;
 import Model.User;
 
@@ -46,13 +48,12 @@ public class SubmitPaper extends JFrame {
 	private MyActionListener listener = new MyActionListener();
 	JFileChooser fileChooser = new JFileChooser();
 
-	private User the_author;
-	private Conference the_conf;
-	private Paper uploaded_paper;
-	
-	public SubmitPaper(Conference conf, User the_author) {
+	private static User the_author;
+	private static Conference the_conf;
+
+	public SubmitPaper(Conference the_conf, User the_author) {
 		this.the_author = the_author;
-		this.the_conf = conf;
+		this.the_conf = the_conf;
 		buildUI();
 	}
 
@@ -180,20 +181,13 @@ public class SubmitPaper extends JFrame {
 				if (c == JFileChooser.APPROVE_OPTION) {
 					File f = fileChooser.getSelectedFile();
 					fileChooserField.setText(f.getAbsolutePath());
-
-					FileInputStream fis = null;
-					ObjectInputStream ois = null;
-					try {
-						fis = new FileInputStream(f);
-						ois = new ObjectInputStream(fis);
-						uploaded_paper = (Paper)ois.readObject();
-
-					} catch (Exception ex) {
-						// Handle what happens if file not found or read error or deserialize error
 				}
 			}
 			if (cmd.equals(SUBMIT)) {
-				the_conf.submitPaper(uploaded_paper);
+				Paper paper = new Paper(the_author, paperTitleField.getText(),
+						keywordField.getText(), abstractField.getText(),
+						fileChooserField.getText());
+				the_conf.submitPaper(paper);
 				Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
 				frm.dispose();
 			}
@@ -205,13 +199,22 @@ public class SubmitPaper extends JFrame {
 
 	}
 
-	//public static void main(String[] args) {
-	/* system = (ManagementSystem) obj.readObject();
-   		   User usr = system.getUser(id);
-   		   new SubmitPaper(usr);*/
 
-
-	//	new SubmitPaper(new User(the_author.getID(),the_author.getFirstName(),the_author.getLastName(),the_author.getEmail())).setVisible(true);
-	//}
-	}
 }
+
+/*public static void main(String[] args) {
+
+		FileInputStream in;
+		ObjectInputStream obj;
+		try {
+			in = new FileInputStream("src/supportingFiles/managementsystem.ser");
+			obj = new ObjectInputStream(in);
+			ManagementSystem system = (ManagementSystem) obj.readObject();
+			new SubmitPaper(system.getConference(), system.getUsers().get(0))
+			.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}*/
+
+

@@ -104,8 +104,11 @@ public class ConferenceTest  {
 	}
 	
 	@Test
-	public void getPapersToReviewTest() {
+	public void hasUserTest() {
+		conf.setPC(usr);
 		
+		assertTrue(conf.hasUser(usr));
+		assertFalse(conf.hasUser(usr2));
 	}
 
 }

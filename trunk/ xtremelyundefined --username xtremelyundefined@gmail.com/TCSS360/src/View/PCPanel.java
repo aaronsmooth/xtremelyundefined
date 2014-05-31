@@ -15,26 +15,32 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.AbstractBorder;
 
+import Model.Conference;
+import Model.ManagementSystem;
+
 
 public class PCPanel extends JPanel {
 	
-	private String Author = "JOE SCHMOE";
+	private String Author;// = "JOE SCHMOE";
+	
+	private ManagementSystem mySystem;
 	
 	/**
 	 * Constructor.
 	 */
-	public PCPanel(){
-	setLayout(new BorderLayout());
-	AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
-	
-	JPanel topPanel, bottomPanel, midPanel;
-	
-	topPanel = topPanel(brdr, Author);
-	bottomPanel = bottomPanel(brdr, manuscripts(brdr), arrowPanel(brdr));
-	midPanel = midPanel(bottomPanel, brdr, "Conference Name");
-	
-	add(topPanel, BorderLayout.NORTH);
-	add(midPanel, BorderLayout.CENTER);
+	public PCPanel(ManagementSystem theSystem){
+		mySystem = theSystem;
+		setLayout(new BorderLayout());
+		AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
+		
+		JPanel topPanel, bottomPanel, midPanel;
+		
+		topPanel = topPanel(brdr, mySystem.getCurrentUser().getName());
+		bottomPanel = bottomPanel(brdr, manuscripts(brdr), arrowPanel(brdr));
+		midPanel = midPanel(bottomPanel, brdr, "Conference Name");
+		
+		add(topPanel, BorderLayout.NORTH);
+		add(midPanel, BorderLayout.CENTER);
 	}
 	
 	/**

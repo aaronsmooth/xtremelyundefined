@@ -44,7 +44,7 @@ public class MainFrame extends JFrame implements Observer, PropertyChangeListene
 		
 		if (evt.getNewValue().toString().equals("Program Chair")){
 			display.setVisible(false);
-			display = new PCPanel();
+			display = new PCPanel(system);
 			add(display);
 		} else if (evt.getNewValue().toString().equals("Subprogram Chair")){
 			display.setVisible(false);

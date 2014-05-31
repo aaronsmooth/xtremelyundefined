@@ -315,7 +315,8 @@ public class Conference extends Observable implements Serializable{
 	}
 	
 	public boolean hasUser(User usr){
-		return usr.getEmail() == this.pc.getEmail() || getReviewers().contains(usr) || getSPCs().contains(usr);
+		if (usr == null) return false;
+		else return usr.getEmail() == this.pc.getEmail() || getReviewers().contains(usr) || getSPCs().contains(usr);
 	}
 	
 	public List<String> getRoles(User usr) {

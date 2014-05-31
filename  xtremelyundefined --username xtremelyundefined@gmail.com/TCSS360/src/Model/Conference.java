@@ -111,7 +111,8 @@ public class Conference extends Observable implements Serializable{
 	}
 	
 	/**
-	 * Sets a new PC for this conference.
+	 * Sets a new PC for this conference. This method should never be
+	 * called by anyone.
 	 * 
 	 * @param newPC PC to add
 	 */
@@ -314,7 +315,7 @@ public class Conference extends Observable implements Serializable{
 	}
 	
 	public boolean hasUser(User usr){
-		return usr == this.pc || getReviewers().contains(usr) || getSPCs().contains(usr);
+		return usr.getEmail() == this.pc.getEmail() || getReviewers().contains(usr) || getSPCs().contains(usr);
 	}
 	
 	public List<String> getRoles(User usr) {
@@ -322,7 +323,7 @@ public class Conference extends Observable implements Serializable{
 		
 		if (getReviewers().contains(usr)) ret.add("Reviewer");
 		if (getSPCs().contains(usr)) ret.add("SubProgram Chair");
-		if (usr == this.pc) ret.add("Program Chair");
+		if (usr.getEmail() == this.pc.getEmail()) ret.add("Program Chair");
 		
 		return ret;
 	}

@@ -167,4 +167,7 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 		currentConference = cnf;
 	}
 
+	public User getCurrentUser() {
+		return currentUser;
+	}
 }

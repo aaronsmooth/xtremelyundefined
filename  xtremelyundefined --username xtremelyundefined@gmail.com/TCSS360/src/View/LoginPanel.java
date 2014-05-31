@@ -56,6 +56,7 @@ public class LoginPanel extends JPanel {
 	public LoginPanel(final ManagementSystem system){
 		
 		JPanel loginpanel = new JPanel(), buttonPanel = new JPanel(), welcomePanel = new JPanel();	
+		this.system = system;
 		users = system.getUsers();
 		conferences = system.getConferences();
 		currentUser = null;

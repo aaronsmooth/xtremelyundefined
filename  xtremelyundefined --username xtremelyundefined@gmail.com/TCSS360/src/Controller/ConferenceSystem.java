@@ -28,28 +28,28 @@ import View.SubmitRecommendation;
 import View.SubmitReview;
 
 public class ConferenceSystem {
-	
-	public static final String FILE = "src/supportingFiles/managementsystem.ser";
-	
-	public static void main(String[] args) {
-		
-		ManagementSystem system = new ManagementSystem();
-		Path src = FileSystems.getDefault().getPath(FILE);	
+        
+        public static final String FILE = "src/supportingFiles/managementsystem.ser";
+        
+        public static void main(String[] args) {
+                
+                ManagementSystem system = new ManagementSystem();
+                Path src = FileSystems.getDefault().getPath(FILE);      
 
-		try{
-			FileInputStream  in = new FileInputStream(FILE);
-			ObjectInputStream obj = new ObjectInputStream(in);
-			system = (ManagementSystem) obj.readObject();
-			obj.close();
-		} catch (IOException | ClassNotFoundException e) {
-			System.out.println(e);
-		}
-		startGUI(system);
-		
-	}
-	
-	public static void startGUI(ManagementSystem system) {
-		MainFrame window = new MainFrame(system);
-		
-	}
+                try{
+                        FileInputStream  in = new FileInputStream(FILE);
+                        ObjectInputStream obj = new ObjectInputStream(in);
+                        system = (ManagementSystem) obj.readObject();
+                        obj.close();
+                } catch (IOException | ClassNotFoundException e) {
+                        System.out.println(e);
+                }
+                startGUI(system);
+                
+        }
+        
+        public static void startGUI(ManagementSystem system) {
+                MainFrame window = new MainFrame(system);
+                
+        }
  }

@@ -64,14 +64,16 @@ public class ConferenceTest  {
 	}
 	@Test
 	public void addSPCTest() {
-		conf.addSPC(usr);;
-		conf.addSPC(usr2);;
+		conf.addReviewer(usr);
+		conf.addSPC(usr);
+		conf.addSPC(usr2);
 		
 		assertSame(conf.getSPCs().get(0).getID(), usr.getID());
-		assertSame(conf.getSPCs().get(1).getID(), usr2.getID());
+		assertTrue(conf.getSPCs().size() == 1);
+		//assertSame(conf.getSPCs().get(1).getID(), usr2.getID());
 		
 		conf.addSPC(usr);
-		assertTrue(conf.getSPCs().size() == 2);
+		assertTrue(conf.getSPCs().size() == 1);
 		
 		exception.expect(IllegalArgumentException.class);
 		conf.addSPC(null);

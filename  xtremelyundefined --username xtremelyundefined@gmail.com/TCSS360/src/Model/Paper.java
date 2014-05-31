@@ -99,7 +99,7 @@ public class Paper {
 	/**
 	 * Adds a Reviewer, Review pair to the reviewerMap. If the Review is null, 
 	 * this indicates that the reviewer has been assigned but there is no
-	 * review done yet.
+	 * review done yet. This 
 	 * 
 	 * @param reviewer Reviewer either assigned to the paper or who did this review
 	 * @param newReview Review if it is complete. Null otherwise.

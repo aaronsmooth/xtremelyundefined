@@ -95,7 +95,9 @@ public class Conference extends Observable implements Serializable{
 	}
 	
 	/**
-	 * Adds an SPC to the conference
+	 * Adds an SPC to the conference. This method enforces business rule 6
+	 * that a user has to already be a reviewer for the current conference
+	 * before being eligible to be a Sup-Program Chair
 	 * 
 	 * @param newSPC the SPC to add
 	 */
@@ -103,7 +105,7 @@ public class Conference extends Observable implements Serializable{
 		if (newSPC == null) {
 			throw new IllegalArgumentException();
 		}
-		if (!spc.contains(newSPC)) {
+		if (!spc.contains(newSPC) && reviewers.contains(newSPC)) {
 			spc.add(Objects.requireNonNull(newSPC));
 		}
 	}
@@ -226,10 +228,12 @@ public class Conference extends Observable implements Serializable{
 			throw new IllegalArgumentException();
 		}
 		List<Paper> myList = new ArrayList<Paper>();
-		for (Iterator<Paper> iter = papers.iterator(); iter.hasNext();) {
-			Paper current = iter.next();
-			if (current.isAReviewer(a_user)) {
-				myList.add(current);
+		if (reviewers.contains(a_user)) {
+			for (Iterator<Paper> iter = papers.iterator(); iter.hasNext();) {
+				Paper current = iter.next();
+				if (current.isAReviewer(a_user)) {
+					myList.add(current);
+				}
 			}
 		}
 		return myList;
@@ -246,10 +250,12 @@ public class Conference extends Observable implements Serializable{
 			throw new IllegalArgumentException();
 		}
 		List<Paper> myList = new ArrayList<Paper>();
-		for (Iterator<Paper> iter = papers.iterator(); iter.hasNext();) {
-			Paper current = iter.next();
-			if (a_user == current.getSPC()) {
-				myList.add(current);
+		if (spc.contains(a_user)) {
+			for (Iterator<Paper> iter = papers.iterator(); iter.hasNext();) {
+				Paper current = iter.next();
+				if (a_user == current.getSPC()) {
+					myList.add(current);
+				}
 			}
 		}
 		return myList;

@@ -16,6 +16,14 @@ import Model.Paper;
 import Model.Review;
 import Model.User;
 
+/**
+ * This class tests method functionality of the Paper.java class.
+ * 
+ * @author TeamUndefined
+ * @version 6/1/2014
+ *
+ */
+
 public class PaperTest {
 	
 	User usr, usr2, usr3;

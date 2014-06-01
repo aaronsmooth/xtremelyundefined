@@ -214,4 +214,8 @@ public class Paper {
 	public Approval getAcceptanceStatus() {
 		return this.isAccepted;
 	}
+	
+	public boolean hasReviewerCompletedReview(User reviewer) {
+		return this.reviewerMap.get(reviewer) != null;
+	}
 }

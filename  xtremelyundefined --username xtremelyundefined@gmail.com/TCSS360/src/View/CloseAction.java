@@ -14,7 +14,6 @@ public class CloseAction implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?", 
 				"Confirm Cancel", JOptionPane.OK_CANCEL_OPTION);
-		System.out.println(confirm);
 		if (confirm == 0) {
 			Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
 			frm.dispose();

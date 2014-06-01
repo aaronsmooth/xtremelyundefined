@@ -77,7 +77,9 @@ public class SelectBox extends JFrame {
 
 	private User[] createSelectOptions(List<User> list){
 		User[] options = new User[list.size()];
-		list.toArray(options);
+		for (int i = 0; i < options.length; i++) {
+			options[i] = list.get(i);
+		}
 		return options ;
 	}
 

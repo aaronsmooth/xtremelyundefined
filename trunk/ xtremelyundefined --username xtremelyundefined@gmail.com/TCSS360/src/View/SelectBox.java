@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Window;
@@ -19,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import Model.Paper;
 import Model.User;
 
 @SuppressWarnings("serial")
@@ -26,7 +28,7 @@ public class SelectBox extends JFrame {
 	
 	private JComboBox<User> choice;
 	private String type;
-	private User selected;
+	private Paper currentPaper;
 	
 	/**
 	 * Creates a window that includes a dropdown box made from 
@@ -35,9 +37,9 @@ public class SelectBox extends JFrame {
 	 * @param objs List of objects for the combo box
 	 * @param name name of thing being chosen 
 	 */
-	public SelectBox (List<User> objs, String name, User selected) {
+	public SelectBox (List<User> objs, String name, Paper currentPaper) {
 		super();
-		this.selected = selected;
+		this.currentPaper = currentPaper;
 		type = name;
 		setTitle("Make a Selection");
 		add(createPanel(objs, name));
@@ -86,17 +88,14 @@ public class SelectBox extends JFrame {
 	private class ButtonListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() instanceof JButton ) {
-				JButton src = (JButton) e.getSource();
-				Window frm = SwingUtilities.windowForComponent(src);
-				if (src.getText().equals("Submit")) {
-					selected = (User) choice.getSelectedItem();
-					firePropertyChange(type, selected, choice.getSelectedItem());
-				}			
-				frm.dispose();
-			}
+			firePropertyChange(type, currentPaper, choice.getSelectedItem());
+			Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
+			frm.dispose();
 		}
+		
 	}
+
 }
+
 
 

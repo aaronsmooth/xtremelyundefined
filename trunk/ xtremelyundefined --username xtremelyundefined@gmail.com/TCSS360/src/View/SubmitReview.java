@@ -396,6 +396,7 @@ public class SubmitReview extends JFrame {
 				if (!allChosen){
 					JOptionPane.showMessageDialog(null, "You need to select a rating and "
 							+ "enter a rationale each one of your ratings.");
+					allChosen = true;
 
 				}  else {
 					List<Integer> scores = new ArrayList<Integer>();
@@ -412,7 +413,7 @@ public class SubmitReview extends JFrame {
 						author.add(comments.get(i).getText());
 					}
 					paper.review(currentUser, new Review(scores, spcOnly, author));
-					firePropertyChange(paper.getTitle(), paper, currentUser);
+					firePropertyChange("role", paper, "Reviewer");
 					Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
 					frm.dispose();
 				}

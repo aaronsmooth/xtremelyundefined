@@ -536,6 +536,7 @@ public class PCPanel extends JPanel {
 				} else {
 				User selected = new User(0, "", "", "");
 				SelectBox myBox = new SelectBox(mySystem.getConference().getSPCs(), "SPC", selected);
+				myBox.addPropertyChangeListener(mySystem);
 				currentPaper.setSPC(selected);
 				}
 			}

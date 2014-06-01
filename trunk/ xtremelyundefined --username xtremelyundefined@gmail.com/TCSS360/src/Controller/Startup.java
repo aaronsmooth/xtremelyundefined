@@ -93,6 +93,7 @@ public class Startup {
 							conf.addReviewer(currentUser);
 							break;
 						case "SubProgram Chair":
+							conf.addReviewer(currentUser); //business rule must be reviewer to be spc
 							conf.addSPC(currentUser);
 							break;
 						default:

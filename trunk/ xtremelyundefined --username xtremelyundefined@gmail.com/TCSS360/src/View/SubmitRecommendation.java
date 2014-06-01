@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -51,7 +52,9 @@ public class SubmitRecommendation extends JFrame {
 		this.setTitle("Recommendation Form: " + thepaper.getTitle()); 
 		this.add(createPanel());
 		this.setResizable(false);
-		setLocationRelativeTo(null);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		setLocation(dim.width/2 - WINDOW_WIDTH/2, dim.height/2 - WINDOW_HEIGHT/2); // center the window frame.
+		//setLocationRelativeTo(null);
 		pack();
 		setVisible(true);
 	}

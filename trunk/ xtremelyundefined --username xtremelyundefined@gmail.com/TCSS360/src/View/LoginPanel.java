@@ -2,9 +2,11 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -61,9 +63,11 @@ public class LoginPanel extends JPanel {
 		conferences = system.getConferences();
 		currentUser = null;
 		currentConference = new JComboBox<Conference>();
-		//setLayout(new BorderLayout());
-		setLayout(null);
+		setLayout(new BorderLayout());
+		//setLayout(null);
 		setSize(500,350);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		setLocation(dim.width/2 - 500/2, dim.height/2 - 350/2); // center the window frame.
 		add(welcomePanel);
 		add(loginpanel);
 		add(buttonPanel);

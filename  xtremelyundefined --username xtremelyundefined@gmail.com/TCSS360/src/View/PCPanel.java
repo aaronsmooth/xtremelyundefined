@@ -307,7 +307,7 @@ public class PCPanel extends JPanel {
 			    p.add(Date1, gridDate1);
 			    
 			    JLabel SPC1;
-			    if(Objects.nonNull(currentPaper.getSPC())) {
+			    if(currentPaper.getSPC() != null) {
 			    	SPC1= new JLabel(currentPaper.getSPC().getName());
 			    } else {
 				    SPC1 = new JLabel(" ");
@@ -346,7 +346,7 @@ public class PCPanel extends JPanel {
 			    
 			    
 			    JLabel Recommend1;
-			    if(Objects.isNull(currentPaper.getRationale())){
+			    if(currentPaper.getRationale() == null){
 			       Recommend1 = new JLabel(" ---------- ");
 			    } else {
 			    	Recommend1 = new JLabel(" ");

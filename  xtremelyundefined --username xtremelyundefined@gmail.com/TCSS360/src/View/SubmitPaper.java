@@ -137,6 +137,7 @@ public class SubmitPaper extends JFrame {
 				GridBagConstraints.HORIZONTAL);
 
 		this.pack();
+		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
@@ -201,8 +202,8 @@ public class SubmitPaper extends JFrame {
 
 
 }
-
-/*public static void main(String[] args) {
+/*
+public static void main(String[] args) {
 
 		FileInputStream in;
 		ObjectInputStream obj;
@@ -215,6 +216,6 @@ public class SubmitPaper extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 
-
+}*/

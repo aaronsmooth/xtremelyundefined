@@ -56,7 +56,7 @@ public class MainFrame extends JFrame implements Observer, PropertyChangeListene
 			add(display);
 		} else if (evt.getNewValue().toString().equals("Author")) {
 			display.setVisible(false);
-			display = new AuthorPanel();
+			display = new AuthorPanel(system);
 			add(display);
 		}
 		

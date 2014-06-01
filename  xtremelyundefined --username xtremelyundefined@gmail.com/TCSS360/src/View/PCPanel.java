@@ -16,6 +16,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -31,8 +32,8 @@ import Model.User;
 
 public class PCPanel extends JPanel {
 	
-	private String Author;// = "JOE SCHMOE";
-	
+	private String Author;
+
 	private Paper currentPaper;
 	
 	private ManagementSystem mySystem;
@@ -57,13 +58,20 @@ public class PCPanel extends JPanel {
 //		User usr2 = new User(56, "jon", "doe", "doe@gmail.com");
 //		Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath");
 //		Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath");
-//		Conference conf = theSystem.getConference();
-//		boolean state = theSystem.getConference().submitPaper(ppr);
-//		theSystem.addConference(conf);
+//		//Conference conf = theSystem.getConference();
+		boolean state;
+//		boolean state1 = theSystem.getConference().submitPaper(ppr2);
+//		//theSystem.addConference(conf);
+		
+		for(int i = 0; i < 10; i++){
+			User usri = new User(5+i, "joe"+i, "schmoe", "schmoe@gmail.com");
+			Paper ppri = new Paper(usri, "thisisthetitle" + i, "thekeywords" + i, "theabstact", "filepath");
+			state = theSystem.getConference().submitPaper(ppri);
+		}
 		
 		mySystem = theSystem;
-		myPapers = (mySystem.getConference()).getAllPapers();
-		start = 0;
+		myPapers = (this.mySystem.getConference()).getAllPapers();
+		start = 1;
 		size = myPapers.size();
 		if (size > 8){
 			end = 8;
@@ -99,6 +107,7 @@ public class PCPanel extends JPanel {
 		
 		JLabel logout = new JLabel("Logout");
 		logout.setBorder(brdr);
+		logout.addMouseListener(new PCPick(logout));
 		JPanel logPanel = new JPanel();
 		logPanel.setLayout(new GridLayout(1,4));
 		for(int i =0; i < 4; i++){
@@ -221,6 +230,9 @@ public class PCPanel extends JPanel {
 					end = end - 8;
 					forward = true;
 				}
+				manuscripts(new TextBubbleBorder(Color.BLACK,2,6,0));
+				//repaint();
+				
 			}
 			
 			@Override
@@ -495,10 +507,6 @@ public class PCPanel extends JPanel {
 		    	Status1.setBorder(brdr);
 		    	Status1.setHorizontalAlignment(SwingConstants.CENTER);
 
-			    //Status1= new JLabel(" ---------- ");
-			    //Status1.setIcon(new ImageIcon("src/supporingFiles/decide.png"));
-				//Status1.setBorder(brdr);
-				//Status1.setHorizontalAlignment(SwingConstants.CENTER);
 			    GridBagConstraints gridRemove1 = new GridBagConstraints();
 			    gridRemove1.insets = new Insets(0, 0, 5, 5);
 			    gridRemove1.gridx = 5;
@@ -515,9 +523,13 @@ public class PCPanel extends JPanel {
             
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				if(label.getText().equalsIgnoreCase("logout")){
+					//display = new LoginPanel(mySystem);
+				} else {
 				User selected = new User(0, "", "", "");
 				SelectBox myBox = new SelectBox(mySystem.getConference().getSPCs(), "SPC", selected);
 				currentPaper.setSPC(selected);
+				}
 			}
 			
 			@Override

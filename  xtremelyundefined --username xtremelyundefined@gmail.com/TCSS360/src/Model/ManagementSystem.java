@@ -158,15 +158,14 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		System.out.println(evt.getSource());
 		if (evt.getPropertyName().equals("role")) {
 			setChanged();
 			notifyObservers(evt.getNewValue());
 		}
 		if (evt.getPropertyName().equals("SPC")) {
-			currentConference.addSPC(getUser((String) evt.getNewValue()));
+			((Paper) evt.getOldValue()).setSPC((User) evt.getNewValue());
 			setChanged();
-			notifyObservers("SubProgram Chair");
+			notifyObservers("Program Chair");
 		}
 		
 	}

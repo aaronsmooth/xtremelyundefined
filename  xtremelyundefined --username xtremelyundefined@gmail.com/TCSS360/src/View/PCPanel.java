@@ -50,6 +50,8 @@ public class PCPanel extends JPanel {
 	
 	private boolean backward;
 	
+	
+	
 	/**
 	 * Constructor.
 	 */
@@ -535,7 +537,7 @@ public class PCPanel extends JPanel {
 					//display = new LoginPanel(mySystem);
 				} else {
 				User selected = new User(0, "", "", "");
-				SelectBox myBox = new SelectBox(mySystem.getConference().getSPCs(), "SPC", selected);
+				SelectBox myBox = new SelectBox(mySystem.getConference().getSPCs(), "SPC", currentPaper);
 				myBox.addPropertyChangeListener(mySystem);
 				currentPaper.setSPC(selected);
 				}
@@ -565,5 +567,7 @@ public class PCPanel extends JPanel {
 				repaint();
 			}
 	 }
+	 
+	 
 	 
 }

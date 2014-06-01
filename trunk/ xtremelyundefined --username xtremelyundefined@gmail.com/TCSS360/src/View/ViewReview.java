@@ -37,6 +37,7 @@ public class ViewReview extends JFrame{
 			}
 			
 		});
+		panel.add(ok);
 		add(panel);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);

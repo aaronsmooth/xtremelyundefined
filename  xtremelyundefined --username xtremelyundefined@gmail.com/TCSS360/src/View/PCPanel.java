@@ -7,6 +7,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -15,13 +22,18 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.AbstractBorder;
 
+import Model.Approval;
 import Model.Conference;
 import Model.ManagementSystem;
+import Model.Paper;
+import Model.User;
 
 
 public class PCPanel extends JPanel {
 	
 	private String Author;// = "JOE SCHMOE";
+	
+	private Paper currentPaper;
 	
 	private ManagementSystem mySystem;
 	
@@ -29,6 +41,14 @@ public class PCPanel extends JPanel {
 	 * Constructor.
 	 */
 	public PCPanel(ManagementSystem theSystem){
+		User usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
+		User usr2 = new User(56, "jon", "doe", "doe@gmail.com");
+		Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath");
+		Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath");
+		//Conference conf = theSystem.getConference();
+		boolean state = theSystem.getConference().submitPaper(ppr);
+		//theSystem.addConference(conf);
+		
 		mySystem = theSystem;
 		setLayout(new BorderLayout());
 		AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
@@ -268,8 +288,11 @@ public class PCPanel extends JPanel {
 	 * @param p a panel where the manuscript will be attached.
 	 */
 	 public void attachManuscripts(AbstractBorder brdr, JPanel p){
-		 for(int i = 0; i < 8; i++){
-			    JLabel Topic1 = new JLabel("New Scientific Frontier" + i);
+		 List<Paper> myPapers = (this.mySystem.getConference()).getAllPapers();
+		 Iterator<Paper> myIt = myPapers.iterator(); 
+		 for(int i = 0; myIt.hasNext(); i++){
+			 	currentPaper = myIt.next();
+			    JLabel Topic1 = new JLabel(currentPaper.getTitle());
 			    GridBagConstraints gridTopic1 = new GridBagConstraints();
 			    gridTopic1.insets = new Insets(0, 0, 5, 5);
 			    gridTopic1.gridx = 0;
@@ -284,27 +307,36 @@ public class PCPanel extends JPanel {
 			    p.add(Date1, gridDate1);
 			    
 			    JLabel SPC1;
-			    if(i % 2 == 0) {
-			     SPC1= new JLabel("Michelle Yang" + i);
-			     } else{
-			    SPC1 = new JLabel(" ");
-			    SPC1.setIcon(new ImageIcon("src/supportingFiles/spc.png"));
-			    SPC1.setBorder(brdr);
-			    SPC1.setHorizontalAlignment(SwingConstants.CENTER);
-			    //topPanel.setOpaque(false);
+			    if(Objects.nonNull(currentPaper.getSPC())) {
+			    	SPC1= new JLabel(currentPaper.getSPC().getName());
+			    } else {
+				    SPC1 = new JLabel(" ");
+				    SPC1.setIcon(new ImageIcon("src/supportingFiles/spc.png"));
+				    SPC1.setBorder(brdr);
+				    SPC1.setHorizontalAlignment(SwingConstants.CENTER);
+				    //topPanel.setOpaque(false);
 			    }
 			    GridBagConstraints gridSPC1 = new GridBagConstraints();
 			    gridSPC1.insets = new Insets(0, 0, 5, 5);
 			    gridSPC1.gridx = 2;
 			    gridSPC1.gridy = i+2;
+			    SPC1.addMouseListener(new SPCPick());
 			    p.add(SPC1, gridSPC1);
 			    
 			    JLabel Reviewer1;
-			    if(i %2 != 0){
-			       Reviewer1 = new JLabel(" ---------- ");
+			    Set<User> rev = currentPaper.getReviewers();
+			    if (rev.size() == 0) {
+				    Reviewer1 = new JLabel(" ---------- ");
+				    
 			    } else {
-			    	Reviewer1 = new JLabel(" Mark" + i);
-			    }
+			    	Iterator<User> myRevIt = rev.iterator();
+			    	String reviewerNames = myRevIt.next().getName();
+			    	while (myRevIt.hasNext()) {
+			    		reviewerNames += ", ";
+			    		reviewerNames += myRevIt.next().getName();
+			    	}
+				    Reviewer1 = new JLabel(reviewerNames);
+				}
 			    //Edit1.setIcon(new ImageIcon("src/edit.png"));
 			    GridBagConstraints gridReviewer1 = new GridBagConstraints();
 			    gridReviewer1.insets = new Insets(0, 0, 5, 5);
@@ -312,8 +344,9 @@ public class PCPanel extends JPanel {
 			    gridReviewer1.gridy = i+2;
 			    p.add(Reviewer1, gridReviewer1);
 			    
+			    
 			    JLabel Recommend1;
-			    if(i %2 != 0){
+			    if(Objects.isNull(currentPaper.getRationale())){
 			       Recommend1 = new JLabel(" ---------- ");
 			    } else {
 			    	Recommend1 = new JLabel(" ");
@@ -328,26 +361,23 @@ public class PCPanel extends JPanel {
 			    gridRecommend1.gridy = i+2;
 			    p.add(Recommend1, gridRecommend1);
 			    
-			    JLabel Status1;
-			    if(i % 2 == 0){
-			    	Status1= new JLabel(" ");
-			    	if(i == 0 || i == 4){
-			    		if(i == 0){
-			    	       Status1.setIcon(new ImageIcon("src/supportingFiles/reject.png"));
-			    		}else {
-			    		   Status1.setIcon(new ImageIcon("src/supportingFiles/approve.png"));
-			    		}
-			    	} else{
+			    JLabel Status1 = new JLabel(" ");
+			    Approval status = currentPaper.getAcceptanceStatus();
+			    switch(status) {
+			    case YES:
+			    	Status1.setIcon(new ImageIcon("src/supportingFiles/approve.png"));
+			    case NO:
+			    	Status1.setIcon(new ImageIcon("src/supportingFiles/reject.png"));
+			    default:
 			    	Status1.setIcon(new ImageIcon("src/supportingFiles/decide.png"));
-			    	Status1.setBorder(brdr);
-			    	Status1.setHorizontalAlignment(SwingConstants.CENTER);
-			    	}
-			    }else{
-			    Status1= new JLabel(" ---------- ");
+			    }
+		    	Status1.setBorder(brdr);
+		    	Status1.setHorizontalAlignment(SwingConstants.CENTER);
+
+			    //Status1= new JLabel(" ---------- ");
 			    //Status1.setIcon(new ImageIcon("src/supporingFiles/decide.png"));
 				//Status1.setBorder(brdr);
 				//Status1.setHorizontalAlignment(SwingConstants.CENTER);
-			    }
 			    GridBagConstraints gridRemove1 = new GridBagConstraints();
 			    gridRemove1.insets = new Insets(0, 0, 5, 5);
 			    gridRemove1.gridx = 5;
@@ -355,4 +385,14 @@ public class PCPanel extends JPanel {
 			    p.add(Status1, gridRemove1);
 			    }
 	 }
+	 private class SPCPick extends MouseAdapter {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				User selected = new User(0, "", "", "");
+				SelectBox myBox = new SelectBox(mySystem.getConference().getSPCs(), "SPC", selected);
+				currentPaper.setSPC(selected);
+			}
+
+	    };
 }

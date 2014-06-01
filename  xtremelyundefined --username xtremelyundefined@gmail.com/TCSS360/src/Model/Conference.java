@@ -316,7 +316,7 @@ public class Conference extends Observable implements Serializable{
 	
 	public boolean hasUser(User usr){
 		if (usr == null) return false;
-		else return usr.getEmail() == this.pc.getEmail() || getReviewers().contains(usr) || getSPCs().contains(usr);
+		else return usr.equals(this.pc) || getReviewers().contains(usr) || getSPCs().contains(usr);
 	}
 	
 	public List<String> getRoles(User usr) {
@@ -324,8 +324,12 @@ public class Conference extends Observable implements Serializable{
 		
 		if (getReviewers().contains(usr)) ret.add("Reviewer");
 		if (getSPCs().contains(usr)) ret.add("SubProgram Chair");
-		if (usr.getEmail() == this.pc.getEmail()) ret.add("Program Chair");
+		if (usr.equals(this.pc)) ret.add("Program Chair");
 		
 		return ret;
+	}
+	
+	public List<Paper> getAllPapers() {
+		return this.papers;
 	}
 }

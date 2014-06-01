@@ -19,11 +19,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import Model.User;
+
 @SuppressWarnings("serial")
-public class SelectBox<T> extends JFrame {
+public class SelectBox extends JFrame {
 	
-	private JComboBox<String> choice;
+	private JComboBox<User> choice;
 	private String type;
+	private User selected;
 	
 	/**
 	 * Creates a window that includes a dropdown box made from 
@@ -32,9 +35,10 @@ public class SelectBox<T> extends JFrame {
 	 * @param objs List of objects for the combo box
 	 * @param name name of thing being chosen 
 	 */
-	public SelectBox (List<T> objs, String name) {
+	public SelectBox (List<User> objs, String name, User selected) {
 		super();
-		type = objs.get(0).getClass().toString();
+		this.selected = selected;
+		type = name;
 		setTitle("Make a Selection");
 		add(createPanel(objs, name));
 		setLocationRelativeTo(null); //put in middle of screen
@@ -44,7 +48,7 @@ public class SelectBox<T> extends JFrame {
 		setVisible(true);
 	}
 
-	private JPanel createPanel(List<T> objs, String name) {
+	private JPanel createPanel(List<User> objs, String name) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		
@@ -53,7 +57,7 @@ public class SelectBox<T> extends JFrame {
 		panel.add(nPanel, BorderLayout.NORTH);
 		
 		JPanel cPanel = new JPanel(new FlowLayout());	
-		choice = (createSelectOptions(objs));
+		choice = new JComboBox<User>(createSelectOptions(objs));
 		cPanel.add(choice);
 		panel.add(cPanel);
 		
@@ -71,11 +75,9 @@ public class SelectBox<T> extends JFrame {
 		return panel;
 	}
 
-	private JComboBox<String> createSelectOptions(List<T> list){
-		JComboBox<String> options = new JComboBox<String>();
-		for (int i = list.size() - 1; i >= 0 ; i--) { //for alphabetical order
-			options.addItem(list.get(i).toString());
-		}
+	private User[] createSelectOptions(List<User> list){
+		User[] options = new User[list.size()];
+		list.toArray(options);
 		return options ;
 	}
 
@@ -86,7 +88,8 @@ public class SelectBox<T> extends JFrame {
 				JButton src = (JButton) e.getSource();
 				Window frm = SwingUtilities.windowForComponent(src);
 				if (src.getText().equals("Submit")) {
-					firePropertyChange(type, null, choice.getSelectedItem());
+					selected = (User) choice.getSelectedItem();
+					//firePropertyChange(type, null, choice.getSelectedItem());
 				}			
 				frm.dispose();
 			}

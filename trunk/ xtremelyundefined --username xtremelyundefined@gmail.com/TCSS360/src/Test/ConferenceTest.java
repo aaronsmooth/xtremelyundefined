@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -14,6 +13,14 @@ import org.junit.rules.ExpectedException;
 import Model.Conference;
 import Model.Paper;
 import Model.User;
+
+/**
+ * This class tests method functionality of the Conference.java class.
+ * 
+ * @author TeamUndefined
+ * @version 6/1/2014
+ *
+ */
 
 public class ConferenceTest  {
 

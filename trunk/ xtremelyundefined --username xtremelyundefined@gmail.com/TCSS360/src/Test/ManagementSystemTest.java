@@ -12,6 +12,14 @@ import Model.ManagementSystem;
 import Model.Paper;
 import Model.User;
 
+/**
+ * This class tests method functionality of the ManagementSystem.java class.
+ * 
+ * @author TeamUndefined
+ * @version 6/1/2014
+ *
+ */
+
 public class ManagementSystemTest {
 	User usr, usr2, usr3;
 	Paper ppr, ppr2;

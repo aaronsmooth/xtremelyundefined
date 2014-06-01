@@ -11,6 +11,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -24,7 +26,8 @@ import Model.Paper;
 import Model.Review;
 import Model.User;
 
-public class ReviewerPanel extends JPanel {
+public class ReviewerPanel extends JPanel{
+	
 	private String Author;// = "JOE SCHMOE";
 	
 	private ManagementSystem mySystem;
@@ -276,7 +279,8 @@ public class ReviewerPanel extends JPanel {
 		    gridReview1.gridx = 2;
 		    gridReview1.gridy = i+2;
 		    Review1.addMouseListener(new SubmitListen());
-		    panelManuscript.add(Review1, gridReview1);
+		    if (!currentPaper.hasReviewerCompletedReview(mySystem.getCurrentUser()))
+		    	panelManuscript.add(Review1, gridReview1);
 		    
 		    JLabel Edit1 = new JLabel(" ");
 		    Edit1.setIcon(new ImageIcon("src/supportingFiles/edit.png"));
@@ -299,8 +303,11 @@ public class ReviewerPanel extends JPanel {
 	}
 	private class SubmitListen extends MouseAdapter {
 		public void mouseClicked(MouseEvent arg0) {
-			new SubmitReview(currentPaper, mySystem.getCurrentUser());
-		}
+			
+			SubmitReview mySR =	new SubmitReview(currentPaper, mySystem.getCurrentUser());
+			mySR.addPropertyChangeListener(mySystem);	
+		}	
 	}
+
 }
 

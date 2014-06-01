@@ -36,7 +36,8 @@ public class MainFrame extends JFrame implements Observer, PropertyChangeListene
 
 	@Override
 	public void update(Observable o, Object arg) {
-		
+		this.validate();
+		//display.setVisible(false);
 	}
 
 	@Override

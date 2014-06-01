@@ -7,6 +7,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -15,24 +19,43 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.AbstractBorder;
 
+import Model.ManagementSystem;
+import Model.Paper;
+import Model.Review;
+import Model.User;
+
 public class ReviewerPanel extends JPanel {
 	private String Author = "JOE SCHMOE";
+	
+	private ManagementSystem mySystem;
+	
+	private Paper currentPaper;
 	
 	/**
 	 * Constructor.
 	 */
-	public ReviewerPanel(){
-	setLayout(new BorderLayout());
-	AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
-	
-	JPanel topPanel, bottomPanel, midPanel;
-	
-	topPanel = topPanel(brdr, Author);
-    bottomPanel = bottomPanel(brdr, manuscript(brdr));
-    midPanel = midPanel(brdr, "Conference Name", bottomPanel);
-	
-	add(topPanel, BorderLayout.NORTH);
-	add(midPanel, BorderLayout.CENTER);
+	public ReviewerPanel(ManagementSystem theSystem){
+		
+		User usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
+		User usr2 = new User(56, "jon", "doe", "doe@gmail.com");
+		Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath");
+		Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath");
+		//Conference conf = theSystem.getConference();
+		boolean state = theSystem.getConference().submitPaper(ppr);
+		//theSystem.addConference(conf);
+		
+		mySystem = theSystem;
+		setLayout(new BorderLayout());
+		AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
+		
+		JPanel topPanel, bottomPanel, midPanel;
+		
+		topPanel = topPanel(brdr, Author);
+	    bottomPanel = bottomPanel(brdr, manuscript(brdr));
+	    midPanel = midPanel(brdr, "Conference Name", bottomPanel);
+		
+		add(topPanel, BorderLayout.NORTH);
+		add(midPanel, BorderLayout.CENTER);
 	}
 	
 	/**
@@ -222,48 +245,57 @@ public class ReviewerPanel extends JPanel {
 	    panelManuscript.add(separator, gbc_separator);
 		
 	    // List of Papers
-	    for(int i = 0; i < 4; i++){
-	    JLabel Topic1 = new JLabel("New Scientific Frontier" + i);
-	    GridBagConstraints gridTopic1 = new GridBagConstraints();
-	    gridTopic1.insets = new Insets(0, 0, 5, 5);
-	    gridTopic1.gridx = 0;
-	    gridTopic1.gridy = i+2;
-	    panelManuscript.add(Topic1, gridTopic1);
-	    
-	    JLabel Date1 = new JLabel("12/15/201"+i);
-	    GridBagConstraints gridDate1 = new GridBagConstraints();
-	    gridDate1.insets = new Insets(0, 0, 5, 5);
-	    gridDate1.gridx = 1;
-	    gridDate1.gridy = i+2;
-	    panelManuscript.add(Date1, gridDate1);
-	    
-	    JLabel Review1 = new JLabel(" ");
-	    Review1.setIcon(new ImageIcon("src/supportingFiles/review.png"));
-	    Review1.setBorder(brdr);
-	    GridBagConstraints gridReview1 = new GridBagConstraints();
-	    gridReview1.insets = new Insets(0, 0, 5, 5);
-	    gridReview1.gridx = 2;
-	    gridReview1.gridy = i+2;
-	    panelManuscript.add(Review1, gridReview1);
-	    
-	    JLabel Edit1 = new JLabel(" ");
-	    Edit1.setIcon(new ImageIcon("src/supportingFiles/edit.png"));
-	    Edit1.setBorder(brdr);
-	    GridBagConstraints gridEdit1 = new GridBagConstraints();
-	    gridEdit1.insets = new Insets(0, 0, 5, 5);
-	    gridEdit1.gridx = 3;
-	    gridEdit1.gridy = i+2;
-	    panelManuscript.add(Edit1, gridEdit1);
-	    
-	    JLabel Remove1 = new JLabel("12/15/201"+i);
-	    GridBagConstraints gridRemove1 = new GridBagConstraints();
-	    gridRemove1.insets = new Insets(0, 0, 5, 5);
-	    gridRemove1.gridx = 4;
-	    gridRemove1.gridy = i+2;
-	    panelManuscript.add(Remove1, gridRemove1);
+	    List<Paper> myPapers = (this.mySystem.getConference()).getAuthored(mySystem.getCurrentUser());
+		Iterator<Paper> myIt = myPapers.iterator();
+	    for(int i = 0; myIt.hasNext(); i++){
+	    	currentPaper = myIt.next();
+		    JLabel Topic1 = new JLabel(currentPaper.getTitle());
+		    GridBagConstraints gridTopic1 = new GridBagConstraints();
+		    gridTopic1.insets = new Insets(0, 0, 5, 5);
+		    gridTopic1.gridx = 0;
+		    gridTopic1.gridy = i+2;
+		    panelManuscript.add(Topic1, gridTopic1);
+		    
+		    JLabel Date1 = new JLabel("12/15/201"+i);
+		    GridBagConstraints gridDate1 = new GridBagConstraints();
+		    gridDate1.insets = new Insets(0, 0, 5, 5);
+		    gridDate1.gridx = 1;
+		    gridDate1.gridy = i+2;
+		    panelManuscript.add(Date1, gridDate1);
+		    
+		    JLabel Review1 = new JLabel(" ");
+		    Review1.setIcon(new ImageIcon("src/supportingFiles/review.png"));
+		    Review1.setBorder(brdr);
+		    GridBagConstraints gridReview1 = new GridBagConstraints();
+		    gridReview1.insets = new Insets(0, 0, 5, 5);
+		    gridReview1.gridx = 2;
+		    gridReview1.gridy = i+2;
+		    Review1.addMouseListener(new SubmitListen());
+		    panelManuscript.add(Review1, gridReview1);
+		    
+		    JLabel Edit1 = new JLabel(" ");
+		    Edit1.setIcon(new ImageIcon("src/supportingFiles/edit.png"));
+		    Edit1.setBorder(brdr);
+		    GridBagConstraints gridEdit1 = new GridBagConstraints();
+		    gridEdit1.insets = new Insets(0, 0, 5, 5);
+		    gridEdit1.gridx = 3;
+		    gridEdit1.gridy = i+2;
+		    panelManuscript.add(Edit1, gridEdit1);
+		    
+		    JLabel Remove1 = new JLabel("12/15/201"+i);
+		    GridBagConstraints gridRemove1 = new GridBagConstraints();
+		    gridRemove1.insets = new Insets(0, 0, 5, 5);
+		    gridRemove1.gridx = 4;
+		    gridRemove1.gridy = i+2;
+		    panelManuscript.add(Remove1, gridRemove1);
 	    }
 	    
 	    return panelManuscript;
+	}
+	private class SubmitListen extends MouseAdapter {
+		public void mouseClicked(MouseEvent arg0) {
+			new SubmitReview(currentPaper, mySystem.getCurrentUser());
+		}
 	}
 }
 

@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -38,7 +39,8 @@ public class SubmitReview extends JFrame {
 	
 	private Paper paper;
 	private User currentUser;
-	private List<ButtonGroup> btngroups;
+	private List<JRadioButton> radiobuttons;
+	private List<ButtonGroup> btngrps;
 	private List<JTextArea> comments;
 	
 	
@@ -58,7 +60,8 @@ public class SubmitReview extends JFrame {
 		super();
 		paper = thepaper;
 		currentUser = theuser;
-		btngroups = new ArrayList<ButtonGroup>();
+		radiobuttons = new ArrayList<JRadioButton>();
+		btngrps = new ArrayList<ButtonGroup>();
 		comments = new ArrayList<JTextArea>();
 		JOptionPane.showMessageDialog(null, instructions);
 		initializePrompts();
@@ -197,11 +200,14 @@ public class SubmitReview extends JFrame {
 				c.gridwidth = 1;
 				c.weightx = .2;
 				JRadioButton btn = new JRadioButton(j + "");
+				btn.setActionCommand(btn.getText());
 				++c.gridx;
 				panel.add(btn, c);
-				btng.add(btn);	
+				btng.add(btn);
+				radiobuttons.add(btn);
 			}
-			btngroups.add(btng);
+			btngrps.add(btng);
+			
 
 			++c.gridy;
 			c.gridx = 1;
@@ -248,11 +254,14 @@ public class SubmitReview extends JFrame {
 			c.gridwidth = 1;
 			c.weightx = .2;
 			JRadioButton btn = new JRadioButton(j + " " +prompts[startingprompt++]);
+			btn.setActionCommand(j + "");
 			++c.gridx;
 			panel.add(btn, c);
 			btng.add(btn);	
+			radiobuttons.add(btn);
 		}
-		btngroups.add(btng);
+		btngrps.add(btng);
+
 		
 		c.gridx = 0;
 		c.gridwidth = 6;
@@ -285,11 +294,14 @@ public class SubmitReview extends JFrame {
 			c.gridwidth = 1;
 			c.weightx = .2;
 			JRadioButton btn = new JRadioButton(j + " " +prompts[startingprompt++]);
+			btn.setActionCommand(j + "");
 			++c.gridx;
 			panel.add(btn, c);
-			btng.add(btn);	
+			btng.add(btn);
+			radiobuttons.add(btn);
 		}
-		btngroups.add(btng);
+		btngrps.add(btng);
+	
 		
 		c.gridx = 0;
 		c.gridwidth = 6;
@@ -315,11 +327,14 @@ public class SubmitReview extends JFrame {
 			c.gridwidth = 1;
 			c.weightx = .2;
 			JRadioButton btn = new JRadioButton(j + " " +prompts[startingprompt++]);
+			btn.setActionCommand(j + "");
 			++c.gridx;
 			panel.add(btn, c);
 			btng.add(btn);	
+			radiobuttons.add(btn);
 		}
-		btngroups.add(btng);
+		btngrps.add(btng);
+	
 		
 		c.gridx = 0;
 		++c.gridy;
@@ -368,8 +383,7 @@ public class SubmitReview extends JFrame {
 			int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to submit your review?", 
 					"Confirm Submission", JOptionPane.OK_CANCEL_OPTION);
 			if (confirm == 0) {
-				for (ButtonGroup bg : btngroups) {
-
+				for (ButtonGroup bg : btngrps) {
 					if (bg.getSelection() == null) {
 						allChosen = false;
 					} 
@@ -387,9 +401,12 @@ public class SubmitReview extends JFrame {
 					List<Integer> scores = new ArrayList<Integer>();
 					List<String> author = new ArrayList<String>();
 
-					for (ButtonGroup bg : btngroups) {
-						scores.add( Integer.valueOf(bg.getSelection().getActionCommand()));
+					for (JRadioButton btn : radiobuttons) {
+						if (btn.isSelected()) {
+							scores.add(Integer.valueOf(btn.getActionCommand()));
+						}
 					}
+					
 					String spcOnly = comments.get(0).getText();
 					for (int i = 1; i < comments.size(); i++) {
 						author.add(comments.get(i).getText());

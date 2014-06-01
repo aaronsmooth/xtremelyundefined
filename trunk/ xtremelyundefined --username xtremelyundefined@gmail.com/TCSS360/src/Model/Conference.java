@@ -321,10 +321,11 @@ public class Conference extends Observable implements Serializable{
 	
 	public List<String> getRoles(User usr) {
 		List<String> ret = new ArrayList<String>();
-		
-		if (getReviewers().contains(usr)) ret.add("Reviewer");
-		if (getSPCs().contains(usr)) ret.add("SubProgram Chair");
-		if (usr.equals(this.pc)) ret.add("Program Chair");
+		if (usr != null) {
+			if (getReviewers().contains(usr)) ret.add("Reviewer");
+			if (getSPCs().contains(usr)) ret.add("SubProgram Chair");
+			if (usr.equals(this.pc)) ret.add("Program Chair");
+		}
 		
 		return ret;
 	}

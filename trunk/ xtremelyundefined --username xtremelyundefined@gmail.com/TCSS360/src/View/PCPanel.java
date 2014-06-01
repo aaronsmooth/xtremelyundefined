@@ -41,12 +41,12 @@ public class PCPanel extends JPanel {
 	 * Constructor.
 	 */
 	public PCPanel(ManagementSystem theSystem){
-		User usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
-		User usr2 = new User(56, "jon", "doe", "doe@gmail.com");
-		Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath");
-		Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath");
+		//User usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
+		//User usr2 = new User(56, "jon", "doe", "doe@gmail.com");
+		//Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath");
+		//Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath");
 		//Conference conf = theSystem.getConference();
-		boolean state = theSystem.getConference().submitPaper(ppr);
+		//boolean state = theSystem.getConference().submitPaper(ppr);
 		//theSystem.addConference(conf);
 		
 		mySystem = theSystem;
@@ -393,6 +393,5 @@ public class PCPanel extends JPanel {
 				SelectBox myBox = new SelectBox(mySystem.getConference().getSPCs(), "SPC", selected);
 				currentPaper.setSPC(selected);
 			}
-
-	    };
+	 }
 }

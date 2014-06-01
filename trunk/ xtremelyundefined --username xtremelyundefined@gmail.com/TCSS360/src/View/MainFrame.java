@@ -15,7 +15,7 @@ import Model.ManagementSystem;
 import Model.User;
 
 @SuppressWarnings("serial")
-public class MainFrame extends JFrame implements Observer{
+public class MainFrame extends JFrame implements Observer, Runnable{
 	
 	protected JPanel display;
 	protected ManagementSystem system;
@@ -26,7 +26,8 @@ public class MainFrame extends JFrame implements Observer{
 		setSize(1200,800); // setting the window size as permanent.
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width/2 - 1200/2, dim.height/2 - 800/2); // center the window frame.
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.addWindowListener(new MainFrameListener());
 		display = new LoginPanel(system);
 		display.addPropertyChangeListener(system);
 		this.add(display);
@@ -56,6 +57,11 @@ public class MainFrame extends JFrame implements Observer{
 		
 		validate();
 		
+	}
+
+	@Override
+	public void run() {
+        system.addObserver(this);   
 	}
 	
 	

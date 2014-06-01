@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,8 +8,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class Paper {
+public class Paper implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7053416395295120578L;
+
 	/**
 	 * The local filepath of the file.
 	 */

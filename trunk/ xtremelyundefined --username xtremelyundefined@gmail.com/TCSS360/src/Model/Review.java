@@ -1,10 +1,16 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Review {
+public class Review implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7055683803564457286L;
+
 	/**
 	 * Array of integers representing the scores given 
 	 * by the reviewer

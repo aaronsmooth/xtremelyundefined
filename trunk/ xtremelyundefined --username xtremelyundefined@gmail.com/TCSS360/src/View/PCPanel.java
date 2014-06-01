@@ -30,6 +30,7 @@ import Model.Paper;
 import Model.User;
 
 
+@SuppressWarnings("serial")
 public class PCPanel extends JPanel {
 	
 	private String Author;
@@ -109,7 +110,7 @@ public class PCPanel extends JPanel {
 		
 		JLabel logout = new JLabel("Logout");
 		logout.setBorder(brdr);
-		logout.addMouseListener(new PCPick(logout));
+		//logout.addMouseListener(new PCPick(logout));
 		JPanel logPanel = new JPanel();
 		logPanel.setLayout(new GridLayout(1,6));
 		for(int i =1; i < 6; i++){
@@ -340,7 +341,7 @@ public class PCPanel extends JPanel {
 	}
 	
 	/**
-	 * Creates a display panel for all the manuscripst in the conference
+	 * Creates a display panel for all the manuscripts in the conference
 	 * @param brdr necessary border style for 
 	 * @return
 	 */
@@ -447,11 +448,11 @@ public class PCPanel extends JPanel {
 			    gridDate1.gridy = i+2;
 			    p.add(Date1, gridDate1);
 			    
-			    JLabel SPC1;
+			    PanelLabel SPC1;
 			    if(currentPaper.getSPC() != null) {
-			    	SPC1= new JLabel(currentPaper.getSPC().getName());
+			    	SPC1= new PanelLabel(currentPaper.getSPC().getName(), currentPaper);
 			    } else {
-				    SPC1 = new JLabel(" ");
+				    SPC1 = new PanelLabel(" ", currentPaper);
 				    SPC1.setIcon(new ImageIcon("src/supportingFiles/spc.png"));
 				    SPC1.setBorder(brdr);
 				    SPC1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -484,11 +485,11 @@ public class PCPanel extends JPanel {
 			    p.add(Reviewer1, gridReviewer1);
 			    
 			    
-			    JLabel Recommend1;
+			    PanelLabel Recommend1;
 			    if(currentPaper.getRationale() == null){
-			       Recommend1 = new JLabel(" ---------- ");
+			       Recommend1 = new PanelLabel(" ---------- ", currentPaper);
 			    } else {
-			    	Recommend1 = new JLabel(" ");
+			    	Recommend1 = new PanelLabel(" ", currentPaper);
 			    	Recommend1.setIcon(new ImageIcon("src/supportingFiles/recd.png"));
 			    	Recommend1.setBorder(brdr);
 			    	Recommend1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -501,7 +502,7 @@ public class PCPanel extends JPanel {
 			    gridRecommend1.gridy = i+2;
 			    p.add(Recommend1, gridRecommend1);
 			    
-			    JLabel Status1 = new JLabel(" ");
+			    PanelLabel Status1 = new PanelLabel(" ", currentPaper);
 			    Approval status = currentPaper.getAcceptanceStatus();
 			    switch(status) {
 			    case YES:
@@ -527,7 +528,7 @@ public class PCPanel extends JPanel {
 	 private class PCPick extends MouseAdapter {
             private JLabel label;
             
-            public PCPick(JLabel label){
+            public PCPick(PanelLabel label){
             	this.label = label;
             }
             
@@ -537,7 +538,8 @@ public class PCPanel extends JPanel {
 					//display = new LoginPanel(mySystem);
 				} else {
 				User selected = new User(0, "", "", "");
-				SelectBox myBox = new SelectBox(mySystem.getConference().getSPCs(), "SPC", currentPaper);
+				SelectBox myBox = new SelectBox(mySystem.getConference().getSPCs(), 
+						"SPC", ((PanelLabel) arg0.getSource()).getPaper());
 				myBox.addPropertyChangeListener(mySystem);
 				currentPaper.setSPC(selected);
 				}
@@ -567,7 +569,5 @@ public class PCPanel extends JPanel {
 				repaint();
 			}
 	 }
-	 
-	 
 	 
 }

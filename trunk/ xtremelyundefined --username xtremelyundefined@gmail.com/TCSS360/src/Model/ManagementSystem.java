@@ -2,6 +2,9 @@ package Model;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +18,8 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 	 * serialVersionID for unique serialization
 	 */
 	private static final long serialVersionUID = 3328234716102456578L;
+	
+	public static final String FILE = "src/supportingFiles/managementsystem.ser";
 	
 	/**
 	 * List of all users available.
@@ -181,4 +186,15 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 	public User getCurrentUser() {
 		return currentUser;
 	}
+	
+    public void serialize() {
+    	try{
+    		FileOutputStream  out = new FileOutputStream(FILE);
+    		ObjectOutputStream obj = new ObjectOutputStream(out);
+    		obj.writeObject(this);
+    		obj.close();
+    	} catch (IOException e) {
+    		System.out.println(e);
+    	}
+    }
 }

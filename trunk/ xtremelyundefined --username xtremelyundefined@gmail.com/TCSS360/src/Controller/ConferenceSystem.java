@@ -27,30 +27,40 @@ import View.SelectBox;
 import View.SubmitRecommendation;
 import View.SubmitReview;
 
-public class ConferenceSystem {
+public class ConferenceSystem implements Runnable{
         
         public static final String FILE = "src/supportingFiles/managementsystem.ser";
         
         public static void main(String[] args) {
                 
-                ManagementSystem system = new ManagementSystem();
-                Path src = FileSystems.getDefault().getPath(FILE);      
-
-                try{
-                        FileInputStream  in = new FileInputStream(FILE);
-                        ObjectInputStream obj = new ObjectInputStream(in);
-                        system = (ManagementSystem) obj.readObject();
-                        obj.close();
-                } catch (IOException | ClassNotFoundException e) {
-                        System.out.println(e);
-                }
-                startGUI(system);
-                
+                ManagementSystem system = deSeriealize();
+                Thread thd = new Thread(new MainFrame(system));
+                thd.start();   
         }
         
-        public static void startGUI(ManagementSystem system) {
-            MainFrame window = new MainFrame(system);
-            system.addObserver(window);           
-                
+    
+        
+        public static ManagementSystem deSeriealize() {
+        	ManagementSystem system = null;
+
+        	try{
+        		FileInputStream  in = new FileInputStream(FILE);
+        		ObjectInputStream obj = new ObjectInputStream(in);
+        		system = (ManagementSystem) obj.readObject();
+        		obj.close();
+        	} catch (IOException | ClassNotFoundException e) {
+        		System.out.println(e);
+        	}
+        	return system;
         }
+        
+    
+
+
+
+		@Override
+		public void run() {
+			new Thread(new ConferenceSystem()).start();
+	
+		}
  }

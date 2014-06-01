@@ -158,8 +158,8 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 	}
 
 	/**
-	 * Listens for a property change on the current user and/or the
-	 * current conference. Updates observers when these values change.
+	 * Listens for a property change and then notifies the GUI 
+	 * of the appropriate panels to show
 	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
@@ -171,6 +171,10 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 			((Paper) evt.getOldValue()).setSPC((User) evt.getNewValue());
 			setChanged();
 			notifyObservers("Program Chair");
+		}
+		if (evt.getPropertyName().equals("login")) {
+			setChanged();
+			notifyObservers("login");
 		}
 		
 	}

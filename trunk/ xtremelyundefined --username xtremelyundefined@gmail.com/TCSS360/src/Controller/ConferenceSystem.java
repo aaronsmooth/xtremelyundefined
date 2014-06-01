@@ -38,7 +38,6 @@ public class ConferenceSystem implements Runnable{
                 thd.start();   
         }
         
-    
         
         public static ManagementSystem deSeriealize() {
         	ManagementSystem system = null;
@@ -54,9 +53,6 @@ public class ConferenceSystem implements Runnable{
         	return system;
         }
         
-    
-
-
 
 		@Override
 		public void run() {

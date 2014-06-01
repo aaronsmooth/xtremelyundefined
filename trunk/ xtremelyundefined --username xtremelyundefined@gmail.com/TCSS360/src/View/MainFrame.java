@@ -57,6 +57,7 @@ public class MainFrame extends JFrame implements Observer, Runnable{
 		} else if (arg.equals("login")){
 			display.setVisible(false);
 			display = new LoginPanel(system);
+			display.addPropertyChangeListener(system);
 			add(display);
 		}
 		

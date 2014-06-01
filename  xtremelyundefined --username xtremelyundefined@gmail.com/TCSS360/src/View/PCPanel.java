@@ -37,19 +37,42 @@ public class PCPanel extends JPanel {
 	
 	private ManagementSystem mySystem;
 	
+	private List<Paper> myPapers; 
+	
+	private int start;
+	
+	private int end;
+	
+	private int size;
+	
+	private boolean forward;
+	
+	private boolean backward;
+	
 	/**
 	 * Constructor.
 	 */
 	public PCPanel(ManagementSystem theSystem){
-		//User usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
-		//User usr2 = new User(56, "jon", "doe", "doe@gmail.com");
-		//Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath");
-		//Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath");
-		//Conference conf = theSystem.getConference();
-		//boolean state = theSystem.getConference().submitPaper(ppr);
-		//theSystem.addConference(conf);
+//		User usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
+//		User usr2 = new User(56, "jon", "doe", "doe@gmail.com");
+//		Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath");
+//		Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath");
+//		Conference conf = theSystem.getConference();
+//		boolean state = theSystem.getConference().submitPaper(ppr);
+//		theSystem.addConference(conf);
 		
 		mySystem = theSystem;
+		myPapers = (mySystem.getConference()).getAllPapers();
+		start = 0;
+		size = myPapers.size();
+		if (size > 8){
+			end = 8;
+			forward = true;
+		} else{
+			end = size;
+			forward = false;
+		}
+		
 		setLayout(new BorderLayout());
 		AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
 		
@@ -175,14 +198,111 @@ public class PCPanel extends JPanel {
 	    gbc_separator1.gridx = 0;
 	    gbc_separator1.gridy = 1;
 		
-	    JLabel prev = new JLabel(" ");
+	    final JLabel prev = new JLabel(" ");
 		prev.setIcon(new ImageIcon("src/supportingFiles/prev.png"));
 		prev.setBorder(brdr);
 		prev.setHorizontalAlignment(SwingConstants.CENTER);
-	    JLabel next = new JLabel(" ");
+		if(backward) {
+		prev.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				if(start - 8 > 8){
+					start -= 8;
+					backward = true;
+					
+					end = end -8;
+					forward = true;
+				} else {	
+					start = (start - 8);
+					backward = false;
+					
+					end = end - 8;
+					forward = true;
+				}
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
+				prev.setBorder(brdr);		
+				repaint();
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
+			    prev.setBorder(brdr);		
+				repaint();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub	
+			}
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub	
+			}
+			
+		});
+		} else {
+		 prev.setVisible(false);
+		}
+		
+	    final JLabel next = new JLabel(" ");
 	    next.setIcon(new ImageIcon("src/supportingFiles/next.png"));
 	    next.setBorder(brdr);
 		next.setHorizontalAlignment(SwingConstants.CENTER);
+		if(forward) {
+		next.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				start = end + 1;
+				backward = true;
+				
+				if(size - end > 8){
+					forward = true;
+					end +=8;
+				} else {
+					forward = false;
+					end += (size - end);
+				}
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
+				next.setBorder(brdr);		
+				repaint();
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
+			    next.setBorder(brdr);		
+				repaint();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub				
+			}
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub				
+			}
+			
+		});
+		} else {
+		 next.setVisible(false);
+		}
 	    
 		arrowPanel.add(separator1, gbc_separator1);
 		JPanel insideArrowPanel = new JPanel();
@@ -288,10 +408,9 @@ public class PCPanel extends JPanel {
 	 * @param p a panel where the manuscript will be attached.
 	 */
 	 public void attachManuscripts(AbstractBorder brdr, JPanel p){
-		 List<Paper> myPapers = (this.mySystem.getConference()).getAllPapers();
-		 Iterator<Paper> myIt = myPapers.iterator(); 
-		 for(int i = 0; myIt.hasNext(); i++){
-			 	currentPaper = myIt.next();
+		 //Iterator<Paper> myIt = myPapers.iterator(); 
+		 for(int i = start-1 ; i < end-1; i++){
+			 	currentPaper = myPapers.get(i);
 			    JLabel Topic1 = new JLabel(currentPaper.getTitle());
 			    GridBagConstraints gridTopic1 = new GridBagConstraints();
 			    gridTopic1.insets = new Insets(0, 0, 5, 5);
@@ -314,13 +433,12 @@ public class PCPanel extends JPanel {
 				    SPC1.setIcon(new ImageIcon("src/supportingFiles/spc.png"));
 				    SPC1.setBorder(brdr);
 				    SPC1.setHorizontalAlignment(SwingConstants.CENTER);
-				    //topPanel.setOpaque(false);
+				    SPC1.addMouseListener(new PCPick(SPC1));
 			    }
 			    GridBagConstraints gridSPC1 = new GridBagConstraints();
 			    gridSPC1.insets = new Insets(0, 0, 5, 5);
 			    gridSPC1.gridx = 2;
 			    gridSPC1.gridy = i+2;
-			    SPC1.addMouseListener(new SPCPick());
 			    p.add(SPC1, gridSPC1);
 			    
 			    JLabel Reviewer1;
@@ -337,7 +455,6 @@ public class PCPanel extends JPanel {
 			    	}
 				    Reviewer1 = new JLabel(reviewerNames);
 				}
-			    //Edit1.setIcon(new ImageIcon("src/edit.png"));
 			    GridBagConstraints gridReviewer1 = new GridBagConstraints();
 			    gridReviewer1.insets = new Insets(0, 0, 5, 5);
 			    gridReviewer1.gridx = 3;
@@ -353,6 +470,7 @@ public class PCPanel extends JPanel {
 			    	Recommend1.setIcon(new ImageIcon("src/supportingFiles/recd.png"));
 			    	Recommend1.setBorder(brdr);
 			    	Recommend1.setHorizontalAlignment(SwingConstants.CENTER);
+			    	Recommend1.addMouseListener(new PCPick(Recommend1));
 			    }
 			    
 			    GridBagConstraints gridRecommend1 = new GridBagConstraints();
@@ -370,6 +488,9 @@ public class PCPanel extends JPanel {
 			    	Status1.setIcon(new ImageIcon("src/supportingFiles/reject.png"));
 			    default:
 			    	Status1.setIcon(new ImageIcon("src/supportingFiles/decide.png"));
+			    	Status1.setBorder(brdr);
+				    Status1.setHorizontalAlignment(SwingConstants.CENTER);
+			    	Status1.addMouseListener(new PCPick(Status1));
 			    }
 		    	Status1.setBorder(brdr);
 		    	Status1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -385,13 +506,35 @@ public class PCPanel extends JPanel {
 			    p.add(Status1, gridRemove1);
 			    }
 	 }
-	 private class SPCPick extends MouseAdapter {
-
+	 private class PCPick extends MouseAdapter {
+            private JLabel label;
+            
+            public PCPick(JLabel label){
+            	this.label = label;
+            }
+            
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				User selected = new User(0, "", "", "");
 				SelectBox myBox = new SelectBox(mySystem.getConference().getSPCs(), "SPC", selected);
 				currentPaper.setSPC(selected);
 			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
+				label.setBorder(brdr);		
+				repaint();
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
+			    label.setBorder(brdr);		
+				repaint();
+			}
 	 }
+	 
 }

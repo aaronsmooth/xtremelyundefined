@@ -15,7 +15,7 @@ import Model.ManagementSystem;
 import Model.User;
 
 @SuppressWarnings("serial")
-public class MainFrame extends JFrame implements Observer, PropertyChangeListener{
+public class MainFrame extends JFrame implements Observer{
 	
 	protected JPanel display;
 	protected ManagementSystem system;
@@ -28,7 +28,7 @@ public class MainFrame extends JFrame implements Observer, PropertyChangeListene
 		setLocation(dim.width/2 - 1200/2, dim.height/2 - 800/2); // center the window frame.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		display = new LoginPanel(system);
-		display.addPropertyChangeListener(this);
+		display.addPropertyChangeListener(system);
 		this.add(display);
 		//pack(); //---> needs to be disable because I am not using a default layout manager.
 		setVisible(true);
@@ -36,32 +36,26 @@ public class MainFrame extends JFrame implements Observer, PropertyChangeListene
 
 	@Override
 	public void update(Observable o, Object arg) {
-		display.validate();
-		//display.setVisible(false);
-	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		
-		if (evt.getNewValue().toString().equals("Program Chair")){
+		if (arg.equals("Program Chair")){
 			display.setVisible(false);
 			display = new PCPanel(system);
 			add(display);
-		} else if (evt.getNewValue().toString().equals("Subprogram Chair")){
+		} else if (arg.equals("SubProgram Chair")){
 			display.setVisible(false);
 			display = new SPCPanel();
 			add(display);
-		} else if (evt.getNewValue().toString().equals("Reviewer")){
+		} else if (arg.equals("Reviewer")){
 			display.setVisible(false);
 			display = new ReviewerPanel(system);	
 			add(display);
-		} else if (evt.getNewValue().toString().equals("Author")) {
+		} else if (arg.equals("Author")) {
 			display.setVisible(false);
 			display = new AuthorPanel(system);
 			add(display);
 		}
 		
-		this.setVisible(true);
+		validate();
+		
 	}
 	
 	

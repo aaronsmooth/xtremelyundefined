@@ -91,7 +91,7 @@ public class SelectBox extends JFrame {
 				Window frm = SwingUtilities.windowForComponent(src);
 				if (src.getText().equals("Submit")) {
 					selected = (User) choice.getSelectedItem();
-					//firePropertyChange(type, null, choice.getSelectedItem());
+					firePropertyChange(type, selected, choice.getSelectedItem());
 				}			
 				frm.dispose();
 			}

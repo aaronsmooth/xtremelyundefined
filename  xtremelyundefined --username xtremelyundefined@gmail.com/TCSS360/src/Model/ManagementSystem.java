@@ -68,6 +68,15 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 		return null;
 	}
 	
+	public User getUser(String email) {
+		for (User u : users) {
+			if (u.getEmail().equalsIgnoreCase(email)) {
+				return u;
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * Determines if a given ID belongs to a user in the system
 	 * 
@@ -149,13 +158,16 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("user")) {
-			currentUser = getUser((int) evt.getNewValue());
-		} else if (evt.getPropertyName().equals("conference")) {
-			currentConference = getConference((String) evt.getNewValue());
+		System.out.println(evt.getSource());
+		if (evt.getPropertyName().equals("role")) {
+			setChanged();
+			notifyObservers(evt.getNewValue());
 		}
-		setChanged();
-		notifyObservers();
+		if (evt.getPropertyName().equals("SPC")) {
+			currentConference.addSPC(getUser((String) evt.getNewValue()));
+			setChanged();
+			notifyObservers("SubProgram Chair");
+		}
 		
 	}
 	

@@ -29,8 +29,6 @@ import Model.User;
 public class LoginPanel extends JPanel {
 
 	private ManagementSystem system;
-	private List<User> users;
-	private List<Conference> conferences;
 	private JTextField email;
 	private User currentUser;
 	private JComboBox<Conference> currentConference;
@@ -40,8 +38,6 @@ public class LoginPanel extends JPanel {
 		
 		JPanel loginpanel = new JPanel(), buttonPanel = new JPanel(), welcomePanel = new JPanel();	
 		this.system = system;
-		users = system.getUsers();
-		conferences = system.getConferences();
 		currentUser = null;
 		currentConference = new JComboBox<Conference>();
 		setLayout(null);
@@ -78,13 +74,9 @@ public class LoginPanel extends JPanel {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				for (User usr : users){
-					if (usr.getEmail().equalsIgnoreCase(email.getText())){
-						//System.out.println( ((JTextField) e.getSource()).getText().equalsIgnoreCase(usr.getEmail()));
-						currentUser = usr;
-					}
-				}
-				for (Conference cnf : conferences) {
+				currentUser = system.getUser(email.getText());
+				
+				for (Conference cnf : system.getConferences()) {
 					if (cnf.hasUser(currentUser)) {
 						currentConference.addItem(cnf);
 					}
@@ -121,7 +113,7 @@ public class LoginPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				system.setConference((Conference) currentConference.getSelectedItem());
 				system.setUser(currentUser);
-				firePropertyChange("user", null, role.getSelectedItem());
+				firePropertyChange("role", currentUser, role.getSelectedItem());
 			}
 			
 		});

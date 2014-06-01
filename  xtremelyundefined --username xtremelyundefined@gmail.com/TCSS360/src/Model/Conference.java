@@ -269,13 +269,7 @@ public class Conference extends Observable implements Serializable{
 	 * @return A list of the SPC's for this conference
 	 */
 	public List<User> getSPCs() {
-		List<User> myList = new ArrayList<User>();
-		for (Iterator<User> iter = spc.iterator(); iter.hasNext(); ){
-			User current = iter.next();
-			myList.add(new User(current.getID(), current.getFirstName(), 
-					current.getLastName(), current.getEmail()));
-		}
-		return myList;
+		return spc;
 	}
 	
 	/**
@@ -321,6 +315,7 @@ public class Conference extends Observable implements Serializable{
 	
 	public List<String> getRoles(User usr) {
 		List<String> ret = new ArrayList<String>();
+		
 		if (usr != null) {
 			if (getReviewers().contains(usr)) ret.add("Reviewer");
 			if (getSPCs().contains(usr)) ret.add("SubProgram Chair");

@@ -50,8 +50,7 @@ public class ConferenceSystem {
         
         public static void startGUI(ManagementSystem system) {
             MainFrame window = new MainFrame(system);
-            system.addObserver(window);
-                
+            system.addObserver(window);           
                 
         }
  }

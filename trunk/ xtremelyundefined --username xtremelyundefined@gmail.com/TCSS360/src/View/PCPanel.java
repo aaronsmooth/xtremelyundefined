@@ -88,7 +88,7 @@ public class PCPanel extends JPanel {
 		
 		topPanel = topPanel(brdr, mySystem.getCurrentUser().getName());
 		bottomPanel = bottomPanel(brdr, manuscripts(brdr), arrowPanel(brdr));
-		midPanel = midPanel(bottomPanel, brdr, "Conference Name");
+		midPanel = midPanel(bottomPanel, brdr, mySystem.getConference().getName());
 		
 		add(topPanel, BorderLayout.NORTH);
 		add(midPanel, BorderLayout.CENTER);
@@ -109,11 +109,11 @@ public class PCPanel extends JPanel {
 		logout.setBorder(brdr);
 		logout.addMouseListener(new PCPick(logout));
 		JPanel logPanel = new JPanel();
-		logPanel.setLayout(new GridLayout(1,4));
-		for(int i =0; i < 4; i++){
-			if(i == 3)logPanel.add(logout);
+		logPanel.setLayout(new GridLayout(1,6));
+		for(int i =1; i < 6; i++){
 			logPanel.add(new JLabel("      ")); // Dummy JLabel for proper placement of logout button.
 		}
+		logPanel.add(logout);
 		
 		topInside.setLayout(new GridLayout(2,1));
 		topInside.add(new JLabel("MSEE Conference"));
@@ -211,34 +211,40 @@ public class PCPanel extends JPanel {
 		prev.setIcon(new ImageIcon("src/supportingFiles/prev.png"));
 		prev.setBorder(brdr);
 		prev.setHorizontalAlignment(SwingConstants.CENTER);
-		if(backward) {
 		prev.addMouseListener(new MouseListener(){
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				
-				if(start - 8 > 8){
-					start -= 8;
-					backward = true;
-					
-					end = end -8;
-					forward = true;
-				} else {	
-					start = (start - 8);
+				if(start == 1){ //if start is at original position, it will not move
 					backward = false;
+				} else {
+					if(start - 8 > 8){
+						start -= 8;
+						backward = true;
 					
-					end = end - 8;
-					forward = true;
+						end = end -8;
+						forward = true;
+					} else {	
+						start = (start - 8);
+						backward = false;
+					
+						end = end - 8;
+						forward = true;
+					}
 				}
 				manuscripts(new TextBubbleBorder(Color.BLACK,2,6,0));
-				//repaint();
 				
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
+				AbstractBorder brdr;
+				if(backward){
+				brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
+				}else {
+				brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
+				}
 				prev.setBorder(brdr);		
 				repaint();
 			}
@@ -261,35 +267,40 @@ public class PCPanel extends JPanel {
 			}
 			
 		});
-		} else {
-		 prev.setVisible(false);
-		}
 		
 	    final JLabel next = new JLabel(" ");
 	    next.setIcon(new ImageIcon("src/supportingFiles/next.png"));
 	    next.setBorder(brdr);
 		next.setHorizontalAlignment(SwingConstants.CENTER);
-		if(forward) {
 		next.addMouseListener(new MouseListener(){
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				start = end + 1;
-				backward = true;
-				
-				if(size - end > 8){
-					forward = true;
-					end +=8;
-				} else {
+				if(end == size){
 					forward = false;
-					end += (size - end);
+				} else {
+					start = end + 1;
+					backward = true;
+				
+					if(size - end > 8){
+						forward = true;
+						end +=8;
+					} else {
+						forward = false;
+						end += (size - end);
+					}
 				}
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
+				AbstractBorder brdr;
+				if(forward){
+				brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
+				}else {
+				brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
+				}
 				next.setBorder(brdr);		
 				repaint();
 			}
@@ -312,10 +323,7 @@ public class PCPanel extends JPanel {
 			}
 			
 		});
-		} else {
-		 next.setVisible(false);
-		}
-	    
+		
 		arrowPanel.add(separator1, gbc_separator1);
 		JPanel insideArrowPanel = new JPanel();
 		insideArrowPanel.setLayout(new GridLayout(1,7));
@@ -535,6 +543,10 @@ public class PCPanel extends JPanel {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
+				if(label.getText().equalsIgnoreCase("logout")){
+					label.setForeground(Color.BLUE);
+					
+				}
 				AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
 				label.setBorder(brdr);		
 				repaint();
@@ -543,6 +555,10 @@ public class PCPanel extends JPanel {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
+				if(label.getText().equalsIgnoreCase("logout")){
+					label.setForeground(Color.BLACK);
+					
+				}
 				AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
 			    label.setBorder(brdr);		
 				repaint();

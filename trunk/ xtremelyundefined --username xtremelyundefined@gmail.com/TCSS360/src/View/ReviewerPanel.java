@@ -25,7 +25,7 @@ import Model.Review;
 import Model.User;
 
 public class ReviewerPanel extends JPanel {
-	private String Author = "JOE SCHMOE";
+	private String Author;// = "JOE SCHMOE";
 	
 	private ManagementSystem mySystem;
 	
@@ -40,10 +40,15 @@ public class ReviewerPanel extends JPanel {
 		User usr2 = new User(56, "jon", "doe", "doe@gmail.com");
 		Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath");
 		Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath");
-		//Conference conf = theSystem.getConference();
-		boolean state = theSystem.getConference().submitPaper(ppr);
-		//theSystem.addConference(conf);
 		
+		//Conference conf = theSystem.getConference();
+		theSystem.getConference().submitPaper(ppr);
+		theSystem.getConference().submitPaper(ppr2);
+		theSystem.getConference().addReviewer(theSystem.getCurrentUser());
+		ppr2.review(theSystem.getCurrentUser(), null);
+		
+		//theSystem.addConference(conf);
+		Author = theSystem.getCurrentUser().getName();
 		mySystem = theSystem;
 		setLayout(new BorderLayout());
 		AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
@@ -52,7 +57,7 @@ public class ReviewerPanel extends JPanel {
 		
 		topPanel = topPanel(brdr, Author);
 	    bottomPanel = bottomPanel(brdr, manuscript(brdr));
-	    midPanel = midPanel(brdr, "Conference Name", bottomPanel);
+	    midPanel = midPanel(brdr, theSystem.getConference().getName(), bottomPanel);
 		
 		add(topPanel, BorderLayout.NORTH);
 		add(midPanel, BorderLayout.CENTER);
@@ -245,7 +250,7 @@ public class ReviewerPanel extends JPanel {
 	    panelManuscript.add(separator, gbc_separator);
 		
 	    // List of Papers
-	    List<Paper> myPapers = (this.mySystem.getConference()).getAuthored(mySystem.getCurrentUser());
+	    List<Paper> myPapers = (this.mySystem.getConference()).getPapersToReview(mySystem.getCurrentUser());
 		Iterator<Paper> myIt = myPapers.iterator();
 	    for(int i = 0; myIt.hasNext(); i++){
 	    	currentPaper = myIt.next();

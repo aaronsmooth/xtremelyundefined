@@ -108,9 +108,9 @@ public class PCPanel extends JPanel {
 		JLabel author = new JLabel(aName);
 		author.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JLabel logout = new JLabel("Logout");
+		JLabel logout = new LogOutLabel("Logout");
+		logout.addPropertyChangeListener(mySystem);
 		logout.setBorder(brdr);
-		//logout.addMouseListener(new PCPick(logout));
 		JPanel logPanel = new JPanel();
 		logPanel.setLayout(new GridLayout(1,6));
 		for(int i =1; i < 6; i++){
@@ -456,7 +456,7 @@ public class PCPanel extends JPanel {
 				    SPC1.setIcon(new ImageIcon("src/supportingFiles/spc.png"));
 				    SPC1.setBorder(brdr);
 				    SPC1.setHorizontalAlignment(SwingConstants.CENTER);
-				    SPC1.addMouseListener(new PCPick(SPC1));
+				    SPC1.addMouseListener(new PCPick());
 			    }
 			    GridBagConstraints gridSPC1 = new GridBagConstraints();
 			    gridSPC1.insets = new Insets(0, 0, 5, 5);
@@ -493,7 +493,7 @@ public class PCPanel extends JPanel {
 			    	Recommend1.setIcon(new ImageIcon("src/supportingFiles/recd.png"));
 			    	Recommend1.setBorder(brdr);
 			    	Recommend1.setHorizontalAlignment(SwingConstants.CENTER);
-			    	Recommend1.addMouseListener(new PCPick(Recommend1));
+			    	Recommend1.addMouseListener(new PCPick());
 			    }
 			    
 			    GridBagConstraints gridRecommend1 = new GridBagConstraints();
@@ -513,7 +513,7 @@ public class PCPanel extends JPanel {
 			    	Status1.setIcon(new ImageIcon("src/supportingFiles/decide.png"));
 			    	Status1.setBorder(brdr);
 				    Status1.setHorizontalAlignment(SwingConstants.CENTER);
-			    	Status1.addMouseListener(new PCPick(Status1));
+			    	Status1.addMouseListener(new PCPick());
 			    }
 		    	Status1.setBorder(brdr);
 		    	Status1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -526,48 +526,17 @@ public class PCPanel extends JPanel {
 			    }
 	 }
 	 private class PCPick extends MouseAdapter {
-            private JLabel label;
-            
-            public PCPick(PanelLabel label){
-            	this.label = label;
-            }
-            
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(label.getText().equalsIgnoreCase("logout")){
-					//display = new LoginPanel(mySystem);
-				} else {
-				User selected = new User(0, "", "", "");
-				SelectBox myBox = new SelectBox(mySystem.getConference().getSPCs(), 
-						"SPC", ((PanelLabel) arg0.getSource()).getPaper());
-				myBox.addPropertyChangeListener(mySystem);
-				currentPaper.setSPC(selected);
-				}
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				if(label.getText().equalsIgnoreCase("logout")){
-					label.setForeground(Color.BLUE);
-					
-				}
-				AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
-				label.setBorder(brdr);		
-				repaint();
-			}
 
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				if(label.getText().equalsIgnoreCase("logout")){
-					label.setForeground(Color.BLACK);
-					
-				}
-				AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
-			    label.setBorder(brdr);		
-				repaint();
-			}
+		 @Override
+		 public void mouseClicked(MouseEvent arg0) {
+
+			 User selected = new User(0, "", "", "");
+			 SelectBox myBox = new SelectBox(mySystem.getConference().getSPCs(), 
+					 "SPC", ((PanelLabel) arg0.getSource()).getPaper());
+			 myBox.addPropertyChangeListener(mySystem);
+			 currentPaper.setSPC(selected);
+		 }
 	 }
-	 
 }
+
+

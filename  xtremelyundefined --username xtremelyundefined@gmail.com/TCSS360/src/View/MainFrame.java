@@ -37,6 +37,7 @@ public class MainFrame extends JFrame implements Observer, Runnable{
 
 	@Override
 	public void update(Observable o, Object arg) {
+		System.out.println(arg.toString());
 		if (arg.equals("Program Chair")){
 			display.setVisible(false);
 			display = new PCPanel(system);
@@ -52,6 +53,10 @@ public class MainFrame extends JFrame implements Observer, Runnable{
 		} else if (arg.equals("Author")) {
 			display.setVisible(false);
 			display = new AuthorPanel(system);
+			add(display);
+		} else if (arg.equals("login")){
+			display.setVisible(false);
+			display = new LoginPanel(system);
 			add(display);
 		}
 		

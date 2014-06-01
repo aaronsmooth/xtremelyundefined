@@ -145,8 +145,8 @@ public class PCPanel extends JPanel {
 		bottomPanel.setBorder(brdr);
 		bottomPanel.setOpaque(false);
 		bottomPanel.setSize(400, 400);
-		bottomPanel.setBounds(100, 110, 1000, 550);
-		
+		bottomPanel.setBounds(100, 110, 1000, 580);
+
 		JPanel insideBottomPanel = new JPanel();
 		insideBottomPanel.setLayout(new BorderLayout());
 		JLabel mypaper = new JLabel("Manuscript(s)");
@@ -432,7 +432,7 @@ public class PCPanel extends JPanel {
 	 */
 	 public void attachManuscripts(AbstractBorder brdr, JPanel p){
 		 //Iterator<Paper> myIt = myPapers.iterator(); 
-		 for(int i = start-1 ; i < end-1; i++){
+		 for(int i = start-1 ; i < end; i++){
 			 	currentPaper = myPapers.get(i);
 			    JLabel Topic1 = new JLabel(currentPaper.getTitle());
 			    GridBagConstraints gridTopic1 = new GridBagConstraints();

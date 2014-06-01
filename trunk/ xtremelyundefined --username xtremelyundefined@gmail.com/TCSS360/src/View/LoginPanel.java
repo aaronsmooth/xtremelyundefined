@@ -1,12 +1,9 @@
 package View;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -19,7 +16,6 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -31,22 +27,7 @@ import Model.User;
 
 @SuppressWarnings("serial")
 public class LoginPanel extends JPanel {
-    
 
-	/**
-	 * Note:  I have create two array of strings here for the JComboBox
-	 * I made them a field for this LoginPanel so that the panel
-	 * can display accurate and current list of available conference from 
-	 * time to time.
-	 * The calling method, in this case the system management, will
-	 * pass a string arrays of conference to be selected as option 
-	 * for the conference dropbox.
-	 */
-	
-//	private String [] roles = { "   -------------------------   ", "PC: Program Chair", "SPC: Sub-Prgram Chair",
-//			             "R: Reviewer", "A: Author"};
-//	
-//	private String [] conference = {"   -------------------------   " ,"Conference 1", "Conference 2", "Conference 3"};
 	private ManagementSystem system;
 	private List<User> users;
 	private List<Conference> conferences;
@@ -63,17 +44,20 @@ public class LoginPanel extends JPanel {
 		conferences = system.getConferences();
 		currentUser = null;
 		currentConference = new JComboBox<Conference>();
-		setLayout(new BorderLayout());
-		//setLayout(null);
-		setSize(500,350);
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		setLocation(dim.width/2 - 500/2, dim.height/2 - 350/2); // center the window frame.
-		add(welcomePanel);
-		add(loginpanel);
-		add(buttonPanel);
-		welcomePanel.setBounds(50, 30, 400, 50);
+		setLayout(null);
+		
+		JPanel framePanel = new JPanel();
+		framePanel.setBorder(new TextBubbleBorder(Color.BLACK,2,6,0));
+		framePanel.setLayout(null);
+		framePanel.setBounds(300,200,600,300);
+		framePanel.add(welcomePanel);
+		framePanel.add(loginpanel);
+		framePanel.add(buttonPanel);
+		welcomePanel.setBounds(100, 30, 400, 50);
 		loginpanel.setBounds(100, 100, 300, 75);
-		buttonPanel.setBounds(100,190,300,50);
+		buttonPanel.setBounds(140,190,300,50);
+		
+		add(framePanel);
 		
 		//Greetings Panel
 		JLabel greetings = new JLabel("MSEE Conference Wizard");

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class Paper {
 	
@@ -196,5 +197,21 @@ public class Paper {
 	
 	public String getTitle(){
 		return title;
+	}
+	
+	public Set<User> getReviewers() {
+		return this.reviewerMap.keySet();
+	}
+	
+	public int getRating() {
+		return this.spcRating;
+	}
+	
+	public String getRationale() {
+		return this.spcRationale;
+	}
+	
+	public Approval getAcceptanceStatus() {
+		return this.isAccepted;
 	}
 }

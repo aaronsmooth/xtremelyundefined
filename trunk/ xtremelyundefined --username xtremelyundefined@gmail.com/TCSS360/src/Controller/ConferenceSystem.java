@@ -49,7 +49,9 @@ public class ConferenceSystem {
         }
         
         public static void startGUI(ManagementSystem system) {
-                MainFrame window = new MainFrame(system);
+
+            MainFrame window = new MainFrame(system);
+                
                 
         }
  }

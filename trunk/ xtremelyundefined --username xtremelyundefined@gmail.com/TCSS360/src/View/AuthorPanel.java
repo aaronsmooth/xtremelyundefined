@@ -4,6 +4,7 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -235,7 +236,7 @@ public class AuthorPanel extends JPanel {
 	    gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0};
 	    gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 	    
-	    JPanel panelManuscript = new JPanel();   
+	    final JPanel panelManuscript = new JPanel();   
 	    panelManuscript.setLayout(gridBagLayout);
 	    panelManuscript.setSize(500,300);
 	    
@@ -299,14 +300,14 @@ public class AuthorPanel extends JPanel {
 		Iterator<Paper> myIt = myPapers.iterator(); 
 	    for(int i = 0; myIt.hasNext(); i++){
 	    	currentPaper = myIt.next();
-		    JLabel Topic1 = new JLabel(currentPaper.getTitle());
+		    final JLabel Topic1 = new JLabel(currentPaper.getTitle());
 		    GridBagConstraints gridTopic1 = new GridBagConstraints();
 		    gridTopic1.insets = new Insets(0, 0, 5, 5);
 		    gridTopic1.gridx = 0;
 		    gridTopic1.gridy = i+2;
 		    panelManuscript.add(Topic1, gridTopic1);
 		    
-		    JLabel Date1 = new JLabel("12/15/201"+i);
+		    final JLabel Date1 = new JLabel("12/15/201"+i);
 		    GridBagConstraints gridDate1 = new GridBagConstraints();
 		    gridDate1.insets = new Insets(0, 0, 5, 5);
 		    gridDate1.gridx = 1;
@@ -364,7 +365,7 @@ public class AuthorPanel extends JPanel {
 		    gridReview1.gridy = i+2;
 		    panelManuscript.add(view1, gridReview1);
 		    
-		    JLabel Edit1 = new JLabel(" ");
+		    final JLabel Edit1 = new JLabel(" ");
 		    Edit1.setIcon(new ImageIcon("src/supportingFiles/edit.png"));
 		    Edit1.setBorder(brdr);
 		    GridBagConstraints gridEdit1 = new GridBagConstraints();
@@ -383,17 +384,17 @@ public class AuthorPanel extends JPanel {
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					// TODO Auto-generated method stub
-			  AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
-			  view1.setBorder(brdr);		
-					repaint();
+					AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
+				    Edit1.setBorder(brdr);		
+				    repaint();
 				}
 	
 				@Override
 				public void mouseExited(MouseEvent e) {
 					// TODO Auto-generated method stub
 					AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
-					  view1.setBorder(brdr);		
-							repaint();
+					Edit1.setBorder(brdr);		
+					repaint();
 				}
 	
 				@Override
@@ -410,7 +411,7 @@ public class AuthorPanel extends JPanel {
 		    	
 		    });
 		    
-		    JLabel Remove1 = new JLabel(" ");
+		    final JLabel Remove1 = new JLabel(" ");
 		    Remove1.setIcon(new ImageIcon("src/supportingFiles/trash.png"));
 		    Remove1.setBorder(brdr);
 		    GridBagConstraints gridRemove1 = new GridBagConstraints();
@@ -418,6 +419,53 @@ public class AuthorPanel extends JPanel {
 		    gridRemove1.gridx = 4;
 		    gridRemove1.gridy = i+2;
 		    panelManuscript.add(Remove1, gridRemove1);
+		    Remove1.addMouseListener(new MouseListener(){
+		    	//Open the Submit Paper frame with all the old information filled in
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove this paper from the conference?", 
+							"Confirm Paper Removal", JOptionPane.OK_CANCEL_OPTION);
+					if (confirm == 0) {
+						mySystem.getConference().removePaper(currentPaper.getTitle());
+						panelManuscript.remove(Remove1);
+						panelManuscript.remove(Edit1);
+						panelManuscript.remove(view1);
+						panelManuscript.remove(Topic1);
+						panelManuscript.remove(Date1);
+						
+					}
+				}
+			
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
+				    Remove1.setBorder(brdr);		
+				    repaint();
+				}
+	
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
+					Remove1.setBorder(brdr);		
+					repaint();
+				}
+	
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+	
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+		    	
+		    });
+		    //panelManuscript.add(Remove1, gridRemove1);
 	    }
 	    
 	    return panelManuscript;

@@ -242,4 +242,8 @@ public class Paper implements Serializable{
 	public String getKeywords() {
 		return this.keywords;
 	}
+	
+	public String getAbstract() {
+		return this.paperAbstract;
+	}
 }

@@ -23,7 +23,7 @@ public class ConfirmDialog extends JFrame {
 		
 		JPanel panel = new JPanel(new BorderLayout());
 		JPanel npanel = new JPanel(new FlowLayout());
-		npanel.setPreferredSize(new Dimension(300, 50));
+		npanel.setPreferredSize(new Dimension(350, 50));
 		JPanel spanel = new JPanel();
 		npanel.add(new JLabel("Are you sure you want to remove this paper?"));
 		JButton ok = new JButton("Ok");
@@ -32,6 +32,8 @@ public class ConfirmDialog extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				firePropertyChange(propertyName, null, thepaper);	
+				Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
+				frm.dispose();
 			}
 			
 		});

@@ -39,16 +39,16 @@ public class ReviewerPanel extends JPanel{
 	 */
 	public ReviewerPanel(ManagementSystem theSystem){
 		
-		User usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
-		User usr2 = new User(56, "jon", "doe", "doe@gmail.com");
-		Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath", "topic");
-		Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath", "topic");
+		//User usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
+		//User usr2 = new User(56, "jon", "doe", "doe@gmail.com");
+		//Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath", "topic");
+		//Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath", "topic");
 		
 		//Conference conf = theSystem.getConference();
-		theSystem.getConference().submitPaper(ppr);
-		theSystem.getConference().submitPaper(ppr2);
-		theSystem.getConference().addReviewer(theSystem.getCurrentUser());
-		ppr2.review(theSystem.getCurrentUser(), null);
+		//theSystem.getConference().submitPaper(ppr);
+		//theSystem.getConference().submitPaper(ppr2);
+		//theSystem.getConference().addReviewer(theSystem.getCurrentUser());
+		//ppr2.review(theSystem.getCurrentUser(), null);
 		
 		//theSystem.addConference(conf);
 		Author = theSystem.getCurrentUser().getName();

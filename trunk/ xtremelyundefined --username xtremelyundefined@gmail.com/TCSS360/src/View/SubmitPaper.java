@@ -48,12 +48,20 @@ public class SubmitPaper extends JFrame {
 	private MyActionListener listener = new MyActionListener();
 	JFileChooser fileChooser = new JFileChooser();
 
-	private static User the_author;
-	private static Conference the_conf;
+	private User the_author;
+	private Conference the_conf;
+	private Paper old_paper;
 
 	public SubmitPaper(Conference the_conf, User the_author) {
 		this.the_author = the_author;
 		this.the_conf = the_conf;
+		buildUI();
+	}
+	
+	public SubmitPaper(Conference the_conf, User the_author, Paper the_paper) {
+		this.the_author = the_author;
+		this.the_conf = the_conf;
+		this.old_paper = the_paper;
 		buildUI();
 	}
 
@@ -64,12 +72,21 @@ public class SubmitPaper extends JFrame {
 	}
 
 	public void buildUI() {
-		nameField = new JTextField(the_author.getName());
-		emailField = new JTextField(the_author.getEmail());
-		paperTopicField = new JTextField();
-		paperTitleField = new JTextField();
-		keywordField = new JTextField();
-		fileChooserField = new JTextField();
+		if (this.old_paper == null) {
+			nameField = new JTextField(the_author.getName());
+			emailField = new JTextField(the_author.getEmail());
+			paperTopicField = new JTextField();
+			paperTitleField = new JTextField();
+			keywordField = new JTextField();
+			fileChooserField = new JTextField();
+		} else {
+			nameField = new JTextField(the_author.getName());
+			emailField = new JTextField(the_author.getEmail());
+			paperTopicField = new JTextField(old_paper.getTopic());
+			paperTitleField = new JTextField(old_paper.getTitle());
+			keywordField = new JTextField(old_paper.getKeywords());
+			fileChooserField = new JTextField(old_paper.getFilePath());
+		}
 		setPreferedSize(250, 25, nameField, paperTopicField, emailField,
 				paperTitleField, keywordField);
 		setPreferedSize(150, 25, fileChooserField);
@@ -177,7 +194,6 @@ public class SubmitPaper extends JFrame {
 				setVisible(false);
 			}
 			if (cmd.equals(UPLOAD)) {
-				System.out.println("???");
 				int c = fileChooser.showOpenDialog(SubmitPaper.this);
 				if (c == JFileChooser.APPROVE_OPTION) {
 					File f = fileChooser.getSelectedFile();
@@ -185,10 +201,12 @@ public class SubmitPaper extends JFrame {
 				}
 			}
 			if (cmd.equals(SUBMIT)) {
+				
 				Paper paper = new Paper(the_author, paperTitleField.getText(),
 						keywordField.getText(), abstractField.getText(),
 						fileChooserField.getText());
 				the_conf.submitPaper(paper);
+				firePropertyChange("paperSubmission", paper, "Author");
 				Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
 				frm.dispose();
 			}

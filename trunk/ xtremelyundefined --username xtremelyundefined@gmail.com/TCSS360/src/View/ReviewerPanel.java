@@ -84,11 +84,10 @@ public class ReviewerPanel extends JPanel{
 		logout.setBorder(brdr);
 
 		JPanel logPanel = new JPanel();
-		logPanel.setLayout(new GridLayout(1,4));
-		logPanel.add(new JLabel("      ")); // Dummy JLabel for proper placement of logout button.
-		logPanel.add(new JLabel("      "));
-		logPanel.add(new JLabel("      "));
+		logPanel.setLayout(new GridLayout(1,6));
+		for(int i = 0; i < 6; i++) logPanel.add(new JLabel("      ")); // Dummy JLabel for proper placement of logout button.
 		logPanel.add(logout);
+
 		
 		JPanel topInside = new JPanel();
 		topInside.setLayout(new GridLayout(2,1));

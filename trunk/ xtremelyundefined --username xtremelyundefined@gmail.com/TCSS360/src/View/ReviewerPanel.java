@@ -229,7 +229,7 @@ public class ReviewerPanel extends JPanel{
 	    gridReview.gridy = 0;
 	    panelManuscript.add(Review);
 		
-		JLabel  Edit = new JLabel("Edit");
+		JLabel  Edit = new JLabel("View");
 		Edit.setHorizontalAlignment(SwingConstants.CENTER);
 		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
 	    GridBagConstraints gridEdit = new GridBagConstraints();
@@ -287,7 +287,7 @@ public class ReviewerPanel extends JPanel{
 		    	panelManuscript.add(Review1, gridReview1);
 		    
 		    JLabel Edit1 = new JLabel(" ");
-		    Edit1.setIcon(new ImageIcon("src/supportingFiles/edit.png"));
+		    Edit1.setIcon(new ImageIcon("src/supportingFiles/view.png"));
 		    Edit1.setBorder(brdr);
 		    GridBagConstraints gridEdit1 = new GridBagConstraints();
 		    gridEdit1.insets = new Insets(0, 0, 5, 5);

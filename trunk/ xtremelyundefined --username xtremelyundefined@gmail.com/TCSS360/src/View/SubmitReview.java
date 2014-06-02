@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.ScrollPane;
+import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -71,7 +72,9 @@ public class SubmitReview extends JFrame {
 		JPanel pane = new JPanel(lyout);
 		pane.add(createCenterPane());
 		add(pane);
-		setLocationRelativeTo(null);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		setLocation(dim.width/2 - 1200/2, dim.height/2 - 800/2); // center the window frame.
+		//setLocationRelativeTo(null);
 		setResizable(false);
 		pack();
 		setVisible(true);

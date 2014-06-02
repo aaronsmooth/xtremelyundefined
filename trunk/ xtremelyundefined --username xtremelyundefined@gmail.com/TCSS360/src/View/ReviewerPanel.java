@@ -80,7 +80,8 @@ public class ReviewerPanel extends JPanel{
 		
 		JLabel author = new JLabel(aName);
 		author.setHorizontalAlignment(SwingConstants.CENTER);
-		JLabel logout = new JLabel("Logout");
+		JLabel logout = new LogOutLabel("Logout");
+		logout.addPropertyChangeListener(mySystem);
 		logout.setBorder(brdr);
 
 		JPanel logPanel = new JPanel();
@@ -270,7 +271,7 @@ public class ReviewerPanel extends JPanel{
 		    gridDate1.gridy = i+2;
 		    panelManuscript.add(Date1, gridDate1);
 		    
-		    JLabel Review1 = new JLabel(" ");
+		    JLabel Review1 = new PanelLabel(" ", currentPaper);
 		    Review1.setIcon(new ImageIcon("src/supportingFiles/review.png"));
 		    Review1.setBorder(brdr);
 		    GridBagConstraints gridReview1 = new GridBagConstraints();
@@ -303,7 +304,7 @@ public class ReviewerPanel extends JPanel{
 	private class SubmitListen extends MouseAdapter {
 		public void mouseClicked(MouseEvent arg0) {
 			
-			SubmitReview mySR =	new SubmitReview(currentPaper, mySystem.getCurrentUser());
+			SubmitReview mySR =	new SubmitReview((Paper) ((PanelLabel)arg0.getSource()).getPaper(), mySystem.getCurrentUser());
 			mySR.addPropertyChangeListener(mySystem);	
 		}	
 	}

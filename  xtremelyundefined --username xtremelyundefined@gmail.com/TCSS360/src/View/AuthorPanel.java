@@ -434,15 +434,8 @@ public class AuthorPanel extends JPanel {
 	    	//Open the Submit Paper frame with all the old information filled in
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Object[] myButtons = {"OK", "Cancel"};
-				JOptionPane myP = JOptionPane(new String("Are you sure you want to remove this paper from the conference?"), 
-						JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION, myButtons);
-				
-				if (confirm == 0) {
-					mySystem.getConference().removePaper(((PanelLabel) e.getSource()).getPaper().getTitle());
-					firePropertyChange("Author",  null,  "Author");
-					
-				}
+				ConfirmDialog myD = new ConfirmDialog("Paper Removal Confirmation", "Author", ((PanelLabel)e.getSource()).getPaper());
+				myD.addPropertyChangeListener(mySystem);
 			}
 		
 			@Override

@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -18,7 +19,8 @@ public class ConfirmDialog extends JFrame {
 	public ConfirmDialog(final String text, final String propertyName, final Paper thepaper) {
 		super(text);
 		
-		JPanel panel = new JPanel();
+		JPanel panel = new JPanel(new BorderLayout());
+		JPanel spanel = new JPanel();
 		panel.add(new JLabel("Are you sure?"));
 		JButton ok = new JButton("Ok");
 		ok.addActionListener(new ActionListener() {
@@ -39,7 +41,12 @@ public class ConfirmDialog extends JFrame {
 			}
 			
 		});
-		
+		spanel.add(ok);
+		spanel.add(cancel);
+		add(panel, BorderLayout.CENTER);
+		add(spanel, BorderLayout.SOUTH);
+		setAlwaysOnTop(true);
+		setVisible(true);
 		
 	}
 }

@@ -44,7 +44,7 @@ public class MainFrame extends JFrame implements Observer, Runnable{
 			add(display);
 		} else if (arg.equals("SubProgram Chair")){
 			display.setVisible(false);
-			display = new SPCPanel();
+			display = new SPCPanel(system);
 			add(display);
 		} else if (arg.equals("Reviewer")){
 			display.setVisible(false);

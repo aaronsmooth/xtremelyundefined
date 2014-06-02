@@ -7,6 +7,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -15,28 +19,40 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.AbstractBorder;
 
+import Model.ManagementSystem;
+import Model.Paper;
+import Model.User;
+
 
 public class SPCPanel extends JPanel {
 	
-	private String Author = "JOE SCHMOE";
+	private ManagementSystem system;
+	private User currentUser;
+	private List<Paper> papers;
+	private Paper currentPaper;
+
 	
 	/**
 	 * Constructor.
 	 */
-	public SPCPanel(){
-	setLayout(new BorderLayout());
-	AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
-	
-	JPanel topPanel, bottomPanel, midPanel;
-	
-	topPanel = topPanel(brdr, Author);
-	bottomPanel = bottomPanel(brdr, manuscripts(brdr), arrowPanel(brdr));
-	midPanel = midPanel(bottomPanel, brdr, "Conference Name");
-	
-	add(topPanel, BorderLayout.NORTH);
-	add(midPanel, BorderLayout.CENTER);
+	public SPCPanel(ManagementSystem theSystem){
+		system = theSystem;
+		currentUser = theSystem.getCurrentUser();
+		papers= new ArrayList<>(system.getConference().getPapersBySPC(currentUser));
+		
+		setLayout(new BorderLayout());
+		AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
+
+		JPanel topPanel, bottomPanel, midPanel;
+
+		topPanel = topPanel(brdr, currentUser.getName());
+		bottomPanel = bottomPanel(brdr, manuscripts(brdr), arrowPanel(brdr));
+		midPanel = midPanel(bottomPanel, brdr, "Conference Name");
+
+		add(topPanel, BorderLayout.NORTH);
+		add(midPanel, BorderLayout.CENTER);
 	}
-	
+
 	/**
 	 * Creates the top panel of the window where the author and logout option is displayed.
 	 * 
@@ -48,7 +64,8 @@ public class SPCPanel extends JPanel {
 		JLabel author = new JLabel(aName);
 		author.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JLabel logout = new JLabel("Logout");
+		JLabel logout = new LogOutLabel("Logout");
+		logout.addPropertyChangeListener(system);
 		logout.setBorder(brdr);
 		JPanel logPanel = new JPanel();
 		logPanel.setLayout(new GridLayout(1,4));
@@ -245,8 +262,11 @@ public class SPCPanel extends JPanel {
 	 * @param p a panel where the manuscript will be attached.
 	 */
 	 public void attachManuscripts(AbstractBorder brdr, JPanel p){
-		 for(int i = 0; i < 4; i++){
-			    JLabel Topic1 = new JLabel("New Scientific Frontier" + i);
+		 Paper currentPaper;
+		 
+		 for(int i = 0; i < papers.size(); i++){
+			 	currentPaper = papers.get(i);
+			    JLabel Topic1 = new JLabel(currentPaper.getTitle());
 			    GridBagConstraints gridTopic1 = new GridBagConstraints();
 			    gridTopic1.insets = new Insets(0, 0, 5, 5);
 			    gridTopic1.gridx = 0;
@@ -261,15 +281,10 @@ public class SPCPanel extends JPanel {
 			    p.add(Date1, gridDate1);
 			    
 			    JLabel SPC1;
-			    if(i % 2 == 0) {
-			     SPC1= new JLabel("Michelle Yang" + i);
-			     } else{
-			    SPC1 = new JLabel(" ");
-			    SPC1.setIcon(new ImageIcon("src/supportingFiles/spc.png"));
+			    SPC1= new JLabel(currentPaper.getAuthor().getName());
 			    SPC1.setBorder(brdr);
 			    SPC1.setHorizontalAlignment(SwingConstants.CENTER);
 			    //topPanel.setOpaque(false);
-			    }
 			    GridBagConstraints gridSPC1 = new GridBagConstraints();
 			    gridSPC1.insets = new Insets(0, 0, 5, 5);
 			    gridSPC1.gridx = 2;
@@ -277,13 +292,18 @@ public class SPCPanel extends JPanel {
 			    p.add(SPC1, gridSPC1);
 			    
 			    JLabel Reviewer1;
-			    if(i %2 != 0){
-			       Reviewer1 = new JLabel(" ---------- ");
+			    if (currentPaper.getReviewers().size() > 0) {
+			    	StringBuilder sb = new StringBuilder();
+			    	for (User rev : currentPaper.getReviewers()){
+			    		sb.append(rev.getName());
+			    	}
+			    	Reviewer1 = new JLabel(sb.toString());
 			    } else {
-			    	Reviewer1 = new JLabel(" ");
+			    	Reviewer1 = new PanelLabel(" ", currentPaper);
+			    	Reviewer1.addPropertyChangeListener(system);
 			    	Reviewer1.setIcon(new ImageIcon("src/supportingFiles/review.png"));
-				    Reviewer1.setBorder(brdr);
-				    Reviewer1.setHorizontalAlignment(SwingConstants.CENTER);
+			    	Reviewer1.setBorder(brdr);
+			    	Reviewer1.setHorizontalAlignment(SwingConstants.CENTER);
 			    }
 			    
 			    GridBagConstraints gridReviewer1 = new GridBagConstraints();
@@ -309,6 +329,18 @@ public class SPCPanel extends JPanel {
 			    p.add(Recommend1, gridRecommend1);
 			    
 			    }
+	 }
+	 private class SPCPick extends MouseAdapter {
+
+		 @Override
+		 public void mouseClicked(MouseEvent arg0) {
+
+			 User selected = new User(0, "", "", "");
+			 SelectBox myBox = new SelectBox(system.getConference().getReviewers(), 
+					 "Reviewer", ((PanelLabel) arg0.getSource()).getPaper());
+			 myBox.addPropertyChangeListener(system);
+			 currentPaper.review(selected, null);
+		 }
 	 }
 }
 

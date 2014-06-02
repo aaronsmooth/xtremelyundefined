@@ -238,19 +238,28 @@ public class PCPanel extends JPanel {
 					
 						end = end -8;
 						forward = true;
+						
+						manuscriptPanel = manuscripts(brdr);
+						bottomPanel = bottomPanel(brdr, manuscriptPanel, arrowsPanel);
+						midPanel = midPanel(bottomPanel, brdr, mySystem.getConference().getName());
+						add(midPanel);
+						prev.addPropertyChangeListener(mySystem);
+						validate();
+						
 					} else {	
-						start = (start - 8);
+						start = Math.max((start - 8),0);
 						backward = false;
 					
 						end = end - 8;
 						forward = true;
+						
+						manuscriptPanel = manuscripts(brdr);
+						bottomPanel = bottomPanel(brdr, manuscriptPanel, arrowsPanel);
+						midPanel = midPanel(bottomPanel, brdr, mySystem.getConference().getName());
+						add(midPanel);
+						prev.addPropertyChangeListener(mySystem);
+						validate();
 					}
-					manuscriptPanel = manuscripts(brdr);
-					bottomPanel = bottomPanel(brdr, manuscriptPanel, arrowsPanel);
-					midPanel = midPanel(bottomPanel, brdr, mySystem.getConference().getName());
-					add(midPanel);
-					prev.addPropertyChangeListener(mySystem);
-					validate();
 				}
 				
 			}

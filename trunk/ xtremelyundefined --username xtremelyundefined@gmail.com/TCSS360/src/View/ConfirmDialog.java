@@ -2,6 +2,8 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,8 +22,10 @@ public class ConfirmDialog extends JFrame {
 		super(text);
 		
 		JPanel panel = new JPanel(new BorderLayout());
+		JPanel npanel = new JPanel(new FlowLayout());
+		npanel.setPreferredSize(new Dimension(300, 50));
 		JPanel spanel = new JPanel();
-		panel.add(new JLabel("Are you sure?"));
+		npanel.add(new JLabel("Are you sure you want to remove this paper?"));
 		JButton ok = new JButton("Ok");
 		ok.addActionListener(new ActionListener() {
 
@@ -43,9 +47,12 @@ public class ConfirmDialog extends JFrame {
 		});
 		spanel.add(ok);
 		spanel.add(cancel);
-		add(panel, BorderLayout.CENTER);
-		add(spanel, BorderLayout.SOUTH);
+		panel.add(npanel, BorderLayout.CENTER);
+		panel.add(spanel, BorderLayout.SOUTH);
+		add(panel);
+		setLocationRelativeTo(null);
 		setAlwaysOnTop(true);
+		pack();
 		setVisible(true);
 		
 	}

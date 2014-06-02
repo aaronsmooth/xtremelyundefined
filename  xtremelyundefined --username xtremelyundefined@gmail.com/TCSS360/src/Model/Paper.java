@@ -79,13 +79,13 @@ public class Paper implements Serializable{
 	 * @param paperAbstract paper's abstract
 	 * @param filePath local filePath.
 	 */
-	public Paper(User author, String  title, String keywords, String paperAbstract, String filePath) {
+	public Paper(User author, String  title, String keywords, String paperAbstract, String filePath, String topic) {
 		this.author = Objects.requireNonNull(author);
 		this.title = Objects.requireNonNull(title);
 		this.keywords = Objects.requireNonNull(keywords);
 		this.paperAbstract = Objects.requireNonNull(paperAbstract);
 		this.filePath = Objects.requireNonNull(filePath);
-		//his.topic = topic;
+		this.topic = topic;
 		isAccepted = Approval.UNDECIDED;
 		reviewerMap = new HashMap<User, Review>();	
 	}

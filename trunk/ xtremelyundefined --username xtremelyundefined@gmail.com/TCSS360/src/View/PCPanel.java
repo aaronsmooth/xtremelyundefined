@@ -247,7 +247,7 @@ public class PCPanel extends JPanel {
 						validate();
 						
 					} else {	
-						start = Math.max((start - 8),0);
+						start = Math.max((start - 8),1);
 						backward = false;
 					
 						end = end - 8;

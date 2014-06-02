@@ -69,7 +69,7 @@ public class SelectBox extends JFrame {
 		btn.addActionListener(new ButtonListener());
 		sPanel.add(btn);
 		btn = new JButton("Cancel");
-		btn.addActionListener(new ButtonListener());
+		btn.addActionListener(new CancelListener());
 		sPanel.add(btn);;
 		panel.add(sPanel, BorderLayout.SOUTH);
 		
@@ -94,6 +94,15 @@ public class SelectBox extends JFrame {
 		}
 		
 	}
+	
+	private class CancelListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
+			frm.dispose();
+		}
+	}
+	
 
 }
 

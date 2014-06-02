@@ -63,20 +63,20 @@ public class PCPanel extends JPanel {
 	 * Constructor.
 	 */
 	public PCPanel(ManagementSystem theSystem){
-//		User usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
-//		User usr2 = new User(56, "jon", "doe", "doe@gmail.com");
-//		Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath");
-//		Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath");
-//		//Conference conf = theSystem.getConference();
+	   /* User usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
+		User usr2 = new User(56, "jon", "doe", "doe@gmail.com");
+		Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath");
+		Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath");
+		Conference conf = theSystem.getConference();
 		boolean state;
-//		boolean state1 = theSystem.getConference().submitPaper(ppr2);
-//		//theSystem.addConference(conf);
+		boolean state1 = theSystem.getConference().submitPaper(ppr2);
+		theSystem.addConference(conf);
 		
 		for(int i = 0; i < 10; i++){
 			User usri = new User(5+i, "joe"+i, "schmoe", "schmoe@gmail.com");
 			Paper ppri = new Paper(usri, "thisisthetitle" + i, "thekeywords" + i, "theabstact", "filepath", "topic" + i);
 			state = theSystem.getConference().submitPaper(ppri);
-		}
+		} */
 		
 		mySystem = theSystem;
 		myPapers = (this.mySystem.getConference()).getAllPapers();

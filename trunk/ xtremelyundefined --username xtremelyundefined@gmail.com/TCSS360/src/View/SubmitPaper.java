@@ -204,7 +204,7 @@ public class SubmitPaper extends JFrame {
 				
 				Paper paper = new Paper(the_author, paperTitleField.getText(),
 						keywordField.getText(), abstractField.getText(),
-						fileChooserField.getText());
+						fileChooserField.getText(), paperTopicField.getText());
 				the_conf.submitPaper(paper);
 				firePropertyChange("paperSubmission", paper, "Author");
 				Window frm = SwingUtilities.windowForComponent((Component) e.getSource());

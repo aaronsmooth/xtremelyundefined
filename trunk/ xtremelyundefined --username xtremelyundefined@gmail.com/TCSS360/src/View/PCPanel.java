@@ -68,7 +68,7 @@ public class PCPanel extends JPanel {
 		
 		for(int i = 0; i < 10; i++){
 			User usri = new User(5+i, "joe"+i, "schmoe", "schmoe@gmail.com");
-			Paper ppri = new Paper(usri, "thisisthetitle" + i, "thekeywords" + i, "theabstact", "filepath");
+			Paper ppri = new Paper(usri, "thisisthetitle" + i, "thekeywords" + i, "theabstact", "filepath", "topic" + i);
 			state = theSystem.getConference().submitPaper(ppri);
 		}
 		

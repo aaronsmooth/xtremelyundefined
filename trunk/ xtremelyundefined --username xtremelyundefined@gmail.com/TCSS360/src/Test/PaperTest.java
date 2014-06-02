@@ -38,8 +38,8 @@ public class PaperTest {
 		usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
 		usr2 = new User(56, "jon", "doe", "doe@gmail.com");
 		usr3 = new User(77, "be", "the", "best@d.com");
-		ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath");
-		ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath");
+		ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath", "topic");
+		ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath", "topic");
 		conf = new Conference("alocation", "adate", "adeadline", null, "aname");
 	}
 	

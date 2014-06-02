@@ -41,8 +41,8 @@ public class ReviewerPanel extends JPanel{
 		
 		User usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
 		User usr2 = new User(56, "jon", "doe", "doe@gmail.com");
-		Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath");
-		Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath");
+		Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath", "topic");
+		Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath", "topic");
 		
 		//Conference conf = theSystem.getConference();
 		theSystem.getConference().submitPaper(ppr);

@@ -21,6 +21,7 @@ import javax.swing.border.AbstractBorder;
 
 import Model.ManagementSystem;
 import Model.Paper;
+import Model.Review;
 import Model.User;
 
 
@@ -206,6 +207,15 @@ public class SPCPanel extends JPanel {
 	    gridDate.gridy = 0;
 	    panelManuscript.add(Date);
 	    
+	    JLabel Author = new JLabel ("Author");
+		Author.setHorizontalAlignment(SwingConstants.CENTER);
+		Author.setFont(new Font("Tahoma", Font.BOLD, 14));
+	    GridBagConstraints gridAuthor = new GridBagConstraints();
+	    gridAuthor.gridx = 1;
+	    gridAuthor.insets = new Insets(0, 0, 5, 5);
+	    gridAuthor.gridy = 0;
+	    panelManuscript.add(Author);
+	    
 	    JLabel Review = new JLabel("Assigned Reviewer");
 		Review.setHorizontalAlignment(SwingConstants.CENTER);
 		Review.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -224,7 +234,7 @@ public class SPCPanel extends JPanel {
 	    gridEdit.gridy = 0;
 	    panelManuscript.add(Edit);
 	    
-	    JLabel  Recommend = new JLabel(" Send Recommendation");
+	    JLabel  Recommend = new JLabel("SPC Recommendation");
 		Recommend.setHorizontalAlignment(SwingConstants.CENTER);
 		Recommend.setFont(new Font("Tahoma", Font.BOLD, 14));
 	    GridBagConstraints gridRecommend = new GridBagConstraints();
@@ -280,16 +290,16 @@ public class SPCPanel extends JPanel {
 			    gridDate1.gridy = i+2;
 			    p.add(Date1, gridDate1);
 			    
-			    JLabel SPC1;
-			    SPC1= new JLabel(currentPaper.getAuthor().getName());
-			    SPC1.setBorder(brdr);
-			    SPC1.setHorizontalAlignment(SwingConstants.CENTER);
+			    JLabel author;
+			    author= new JLabel(currentPaper.getAuthor().getName());
+			    author.setBorder(brdr);
+			    author.setHorizontalAlignment(SwingConstants.CENTER);
 			    //topPanel.setOpaque(false);
-			    GridBagConstraints gridSPC1 = new GridBagConstraints();
-			    gridSPC1.insets = new Insets(0, 0, 5, 5);
-			    gridSPC1.gridx = 2;
-			    gridSPC1.gridy = i+2;
-			    p.add(SPC1, gridSPC1);
+			    GridBagConstraints gridAuthor = new GridBagConstraints();
+			    gridAuthor.insets = new Insets(0, 0, 5, 5);
+			    gridAuthor.gridx = 2;
+			    gridAuthor.gridy = i+2;
+			    p.add(author, gridAuthor);
 			    
 			    JLabel Reviewer1;
 			    if (currentPaper.getReviewers().size() > 0) {
@@ -297,10 +307,9 @@ public class SPCPanel extends JPanel {
 			    	for (User rev : currentPaper.getReviewers()){
 			    		sb.append(rev.getName());
 			    	}
-			    	Reviewer1 = new JLabel(sb.toString());
+			    	Reviewer1 = new PanelLabel(sb.toString(), currentPaper);
 			    } else {
 			    	Reviewer1 = new PanelLabel(" ", currentPaper);
-			    	Reviewer1.addPropertyChangeListener(system);
 			    	Reviewer1.setIcon(new ImageIcon("src/supportingFiles/review.png"));
 			    	Reviewer1.setBorder(brdr);
 			    	Reviewer1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -310,13 +319,32 @@ public class SPCPanel extends JPanel {
 			    gridReviewer1.insets = new Insets(0, 0, 5, 5);
 			    gridReviewer1.gridx = 3;
 			    gridReviewer1.gridy = i+2;
+			    Reviewer1.addMouseListener(new SPCPick());
 			    p.add(Reviewer1, gridReviewer1);
 			    
-			    JLabel Recommend1;
-			    if(i %2 != 0){
-			       Recommend1 = new JLabel(" ---------- ");
+			    JLabel view1;
+			    if (currentPaper.getReviews().size() == 0) {
+			    	view1 = new PanelLabel(" ", currentPaper);
 			    } else {
-			    	Recommend1 = new JLabel(" ");
+			    	view1 = new PanelLabel(" ", currentPaper);
+			    	view1.setIcon(new ImageIcon("src/supportingFiles/review.png"));
+			    	view1.setBorder(brdr);
+			    	view1.setHorizontalAlignment(SwingConstants.CENTER);
+			    }
+			    
+			    GridBagConstraints gridView1 = new GridBagConstraints();
+			    gridView1.insets = new Insets(0, 0, 5, 5);
+			    gridView1.gridx = 4;
+			    gridView1.gridy = i+2;
+			    view1.addMouseListener(new SPCView());
+			    p.add(view1, gridView1);
+			    
+			    PanelLabel Recommend1;
+			    if (currentPaper.getRating() != 0) {
+			       Recommend1 = new PanelLabel(Integer.toString(currentPaper.getRating()), currentPaper);
+			    } else {
+			    	Recommend1 = new PanelLabel(" ", currentPaper);
+			    	Recommend1.addMouseListener(new SPCRecommend());
 			    	Recommend1.setIcon(new ImageIcon("src/supportingFiles/recd.png"));
 			    	Recommend1.setBorder(brdr);
 			    	Recommend1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -324,22 +352,40 @@ public class SPCPanel extends JPanel {
 
 			    GridBagConstraints gridRecommend1 = new GridBagConstraints();
 			    gridRecommend1.insets = new Insets(0, 0, 5, 5);
-			    gridRecommend1.gridx = 4;
+			    gridRecommend1.gridx = 5;
 			    gridRecommend1.gridy = i+2;
 			    p.add(Recommend1, gridRecommend1);
 			    
 			    }
 	 }
+	 
+	 private class SPCView extends MouseAdapter {
+		 @Override
+		 public void mouseClicked(MouseEvent arg0) {
+			 currentPaper = (Paper) ((PanelLabel) arg0.getSource()).getPaper();
+			 for (Review rev : currentPaper.getReviews()) {
+				 ViewReview v = new ViewReview(rev.getRating(), rev.getSpcComment(), rev.getAuthorComments());
+			 }
+		 }
+	 }
+	 
+	 private class SPCRecommend extends MouseAdapter {
+		 @Override
+		 public void mouseClicked(MouseEvent arg0) {
+			 currentPaper = (Paper) ((PanelLabel) arg0.getSource()).getPaper();
+			 SubmitRecommendation rec= new SubmitRecommendation(((PanelLabel) arg0.getSource()).getPaper());
+			 rec.addPropertyChangeListener(system);
+		 }
+	 }
+	 
 	 private class SPCPick extends MouseAdapter {
 
 		 @Override
 		 public void mouseClicked(MouseEvent arg0) {
-
-			 User selected = new User(0, "", "", "");
+			 currentPaper = (Paper) ((PanelLabel) arg0.getSource()).getPaper();
 			 SelectBox myBox = new SelectBox(system.getConference().getReviewers(), 
 					 "Reviewer", ((PanelLabel) arg0.getSource()).getPaper());
 			 myBox.addPropertyChangeListener(system);
-			 currentPaper.review(selected, null);
 		 }
 	 }
 }

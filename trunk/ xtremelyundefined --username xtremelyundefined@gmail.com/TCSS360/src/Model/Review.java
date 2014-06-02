@@ -31,7 +31,7 @@ public class Review implements Serializable{
 	 * Comments for the author
 	 */
 	private List<String> authorComments;
-	
+
 	/**
 	 * Public constructor that initializes fields
 	 * 
@@ -49,6 +49,18 @@ public class Review implements Serializable{
 		for (String str : author) {
 			authorComments.add(str);
 		}
-		
+
+	}
+
+	public List<Integer> getRating() {
+		return rating;
+	}
+	
+	public String getSpcComment() {
+		return spcComments;
+	}
+
+	public List<String> getAuthorComments() {
+		return authorComments;
 	}
 }

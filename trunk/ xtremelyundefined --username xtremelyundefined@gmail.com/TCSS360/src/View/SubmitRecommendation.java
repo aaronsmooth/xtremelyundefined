@@ -105,6 +105,7 @@ public class SubmitRecommendation extends JFrame {
 				if (btng.getSelection() != null && !txt.getText().equals("")) {
 					paper.setRating(Integer.valueOf(((ButtonModel) btng.getSelection()).getActionCommand()));
 					paper.setRationale(txt.getText());
+					firePropertyChange("Reviewer", null, null);
 					Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
 					frm.dispose();
 				} else {

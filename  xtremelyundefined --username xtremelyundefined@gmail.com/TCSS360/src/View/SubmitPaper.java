@@ -79,6 +79,7 @@ public class SubmitPaper extends JFrame {
 			paperTitleField = new JTextField();
 			keywordField = new JTextField();
 			fileChooserField = new JTextField();
+			abstractField = new JTextArea();
 		} else {
 			nameField = new JTextField(the_author.getName());
 			emailField = new JTextField(the_author.getEmail());
@@ -86,12 +87,13 @@ public class SubmitPaper extends JFrame {
 			paperTitleField = new JTextField(old_paper.getTitle());
 			keywordField = new JTextField(old_paper.getKeywords());
 			fileChooserField = new JTextField(old_paper.getFilePath());
+			abstractField = new JTextArea(old_paper.getAbstract());
 		}
 		setPreferedSize(250, 25, nameField, paperTopicField, emailField,
 				paperTitleField, keywordField);
 		setPreferedSize(150, 25, fileChooserField);
 
-		abstractField = new JTextArea();
+		//abstractField = new JTextArea();
 		setPreferedSize(250, 80, abstractField);
 		cancel = new JButton(CANCEL);
 		submit = new JButton(SUBMIT);
@@ -201,7 +203,9 @@ public class SubmitPaper extends JFrame {
 				}
 			}
 			if (cmd.equals(SUBMIT)) {
-				
+				if (old_paper != null) {
+					the_conf.removePaper(old_paper.getTitle());
+				}
 				Paper paper = new Paper(the_author, paperTitleField.getText(),
 						keywordField.getText(), abstractField.getText(),
 						fileChooserField.getText(), paperTopicField.getText());

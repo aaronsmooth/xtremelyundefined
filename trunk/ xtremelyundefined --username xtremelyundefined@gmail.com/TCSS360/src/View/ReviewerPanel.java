@@ -188,10 +188,14 @@ public class ReviewerPanel extends JPanel{
 	public JPanel manuscript(AbstractBorder brdr){
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-	    gridBagLayout.columnWidths = new int[]{150, 150, 150, 150, 150};
-	    gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};
+//	      gridBagLayout.columnWidths = new int[]{150, 150, 150, 150, 150};
+//		  gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};
+//		  gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0};
+//		  gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+	    gridBagLayout.columnWidths = new int[]{150, 150, 150, 150};
+	    gridBagLayout.rowHeights = new int[]{ 0, 0, 0, 0};
 	    gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0};
-	    gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+	    gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0};
 	    
 	    JPanel panelManuscript = new JPanel();   
 	    panelManuscript.setLayout(gridBagLayout);
@@ -207,14 +211,14 @@ public class ReviewerPanel extends JPanel{
 	    gridTopic.gridy = 0;
 	    panelManuscript.add(Topic);
 	    
-		JLabel Date = new JLabel ("Date");
-		Date.setHorizontalAlignment(SwingConstants.CENTER);
-		Date.setFont(new Font("Tahoma", Font.BOLD, 14));
-	    GridBagConstraints gridDate = new GridBagConstraints();
-	    gridDate.gridx = 1;
-	    gridDate.insets = new Insets(0, 0, 5, 5);
-	    gridDate.gridy = 0;
-	    panelManuscript.add(Date);
+//		JLabel Date = new JLabel ("Date");
+//		Date.setHorizontalAlignment(SwingConstants.CENTER);
+//		Date.setFont(new Font("Tahoma", Font.BOLD, 14));
+//	    GridBagConstraints gridDate = new GridBagConstraints();
+//	    gridDate.gridx = 1;
+//	    gridDate.insets = new Insets(0, 0, 5, 5);
+//	    gridDate.gridy = 0;
+//	    panelManuscript.add(Date);
 	    
 	    JLabel Review = new JLabel("Review");
 		Review.setHorizontalAlignment(SwingConstants.CENTER);
@@ -264,19 +268,19 @@ public class ReviewerPanel extends JPanel{
 		    gridTopic1.gridy = i+2;
 		    panelManuscript.add(Topic1, gridTopic1);
 		    
-		    JLabel Date1 = new JLabel("12/15/201"+i);
-		    GridBagConstraints gridDate1 = new GridBagConstraints();
-		    gridDate1.insets = new Insets(0, 0, 5, 5);
-		    gridDate1.gridx = 1;
-		    gridDate1.gridy = i+2;
-		    panelManuscript.add(Date1, gridDate1);
+//		    JLabel Date1 = new JLabel("12/15/201"+i);
+//		    GridBagConstraints gridDate1 = new GridBagConstraints();
+//		    gridDate1.insets = new Insets(0, 0, 5, 5);
+//		    gridDate1.gridx = 1;
+//		    gridDate1.gridy = i+2;
+//		    panelManuscript.add(Date1, gridDate1);
 		    
 		    JLabel Review1 = new PanelLabel(" ", currentPaper);
 		    Review1.setIcon(new ImageIcon("src/supportingFiles/review.png"));
 		    Review1.setBorder(brdr);
 		    GridBagConstraints gridReview1 = new GridBagConstraints();
 		    gridReview1.insets = new Insets(0, 0, 5, 5);
-		    gridReview1.gridx = 2;
+		    gridReview1.gridx = 1;
 		    gridReview1.gridy = i+2;
 		    Review1.addMouseListener(new SubmitListen());
 		    if (!currentPaper.hasReviewerCompletedReview(mySystem.getCurrentUser()))
@@ -287,14 +291,14 @@ public class ReviewerPanel extends JPanel{
 		    Edit1.setBorder(brdr);
 		    GridBagConstraints gridEdit1 = new GridBagConstraints();
 		    gridEdit1.insets = new Insets(0, 0, 5, 5);
-		    gridEdit1.gridx = 3;
+		    gridEdit1.gridx = 2;
 		    gridEdit1.gridy = i+2;
 		    panelManuscript.add(Edit1, gridEdit1);
 		    
 		    JLabel Remove1 = new JLabel("12/15/201"+i);
 		    GridBagConstraints gridRemove1 = new GridBagConstraints();
 		    gridRemove1.insets = new Insets(0, 0, 5, 5);
-		    gridRemove1.gridx = 4;
+		    gridRemove1.gridx = 3;
 		    gridRemove1.gridy = i+2;
 		    panelManuscript.add(Remove1, gridRemove1);
 	    }

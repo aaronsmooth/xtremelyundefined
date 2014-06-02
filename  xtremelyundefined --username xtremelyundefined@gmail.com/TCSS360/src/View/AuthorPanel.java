@@ -19,6 +19,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -66,7 +68,8 @@ public class AuthorPanel extends JPanel {
 		
 		JLabel author = new JLabel(aName);
 		author.setHorizontalAlignment(SwingConstants.CENTER);
-		JLabel logout = new JLabel("Logout");
+		JLabel logout = new LogOutLabel("Logout");
+		logout.addPropertyChangeListener(mySystem);
 		logout.setBorder(brdr);
 
 		JPanel logPanel = new JPanel();
@@ -300,12 +303,12 @@ public class AuthorPanel extends JPanel {
 		Iterator<Paper> myIt = myPapers.iterator(); 
 	    for(int i = 0; myIt.hasNext(); i++){
 	    	currentPaper = myIt.next();
-		    final JLabel Topic1 = new JLabel(currentPaper.getTitle());
+		    final JLabel Title1 = new JLabel(currentPaper.getTitle());
 		    GridBagConstraints gridTopic1 = new GridBagConstraints();
 		    gridTopic1.insets = new Insets(0, 0, 5, 5);
 		    gridTopic1.gridx = 0;
 		    gridTopic1.gridy = i+2;
-		    panelManuscript.add(Topic1, gridTopic1);
+		    panelManuscript.add(Title1, gridTopic1);
 		    
 		    final JLabel Date1 = new JLabel("12/15/201"+i);
 		    GridBagConstraints gridDate1 = new GridBagConstraints();
@@ -411,7 +414,7 @@ public class AuthorPanel extends JPanel {
 		    	
 		    });
 		    
-		    final JLabel Remove1 = new JLabel(" ");
+		    final JLabel Remove1 = new PanelLabel(" ", currentPaper);
 		    Remove1.setIcon(new ImageIcon("src/supportingFiles/trash.png"));
 		    Remove1.setBorder(brdr);
 		    GridBagConstraints gridRemove1 = new GridBagConstraints();
@@ -419,56 +422,57 @@ public class AuthorPanel extends JPanel {
 		    gridRemove1.gridx = 4;
 		    gridRemove1.gridy = i+2;
 		    panelManuscript.add(Remove1, gridRemove1);
-		    Remove1.addMouseListener(new MouseListener(){
-		    	//Open the Submit Paper frame with all the old information filled in
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove this paper from the conference?", 
-							"Confirm Paper Removal", JOptionPane.OK_CANCEL_OPTION);
-					if (confirm == 0) {
-						mySystem.getConference().removePaper(currentPaper.getTitle());
-						panelManuscript.remove(Remove1);
-						panelManuscript.remove(Edit1);
-						panelManuscript.remove(view1);
-						panelManuscript.remove(Topic1);
-						panelManuscript.remove(Date1);
-						
-					}
-				}
-			
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					// TODO Auto-generated method stub
-					AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
-				    Remove1.setBorder(brdr);		
-				    repaint();
-				}
-	
-				@Override
-				public void mouseExited(MouseEvent e) {
-					// TODO Auto-generated method stub
-					AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
-					Remove1.setBorder(brdr);		
-					repaint();
-				}
-	
-				@Override
-				public void mousePressed(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-	
-				@Override
-				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-		    	
-		    });
+		    Remove1.addMouseListener(new removeMouseAdapter());
+		    Remove1.addPropertyChangeListener(mySystem);
 		    //panelManuscript.add(Remove1, gridRemove1);
 	    }
 	    
 	    return panelManuscript;
+	}
+	
+	private class removeMouseAdapter implements MouseListener {
+	    	//Open the Submit Paper frame with all the old information filled in
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Object[] myButtons = {"OK", "Cancel"};
+				JOptionPane myP = JOptionPane(new String("Are you sure you want to remove this paper from the conference?"), 
+						JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION, myButtons);
+				
+				if (confirm == 0) {
+					mySystem.getConference().removePaper(((PanelLabel) e.getSource()).getPaper().getTitle());
+					firePropertyChange("Author",  null,  "Author");
+					
+				}
+			}
+		
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
+			    ((PanelLabel) e.getSource()).setBorder(brdr);		
+			    repaint();
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
+				((PanelLabel) e.getSource()).setBorder(brdr);		
+				repaint();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
 	}
 
 }

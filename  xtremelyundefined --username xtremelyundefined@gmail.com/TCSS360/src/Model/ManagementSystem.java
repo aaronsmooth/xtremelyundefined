@@ -187,7 +187,11 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 			setChanged();
 			notifyObservers("SubProgram Chair");
 		}
-		
+		if (evt.getPropertyName().equals("Author")) {
+			setChanged();
+			notifyObservers("Author");
+		}
+	
 		
 	}
 	

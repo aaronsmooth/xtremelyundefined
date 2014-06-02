@@ -4,6 +4,7 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -11,6 +12,8 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -160,14 +163,15 @@ public class AuthorPanel extends JPanel {
 			public void mouseClicked(MouseEvent arg0) {
 				if (mySystem.getConference().getAuthored(mySystem.getCurrentUser()).size() < 4)
 				{
-					new SubmitPaper(mySystem.getConference(), mySystem.getCurrentUser());
+					SubmitPaper mySP = new SubmitPaper(mySystem.getConference(), mySystem.getCurrentUser());
+					mySP.addPropertyChangeListener(mySystem);	
 				} else { //author has already submitted 4 papers to this conference
 					JOptionPane.showMessageDialog(null, "You have already submitted the maximum "
 							+ "number of papers allowed for this conference.");
 				}
 				
 			}
-
+			
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
 				submitPaper.setForeground(Color.BLUE);
@@ -179,7 +183,6 @@ public class AuthorPanel extends JPanel {
 
 			@Override
 			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				submitPaper.setForeground(Color.BLACK);
 				//bottomPanel = bottomPanel(brdr, manuscript(brdr));
 				AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
@@ -314,11 +317,16 @@ public class AuthorPanel extends JPanel {
 		    view1.setIcon(new ImageIcon("src/supportingFiles/review.png"));
 		    view1.setBorder(brdr);
 		    view1.addMouseListener(new MouseListener(){
-	
+		    	//Open the file in whatever the files extension default program is
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
+					File myFile = new File(currentPaper.getFilePath());
+			        try {
+						Desktop.getDesktop().open(myFile);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 	
 				@Override
@@ -364,6 +372,43 @@ public class AuthorPanel extends JPanel {
 		    gridEdit1.gridx = 3;
 		    gridEdit1.gridy = i+2;
 		    panelManuscript.add(Edit1, gridEdit1);
+		    Edit1.addMouseListener(new MouseListener(){
+		    	//Open the Submit Paper frame with all the old information filled in
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					SubmitPaper mySP = new SubmitPaper(mySystem.getConference(), mySystem.getCurrentUser(), currentPaper);
+					mySP.addPropertyChangeListener(mySystem);
+				}
+	
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+			  AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
+			  view1.setBorder(brdr);		
+					repaint();
+				}
+	
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
+					  view1.setBorder(brdr);		
+							repaint();
+				}
+	
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+	
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+		    	
+		    });
 		    
 		    JLabel Remove1 = new JLabel(" ");
 		    Remove1.setIcon(new ImageIcon("src/supportingFiles/trash.png"));

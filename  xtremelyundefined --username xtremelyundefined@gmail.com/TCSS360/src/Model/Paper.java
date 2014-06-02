@@ -41,6 +41,11 @@ public class Paper implements Serializable{
 	private String paperAbstract;
 	
 	/**
+	 * Topic of the paper
+	 */
+	private String topic;
+	
+	/**
 	 * The spc assigned to this paper.
 	 */
 	private User spc;
@@ -80,6 +85,7 @@ public class Paper implements Serializable{
 		this.keywords = Objects.requireNonNull(keywords);
 		this.paperAbstract = Objects.requireNonNull(paperAbstract);
 		this.filePath = Objects.requireNonNull(filePath);
+		//his.topic = topic;
 		isAccepted = Approval.UNDECIDED;
 		reviewerMap = new HashMap<User, Review>();	
 	}
@@ -223,5 +229,17 @@ public class Paper implements Serializable{
 	
 	public boolean hasReviewerCompletedReview(User reviewer) {
 		return this.reviewerMap.get(reviewer) != null;
+	}
+	
+	public String getFilePath() {
+		return this.filePath;
+	}
+	
+	public String getTopic() {
+		return this.topic;
+	}
+	
+	public String getKeywords() {
+		return this.keywords;
 	}
 }

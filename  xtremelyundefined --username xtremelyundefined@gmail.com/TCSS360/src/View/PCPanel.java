@@ -51,7 +51,13 @@ public class PCPanel extends JPanel {
 	
 	private boolean backward;
 	
+	private JPanel midPanel;
 	
+	private JPanel bottomPanel;
+	
+	private JPanel manuscriptPanel;
+	
+	private JPanel arrowsPanel;
 	
 	/**
 	 * Constructor.
@@ -87,10 +93,11 @@ public class PCPanel extends JPanel {
 		setLayout(new BorderLayout());
 		AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
 		
-		JPanel topPanel, bottomPanel, midPanel;
-		
+		JPanel topPanel; //, bottomPanel, midPanel;
 		topPanel = topPanel(brdr, mySystem.getCurrentUser().getName());
-		bottomPanel = bottomPanel(brdr, manuscripts(brdr), arrowPanel(brdr));
+		manuscriptPanel = manuscripts(brdr);
+		arrowsPanel = arrowPanel(brdr);
+		bottomPanel = bottomPanel(brdr, manuscriptPanel, arrowsPanel);
 		midPanel = midPanel(bottomPanel, brdr, mySystem.getConference().getName());
 		
 		add(topPanel, BorderLayout.NORTH);
@@ -221,6 +228,10 @@ public class PCPanel extends JPanel {
 				if(start == 1){ //if start is at original position, it will not move
 					backward = false;
 				} else {
+					
+					remove(midPanel);
+					AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
+					
 					if(start - 8 > 8){
 						start -= 8;
 						backward = true;
@@ -234,8 +245,13 @@ public class PCPanel extends JPanel {
 						end = end - 8;
 						forward = true;
 					}
+					manuscriptPanel = manuscripts(brdr);
+					bottomPanel = bottomPanel(brdr, manuscriptPanel, arrowsPanel);
+					midPanel = midPanel(bottomPanel, brdr, mySystem.getConference().getName());
+					add(midPanel);
+					prev.addPropertyChangeListener(mySystem);
+					validate();
 				}
-				manuscripts(new TextBubbleBorder(Color.BLACK,2,6,0));
 				
 			}
 			
@@ -279,9 +295,13 @@ public class PCPanel extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				
 				if(end == size){
 					forward = false;
 				} else {
+					remove(midPanel);
+					AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
+					
 					start = end + 1;
 					backward = true;
 				
@@ -292,6 +312,12 @@ public class PCPanel extends JPanel {
 						forward = false;
 						end += (size - end);
 					}
+					manuscriptPanel = manuscripts(brdr);
+					bottomPanel = bottomPanel(brdr, manuscriptPanel, arrowsPanel);
+					midPanel = midPanel(bottomPanel, brdr, mySystem.getConference().getName());
+					add(midPanel);
+					next.addPropertyChangeListener(mySystem);
+					validate();
 				}
 			}
 			

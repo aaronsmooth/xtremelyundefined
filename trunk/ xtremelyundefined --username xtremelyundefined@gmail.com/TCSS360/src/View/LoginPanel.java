@@ -40,6 +40,20 @@ public class LoginPanel extends JPanel {
 		this.system = system;
 		currentUser = null;
 		currentConference = new JComboBox<Conference>();
+		currentConference.addActionListener(new ActionListener(){
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (String rle : ((Conference)currentConference.getSelectedItem()).getRoles(currentUser)) {
+					role.addItem(rle);
+				}
+
+			}
+
+		});
+		for (Conference cnf : system.getConferences()) {
+			currentConference.addItem(cnf);
+		}
 		setLayout(null);
 		
 		JPanel framePanel = new JPanel();
@@ -65,48 +79,34 @@ public class LoginPanel extends JPanel {
 		loginpanel.setLayout(new GridLayout(4,2, 1, 1));
 		loginpanel.add(new JLabel("Email Address"));
 		email = new JTextField(16);
+		role = new JComboBox<String>();
+		final JButton login = new JButton();
+		login.setEnabled(false);
 		email.addFocusListener(new FocusListener(){
 
 			@Override
 			public void focusGained(FocusEvent e) {
-
+				role.removeAll();
+				role.addItem("Author");
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				currentUser = system.getUser(email.getText());
-				
-				for (Conference cnf : system.getConferences()) {
-					if (cnf.hasUser(currentUser)) {
-						currentConference.addItem(cnf);
-					}
+				if (system.getUser(email.getText()) != null) {
+					currentUser = system.getUser(email.getText());
+					login.setEnabled(true);
 				}
 			}					
 		});
 		loginpanel.add(email);
 		loginpanel.add(new JLabel("Conference"));
-		currentConference = new JComboBox<Conference>();
-		currentConference.addActionListener(new ActionListener(){
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				for (String rle : ((Conference)currentConference.getSelectedItem()).getRoles(currentUser)) {
-					role.addItem(rle);
-				}
-
-			}
-
-		});
 		loginpanel.add(currentConference);
 		loginpanel.add(new JLabel("Role"));
-		role = new JComboBox<String>();
-		role.addItem("Author");
 		loginpanel.add(role);
 		
 		
 		//Button Panel
 		buttonPanel.setLayout(new FlowLayout());
-		JButton login = new JButton();
 		login.addActionListener(new ActionListener() {
 
 			@Override

@@ -1,6 +1,11 @@
 package View;
 
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,19 +25,38 @@ public class ViewReview extends JFrame{
 	List<String> prompts;
 	
 	public ViewReview(List<Integer> scores, String spc, List<String> comments) {
+		super("Completed Review");
 		prompts = initializePrompts();
-		panel = new JPanel();
-		panel.add(new JLabel("Confidential Comment to the SPC"));
-		panel.add(new JLabel(spc));
-		for (int i = 0; i < scores.size(); i++) {
-			panel.add(new JLabel(prompts.get(i)));
-			panel.add(new JLabel(scores.get(i).toString() + ": "));
-			panel.add(new JLabel(comments.get(i)));
+		panel = new JPanel(new GridBagLayout());
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridheight = 1;
+		c.gridwidth = 1;
+		c.anchor = GridBagConstraints.WEST;
+		panel.add(new JLabel("Confidential Comment to the SPC:"), c);
+		
+		++c.gridy;
+		c.gridx = 0;
+		panel.add(new JLabel("\t" + spc), c);
+		
+		for (int i = 0; i < scores.size() - 1; i++) {
+			c.gridy+=2;
+			c.gridx = 0;
+			c.anchor = GridBagConstraints.WEST;
+			panel.add(new JLabel(scores.get(i).toString() + ": " + prompts.get(i)), c);
+			
+			c.gridx = 0;
+			++c.gridy;
+			c.anchor = GridBagConstraints.WEST;
+			panel.add(new JLabel("\t" + comments.get(i)), c);
 		}
+		++c.gridy;
+		c.anchor = GridBagConstraints.CENTER;
 		JButton ok = new JButton("OK");
 		ok.addActionListener(new ActionListener()
 		{
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Window frm = SwingUtilities.windowForComponent((Component) e.getSource());
@@ -40,8 +64,15 @@ public class ViewReview extends JFrame{
 			}
 			
 		});
-		panel.add(ok);
+		JPanel spanel = new JPanel(new FlowLayout());
+		spanel.add(ok);
+		
+		++c.gridy;
+		panel.add(spanel, c);
+		panel.setPreferredSize(new Dimension(1000, 500));
 		add(panel);
+		pack();
+		setAlwaysOnTop(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}

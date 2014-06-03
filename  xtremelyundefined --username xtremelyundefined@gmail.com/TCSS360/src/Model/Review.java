@@ -35,20 +35,13 @@ public class Review implements Serializable{
 	/**
 	 * Public constructor that initializes fields
 	 * 
-	 * @param rating int[] of ratings
+	 * @param rating List  of ratings
 	 * @param summary text of reviewers summary
 	 */
 	public Review(List<Integer> rating, String spc, List<String> author) {
-		rating = new ArrayList<Integer>();
-		author = new ArrayList<String>();
-		//defensive copy of parameter
-		for (Integer i : rating) { 
-			this.rating.add(i);
-		}
+		this.rating = new ArrayList<Integer>(rating);
+		this.authorComments = new ArrayList<String>(author);	
 		spcComments = spc;
-		for (String str : author) {
-			authorComments.add(str);
-		}
 
 	}
 

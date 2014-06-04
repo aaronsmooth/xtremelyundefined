@@ -437,17 +437,15 @@ public class AuthorPanel extends JPanel {
 		    //panelManuscript.add(Remove1, gridRemove1);
 		    
 		    if (currentPaper.getAcceptanceStatus() != Approval.UNDECIDED) {
-			    final PanelLabel viewReview1 = new PanelLabel(" ", currentPaper);
+			    PanelLabel viewReview1 = new PanelLabel(" ", currentPaper);
 			    viewReview1.setIcon(new ImageIcon("src/supportingFiles/view.png"));
-			    Remove1.setBorder(brdr);
+			    viewReview1.setBorder(brdr);
 			    GridBagConstraints gridView1 = new GridBagConstraints();
 			    gridView1.insets = new Insets(0, 0, 5, 5);
 			    gridView1.gridx = 5;
 			    gridView1.gridy = i+2;
-			    panelManuscript.add(Remove1, gridRemove1);
+			    panelManuscript.add(viewReview1, gridView1);
 			    viewReview1.addMouseListener(new ViewListen());
-			    viewReview1.addPropertyChangeListener(mySystem);
-			    add(viewReview1);
 		    }
 	    }
 	    
@@ -494,10 +492,25 @@ public class AuthorPanel extends JPanel {
 	
 	private class ViewListen extends MouseAdapter {
 		public void mouseClicked(MouseEvent arg0) {
-			Review rev = ((((PanelLabel) arg0.getSource())).getPaper().getReview(mySystem.getCurrentUser()));
-			if (rev != null) {
+			for (Review rev : ((PanelLabel) arg0.getSource()).getPaper().getReviews()){
 				ViewReview vr = new ViewReview(rev, false);
 			}
+		}
+		
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
+		    ((PanelLabel) e.getSource()).setBorder(brdr);		
+		    repaint();
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
+			((PanelLabel) e.getSource()).setBorder(brdr);		
+			repaint();
 		}
 	}
 

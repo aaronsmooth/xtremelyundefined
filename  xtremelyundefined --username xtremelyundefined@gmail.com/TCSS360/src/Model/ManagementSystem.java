@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JOptionPane;
+
 public class ManagementSystem extends Observable implements Serializable, PropertyChangeListener{
 
 	/**
@@ -168,9 +170,13 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 			notifyObservers(evt.getNewValue());
 		}
 		if (evt.getPropertyName().equals("SPC")) {
-			((Paper) evt.getOldValue()).setSPC((User) evt.getNewValue());
-			setChanged();
-			notifyObservers("Program Chair");
+			if (evt.getNewValue() != null && ((User) evt.getNewValue()).equals(currentUser) ) {
+				JOptionPane.showMessageDialog(null, "Sorry, you can not assign yourself to that role.");
+			} else {
+				((Paper) evt.getOldValue()).setSPC((User) evt.getNewValue());
+				setChanged();
+				notifyObservers("Program Chair");
+			}
 		}
 		if (evt.getPropertyName().equals("login")) {
 			setChanged();
@@ -181,7 +187,9 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 			notifyObservers(evt.getNewValue());
 		}
 		if (evt.getPropertyName().equals("Reviewer")){
-			if (evt.getNewValue() != null) {
+			if (evt.getNewValue() != null && ((User) evt.getNewValue()).equals(currentUser) ) {
+				JOptionPane.showMessageDialog(null, "Sorry, you can not assign yourself to that role.");
+			} else {
 				((Paper) evt.getOldValue()).review((User) evt.getNewValue(), null);
 			}
 			setChanged();

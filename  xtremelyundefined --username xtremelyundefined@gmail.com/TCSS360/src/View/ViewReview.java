@@ -12,10 +12,14 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
@@ -23,6 +27,8 @@ public class ViewReview extends JFrame{
 
 	JPanel panel;
 	List<String> prompts;
+	private static final int TEXT_HEIGHT = 50;
+	private static final int TEXT_WIDTH = 500;
 	
 	public ViewReview(List<Integer> scores, String spc, List<String> comments) {
 		super("Completed Review");
@@ -39,7 +45,9 @@ public class ViewReview extends JFrame{
 		
 		++c.gridy;
 		c.gridx = 0;
-		panel.add(new JLabel("\t" + spc), c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = GridBagConstraints.REMAINDER;
+		panel.add(newText(spc), c);
 		
 		for (int i = 0; i < scores.size() - 1; i++) {
 			c.gridy+=2;
@@ -50,7 +58,9 @@ public class ViewReview extends JFrame{
 			c.gridx = 0;
 			++c.gridy;
 			c.anchor = GridBagConstraints.WEST;
-			panel.add(new JLabel("\t" + comments.get(i)), c);
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.weightx = GridBagConstraints.REMAINDER;
+			panel.add(newText(comments.get(i)), c);
 		}
 		++c.gridy;
 		c.anchor = GridBagConstraints.CENTER;
@@ -96,5 +106,19 @@ public class ViewReview extends JFrame{
 		prompts.add("Does the paper adhere to standards ofstyle, usage, and composotion?");
 		return prompts;
 		
+	}
+	
+	private JScrollPane newText(String str){
+		JTextArea txt = new JTextArea(str);
+		txt.setBorder(BorderFactory.createEtchedBorder());
+		txt.setWrapStyleWord(true);
+		txt.setLineWrap(true);
+		txt.setEditable(false);
+		txt.setBackground(this.getBackground());
+		JScrollPane scroll = new JScrollPane(txt);
+		scroll.setBorder(BorderFactory.createEtchedBorder());
+		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		return scroll;
 	}
 }

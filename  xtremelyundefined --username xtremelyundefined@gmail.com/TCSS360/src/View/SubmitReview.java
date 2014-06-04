@@ -147,7 +147,7 @@ public class SubmitReview extends JFrame {
 		return scroll;
 	}
 	
-	public ScrollPane createCenterPane() {
+	private ScrollPane createCenterPane() {
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -353,6 +353,7 @@ public class SubmitReview extends JFrame {
 		c.weightx = GridBagConstraints.REMAINDER;
 		++c.gridy;
 		panel.add(newText(), c);
+		
 		
 		c.gridy++;
 		panel.add(createSouthPanel(), c);

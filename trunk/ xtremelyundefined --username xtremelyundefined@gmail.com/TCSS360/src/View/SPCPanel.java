@@ -48,7 +48,7 @@ public class SPCPanel extends JPanel {
 
 		topPanel = topPanel(brdr, currentUser.getName());
 		bottomPanel = bottomPanel(brdr, manuscripts(brdr), arrowPanel(brdr));
-		midPanel = midPanel(bottomPanel, brdr, "Conference Name");
+		midPanel = midPanel(bottomPanel, brdr, system.getConference().getName());
 
 		add(topPanel, BorderLayout.NORTH);
 		add(midPanel, BorderLayout.CENTER);
@@ -189,7 +189,7 @@ public class SPCPanel extends JPanel {
 	    panelManuscript.setLayout(gridBagLayout);
 	    panelManuscript.setSize(500,300);
 	    
-	    JLabel Topic = new JLabel ("Topic");
+	    JLabel Topic = new JLabel ("Title");
 	    Topic.setHorizontalAlignment(SwingConstants.CENTER);
 	    Topic.setFont(new Font("Tahoma", Font.BOLD, 14));
 	    GridBagConstraints gridTopic = new GridBagConstraints();
@@ -364,7 +364,7 @@ public class SPCPanel extends JPanel {
 		 public void mouseClicked(MouseEvent arg0) {
 			 currentPaper = (Paper) ((PanelLabel) arg0.getSource()).getPaper();
 			 for (Review rev : currentPaper.getReviews()) {
-				 ViewReview v = new ViewReview(rev.getRating(), rev.getSpcComment(), rev.getAuthorComments());
+				 ViewReview v = new ViewReview(rev, true);
 			 }
 		 }
 	 }

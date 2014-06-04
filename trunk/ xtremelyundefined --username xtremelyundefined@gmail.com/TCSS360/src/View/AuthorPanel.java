@@ -32,7 +32,7 @@ import Model.ManagementSystem;
 import Model.Paper;
 
 public class AuthorPanel extends JPanel {
-	private String Author;// = "JOE SCHMOE";
+	private String Author;
 	
 	private ManagementSystem mySystem;
 	

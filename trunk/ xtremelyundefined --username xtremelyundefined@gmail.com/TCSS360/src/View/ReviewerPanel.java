@@ -322,8 +322,10 @@ public class ReviewerPanel extends JPanel{
 	
 	private class ViewListen extends MouseAdapter {
 		public void mouseClicked(MouseEvent arg0) {
-			ViewReview vr = new ViewReview((((PanelLabel) arg0.getSource())).getPaper().getReview(mySystem.getCurrentUser()), 
-					true);
+			Review rev = ((((PanelLabel) arg0.getSource())).getPaper().getReview(mySystem.getCurrentUser()));
+			if (rev != null) {
+				ViewReview vr = new ViewReview(rev, true);
+			}
 		}
 	}
 

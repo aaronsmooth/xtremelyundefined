@@ -342,7 +342,8 @@ public class SPCPanel extends JPanel {
 			    
 			    PanelLabel Recommend1;
 			    if (currentPaper.getRating() != 0) {
-			       Recommend1 = new PanelLabel(Integer.toString(currentPaper.getRating()), currentPaper);
+			    	Recommend1 = new PanelLabel(currentPaper.getRating() + ": " 
+				    		   + currentPaper.getRationale(), currentPaper);
 			    } else {
 			    	Recommend1 = new PanelLabel(" ", currentPaper);
 			    	Recommend1.addMouseListener(new SPCRecommend());

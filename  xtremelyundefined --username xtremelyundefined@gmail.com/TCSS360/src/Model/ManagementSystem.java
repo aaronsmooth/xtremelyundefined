@@ -187,10 +187,12 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 			notifyObservers(evt.getNewValue());
 		}
 		if (evt.getPropertyName().equals("Reviewer")){
-			if (evt.getNewValue() != null && ((User) evt.getNewValue()).equals(currentUser) ) {
-				JOptionPane.showMessageDialog(null, "Sorry, you can not assign yourself to that role.");
-			} else {
-				((Paper) evt.getOldValue()).review((User) evt.getNewValue(), null);
+			if (evt.getOldValue() != null && evt.getNewValue() != null) {
+				if (((User) evt.getNewValue()).equals(currentUser) ) {
+					JOptionPane.showMessageDialog(null, "Sorry, you can not assign yourself to that role.");
+				} else {
+					((Paper) evt.getOldValue()).review((User) evt.getNewValue(), null);
+				}
 			}
 			setChanged();
 			notifyObservers("SubProgram Chair");

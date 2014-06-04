@@ -174,9 +174,9 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 				JOptionPane.showMessageDialog(null, "Sorry, you can not assign yourself to that role.");
 			} else {
 				((Paper) evt.getOldValue()).setSPC((User) evt.getNewValue());
-				setChanged();
-				notifyObservers("Program Chair");
 			}
+			setChanged();
+			notifyObservers("Program Chair");
 		}
 		if (evt.getPropertyName().equals("login")) {
 			setChanged();

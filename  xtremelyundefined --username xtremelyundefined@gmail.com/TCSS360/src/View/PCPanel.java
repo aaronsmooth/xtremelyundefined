@@ -521,14 +521,14 @@ public class PCPanel extends JPanel {
 			    
 			    
 			    PanelLabel Recommend1;
-			    if(currentPaper.getRationale() == null){
-			       Recommend1 = new PanelLabel(" ---------- ", currentPaper);
+			    if(currentPaper.getRationale() != null){
+			       Recommend1 = new PanelLabel(currentPaper.getRating() + ": " 
+			    		   + currentPaper.getRationale(), currentPaper);
 			    } else {
 			    	Recommend1 = new PanelLabel(" ", currentPaper);
 			    	Recommend1.setIcon(new ImageIcon("src/supportingFiles/recd.png"));
 			    	Recommend1.setBorder(brdr);
 			    	Recommend1.setHorizontalAlignment(SwingConstants.CENTER);
-			    	Recommend1.addMouseListener(new PCPick());
 			    }
 			    
 			    GridBagConstraints gridRecommend1 = new GridBagConstraints();
@@ -539,16 +539,18 @@ public class PCPanel extends JPanel {
 			    
 			    PanelLabel Status1 = new PanelLabel(" ", currentPaper);
 			    Approval status = currentPaper.getAcceptanceStatus();
+			    Status1.addMouseListener(new AcceptAction());
 			    switch(status) {
 			    case YES:
 			    	Status1.setIcon(new ImageIcon("src/supportingFiles/approve.png"));
+			    	break;
 			    case NO:
 			    	Status1.setIcon(new ImageIcon("src/supportingFiles/reject.png"));
+			    	break;
 			    default:
 			    	Status1.setIcon(new ImageIcon("src/supportingFiles/decide.png"));
 			    	Status1.setBorder(brdr);
 				    Status1.setHorizontalAlignment(SwingConstants.CENTER);
-			    	Status1.addMouseListener(new PCPick());
 			    }
 		    	Status1.setBorder(brdr);
 		    	Status1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -571,6 +573,31 @@ public class PCPanel extends JPanel {
 			 myBox.addPropertyChangeListener(mySystem);
 			 currentPaper.setSPC(selected);
 		 }
+	 }
+	 
+	 private class AcceptAction extends MouseAdapter {
+		 @Override
+		 public void mouseClicked(MouseEvent arg0) {
+			PanelLabel src = (PanelLabel) arg0.getSource();
+			 Approval status = src.getPaper().getAcceptanceStatus();
+			 switch (status) {
+			 	case YES:
+			 		src.getPaper().setAccepted(Approval.NO);
+			    	src.setIcon(new ImageIcon("src/supportingFiles/reject.png"));
+			 		break;
+			 	case NO:
+			 		src.getPaper().setAccepted(Approval.UNDECIDED);
+			    	src.setIcon(new ImageIcon("src/supportingFiles/decide.png"));
+			 		break;
+			 	case UNDECIDED:
+			 		src.getPaper().setAccepted(Approval.YES);
+			    	src.setIcon(new ImageIcon("src/supportingFiles/approve.png"));
+			 		break;
+			 	default:
+			 		break;
+			 }
+		 }
+
 	 }
 }
 

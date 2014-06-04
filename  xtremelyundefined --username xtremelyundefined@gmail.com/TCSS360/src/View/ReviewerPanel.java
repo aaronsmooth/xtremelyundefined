@@ -278,6 +278,7 @@ public class ReviewerPanel extends JPanel{
 		    JLabel Review1 = new PanelLabel(" ", currentPaper);
 		    Review1.setIcon(new ImageIcon("src/supportingFiles/review.png"));
 		    Review1.setBorder(brdr);
+		    Review1.addMouseListener(new ViewListen());
 		    GridBagConstraints gridReview1 = new GridBagConstraints();
 		    gridReview1.insets = new Insets(0, 0, 5, 5);
 		    gridReview1.gridx = 1;
@@ -317,6 +318,13 @@ public class ReviewerPanel extends JPanel{
 			SubmitReview mySR =	new SubmitReview((Paper) ((PanelLabel)arg0.getSource()).getPaper(), mySystem.getCurrentUser());
 			mySR.addPropertyChangeListener(mySystem);	
 		}	
+	}
+	
+	private class ViewListen extends MouseAdapter {
+		public void mouseClicked(MouseEvent arg0) {
+			ViewReview vr = new ViewReview((((PanelLabel) arg0.getSource())).getPaper().getReview(mySystem.getCurrentUser()), 
+					true);
+		}
 	}
 
 }

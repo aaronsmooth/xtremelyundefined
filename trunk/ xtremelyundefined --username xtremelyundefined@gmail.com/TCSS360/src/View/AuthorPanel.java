@@ -32,7 +32,7 @@ import Model.ManagementSystem;
 import Model.Paper;
 
 public class AuthorPanel extends JPanel {
-	private String Author;
+	private String author;
 	
 	private ManagementSystem mySystem;
 	
@@ -40,13 +40,13 @@ public class AuthorPanel extends JPanel {
 	
 	public AuthorPanel(ManagementSystem theSystem){
 		mySystem = theSystem;
-		Author = theSystem.getCurrentUser().getName();
+		author = theSystem.getCurrentUser().getName();
 		setLayout(new BorderLayout());
 		AbstractBorder brdr = new TextBubbleBorder(Color.BLACK,2,6,0);
 		
 		JPanel topPanel, bottomPanel, midPanel;
 		
-		topPanel = topPanel(brdr, Author);
+		topPanel = topPanel(brdr, author);
 	    bottomPanel = bottomPanel(brdr, manuscript(brdr));
 	    midPanel = midPanel(brdr, theSystem.getConference().getName(), bottomPanel);
 		
@@ -297,7 +297,7 @@ public class AuthorPanel extends JPanel {
 	    panelManuscript.add(separator, gbc_separator);
 		
 	    // List of Papers
-	    List<Paper> myPapers = (this.mySystem.getConference()).getAllPapers();
+	    List<Paper> myPapers = (this.mySystem.getConference()).getAuthored(mySystem.getCurrentUser());
 		Iterator<Paper> myIt = myPapers.iterator(); 
 	    for(int i = 0; myIt.hasNext(); i++){
 	    	currentPaper = myIt.next();

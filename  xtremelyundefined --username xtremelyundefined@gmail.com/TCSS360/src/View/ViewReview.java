@@ -3,9 +3,11 @@ package View;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.ScrollPane;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,45 +26,67 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
+import Model.Review;
+
 @SuppressWarnings("serial")
 public class ViewReview extends JFrame{
 
 	JPanel panel;
 	List<String> prompts;
+	boolean spc;
 	private static final int TEXT_HEIGHT = 50;
 	private static final int TEXT_WIDTH = 500;
 	
-	public ViewReview(List<Integer> scores, String spc, List<String> comments) {
+	public ViewReview(Review rev, boolean spc) {
 		super("Completed Review");
+		this.spc = spc;
 		prompts = initializePrompts();
 		panel = new JPanel(new GridBagLayout());
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
-		c.gridheight = 1;
-		c.gridwidth = 1;
-		c.anchor = GridBagConstraints.WEST;
-		panel.add(new JLabel("Confidential Comment to the SPC:"), c);
 		
-		++c.gridy;
-		c.gridx = 0;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = GridBagConstraints.REMAINDER;
-		panel.add(newText(spc), c);
-		
-		for (int i = 0; i < scores.size() - 1; i++) {
-			c.gridy+=2;
-			c.gridx = 0;
+		if (spc) {
+			c.gridheight = 1;
+			c.gridwidth = 1;
 			c.anchor = GridBagConstraints.WEST;
-			panel.add(new JLabel(scores.get(i).toString() + ": " + prompts.get(i)), c);
+			panel.add(new JLabel("Confidential Comment to the SPC:"), c);
+
+			++c.gridy;
+			c.gridx = 0;
+			c.fill = GridBagConstraints.BOTH;
+			c.weightx = GridBagConstraints.REMAINDER;
+			panel.add(newText(rev.getSpcComment()), c);
+		}
+		
+		for (int i = 0; i < rev.getRating().size(); i++) {
+			++c.gridy;
+			c.gridheight = 1;
+			c.weighty = GridBagConstraints.REMAINDER;
+			c.fill = GridBagConstraints.NONE;
+			panel.add(Box.createVerticalStrut(25), c);
+			c.ipady = 20;
+			c.ipadx = 10;
+			++c.gridy;
+			c.gridx = 0;
+			c.gridwidth = 1;
+			c.fill = GridBagConstraints.BOTH;
+			c.anchor = GridBagConstraints.WEST;
+			panel.add(new JLabel(prompts.get(i)), c);
+			
+			++c.gridx;
+			JLabel score = new JLabel(rev.getRating().get(i).toString());
+			score.setFont(new Font("TimesRoman", Font.BOLD, 20));
+			panel.add(score, c);
 			
 			c.gridx = 0;
 			++c.gridy;
 			c.anchor = GridBagConstraints.WEST;
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.weightx = GridBagConstraints.REMAINDER;
-			panel.add(newText(comments.get(i)), c);
+			c.gridwidth = 2;
+			c.gridheight = 2;
+			c.fill = GridBagConstraints.BOTH;
+			panel.add(newText(rev.getAuthorComments().get(i)), c);
 		}
 		++c.gridy;
 		c.anchor = GridBagConstraints.CENTER;
@@ -79,10 +105,13 @@ public class ViewReview extends JFrame{
 		
 		++c.gridy;
 		panel.add(spanel, c);
-		panel.setPreferredSize(new Dimension(1000, 500));
-		add(panel);
+		ScrollPane scroll = new ScrollPane();
+		scroll.setPreferredSize(new Dimension(1000, 700));
+		scroll.add(panel);
+		add(scroll);
 		pack();
 		setAlwaysOnTop(true);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}
@@ -93,7 +122,7 @@ public class ViewReview extends JFrame{
 		prompts.add( "Does the work appeal to a broad readership interested in engineering education or is it"
 					+" narrowly specialized?");
 		prompts.add("Does the work address a significant problem?");
-		prompts.add("Does the author build upon relevant refernces and bodies of knowledge");
+		prompts.add("Does the author build upon relevant refernces and bodies of knowledge?");
 		prompts.add("If a teaching invtervention is reported, is it adequately evaluated in terms of its "
 				+ "impact on learning in actual use?");
 
@@ -102,8 +131,9 @@ public class ViewReview extends JFrame{
 
 		prompts.add("Did the author provide sufficient detail to replicate and evaluate?");
 
-		prompts.add("Is the paper clearly and carefully written");
+		prompts.add("Is the paper clearly and carefully written?");
 		prompts.add("Does the paper adhere to standards ofstyle, usage, and composotion?");
+		prompts.add("Summary: ");
 		return prompts;
 		
 	}
@@ -114,6 +144,7 @@ public class ViewReview extends JFrame{
 		txt.setWrapStyleWord(true);
 		txt.setLineWrap(true);
 		txt.setEditable(false);
+		txt.setMinimumSize(new Dimension(200, 100));
 		txt.setBackground(this.getBackground());
 		JScrollPane scroll = new JScrollPane(txt);
 		scroll.setBorder(BorderFactory.createEtchedBorder());

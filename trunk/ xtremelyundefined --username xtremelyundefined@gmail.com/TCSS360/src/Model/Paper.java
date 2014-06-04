@@ -125,6 +125,10 @@ public class Paper implements Serializable{
 		}
 	}
 	
+	public Review getReview(User reviewer) {
+		return reviewerMap.get(reviewer);
+	}
+	
 	/**
 	 * Assigns an SPC to this paper
 	 * 

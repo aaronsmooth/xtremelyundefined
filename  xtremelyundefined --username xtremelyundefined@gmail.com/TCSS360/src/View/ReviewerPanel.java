@@ -278,7 +278,6 @@ public class ReviewerPanel extends JPanel{
 		    JLabel Review1 = new PanelLabel(" ", currentPaper);
 		    Review1.setIcon(new ImageIcon("src/supportingFiles/review.png"));
 		    Review1.setBorder(brdr);
-		    Review1.addMouseListener(new ViewListen());
 		    GridBagConstraints gridReview1 = new GridBagConstraints();
 		    gridReview1.insets = new Insets(0, 0, 5, 5);
 		    gridReview1.gridx = 1;
@@ -293,8 +292,9 @@ public class ReviewerPanel extends JPanel{
 		    }
 		    
 		    
-		    JLabel Edit1 = new JLabel(" ");
+		    PanelLabel Edit1 = new PanelLabel(" ",currentPaper);
 		    Edit1.setIcon(new ImageIcon("src/supportingFiles/view.png"));
+		    Edit1.addMouseListener(new ViewListen());
 		    Edit1.setBorder(brdr);
 		    GridBagConstraints gridEdit1 = new GridBagConstraints();
 		    gridEdit1.insets = new Insets(0, 0, 5, 5);

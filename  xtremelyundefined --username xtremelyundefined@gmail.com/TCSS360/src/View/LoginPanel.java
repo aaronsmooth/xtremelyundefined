@@ -44,6 +44,10 @@ public class LoginPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (role != null) {
+					role.removeAllItems();
+					role.addItem("Author");
+				}
 				for (String rle : ((Conference)currentConference.getSelectedItem()).getRoles(currentUser)) {
 					role.addItem(rle);
 				}
@@ -86,8 +90,7 @@ public class LoginPanel extends JPanel {
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				role.removeAll();
-				role.addItem("Author");
+				
 			}
 
 			@Override

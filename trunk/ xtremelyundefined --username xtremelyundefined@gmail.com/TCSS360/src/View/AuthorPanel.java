@@ -11,6 +11,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -28,8 +29,10 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.AbstractBorder;
 
+import Model.Approval;
 import Model.ManagementSystem;
 import Model.Paper;
+import Model.Review;
 
 public class AuthorPanel extends JPanel {
 	private String author;
@@ -260,7 +263,7 @@ public class AuthorPanel extends JPanel {
 	    gridDate.gridy = 0;
 	    panelManuscript.add(Date);
 	    
-	    JLabel Review = new JLabel("View");
+	    JLabel Review = new JLabel("View Paper");
 		Review.setHorizontalAlignment(SwingConstants.CENTER);
 		Review.setFont(new Font("Tahoma", Font.BOLD, 14));
 	    GridBagConstraints gridReview = new GridBagConstraints();
@@ -286,6 +289,15 @@ public class AuthorPanel extends JPanel {
 	    gridRemove.insets = new Insets(0, 0, 5, 5);
 	    gridRemove.gridy = 0;
 	    panelManuscript.add(Remove);
+	    
+	    JLabel viewReview = new JLabel("View Reviews");
+		viewReview.setHorizontalAlignment(SwingConstants.CENTER);
+		viewReview.setFont(new Font("Tahoma", Font.BOLD, 14));
+	    GridBagConstraints gridView = new GridBagConstraints();
+	    gridView.gridx = 1;
+	    gridView.insets = new Insets(0, 0, 5, 5);
+	    gridView.gridy = 0;
+	    panelManuscript.add(viewReview);
 		
 	    JSeparator separator = new JSeparator();
 	    GridBagConstraints gbc_separator = new GridBagConstraints();
@@ -423,6 +435,20 @@ public class AuthorPanel extends JPanel {
 		    Remove1.addMouseListener(new removeMouseAdapter());
 		    Remove1.addPropertyChangeListener(mySystem);
 		    //panelManuscript.add(Remove1, gridRemove1);
+		    
+		    if (currentPaper.getAcceptanceStatus() != Approval.UNDECIDED) {
+			    final PanelLabel viewReview1 = new PanelLabel(" ", currentPaper);
+			    viewReview1.setIcon(new ImageIcon("src/supportingFiles/view.png"));
+			    Remove1.setBorder(brdr);
+			    GridBagConstraints gridView1 = new GridBagConstraints();
+			    gridView1.insets = new Insets(0, 0, 5, 5);
+			    gridView1.gridx = 5;
+			    gridView1.gridy = i+2;
+			    panelManuscript.add(Remove1, gridRemove1);
+			    viewReview1.addMouseListener(new ViewListen());
+			    viewReview1.addPropertyChangeListener(mySystem);
+			    add(viewReview1);
+		    }
 	    }
 	    
 	    return panelManuscript;
@@ -464,6 +490,15 @@ public class AuthorPanel extends JPanel {
 				
 			}
 	    	
+	}
+	
+	private class ViewListen extends MouseAdapter {
+		public void mouseClicked(MouseEvent arg0) {
+			Review rev = ((((PanelLabel) arg0.getSource())).getPaper().getReview(mySystem.getCurrentUser()));
+			if (rev != null) {
+				ViewReview vr = new ViewReview(rev, false);
+			}
+		}
 	}
 
 }

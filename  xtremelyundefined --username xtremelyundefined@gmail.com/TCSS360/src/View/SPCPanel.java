@@ -305,8 +305,9 @@ public class SPCPanel extends JPanel {
 			    if (currentPaper.getReviewers().size() > 0) {
 			    	StringBuilder sb = new StringBuilder();
 			    	for (User rev : currentPaper.getReviewers()){
-			    		sb.append(rev.getName());
+			    		sb.append(rev.getName() + "; ");
 			    	}
+			    	sb.delete(sb.length() - 2, sb.length());
 			    	Reviewer1 = new PanelLabel(sb.toString(), currentPaper);
 			    } else {
 			    	Reviewer1 = new PanelLabel(" ", currentPaper);

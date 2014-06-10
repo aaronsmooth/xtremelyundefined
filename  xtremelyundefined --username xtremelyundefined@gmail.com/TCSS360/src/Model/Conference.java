@@ -9,11 +9,19 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Observable;
 
-
+/**
+ * This class represents a conference that holds papers whose members
+ * that are authors submit, reviewers review, and sub-program chairs 
+ * recommend and program chairs approve to the conference.
+ * @author Aaron Nelson
+ * @version 5/19/2014
+ *
+ */
 public class Conference extends Observable implements Serializable{
 	
 	/**
 	 * ID used for unique serialization
+	 * added by Mitchell Alpert
 	 */
 	private static final long serialVersionUID = -6376784954447084287L;
 
@@ -288,6 +296,7 @@ public class Conference extends Observable implements Serializable{
 	
 	/**
 	 * Returns list of reviewers
+	 * added by Mitchell Alpert
 	 * 
 	 * @return List<Users> list of reviewers assigned to this 
 	 * 	conference.
@@ -304,15 +313,34 @@ public class Conference extends Observable implements Serializable{
 		return name;
 	}
 	
+	/**
+	 * Getter for the Program Chair of the current conference
+	 * 
+	 * @return a User that is the PC
+	 */
 	public User getPC() {
 		return pc;
 	}
 	
+	/**
+	 * This method figures out if a user is part of the current conference
+	 * added by Mitchell Alpert
+	 * 
+	 * @param usr a User to look for
+	 * @return True if User is in conference
+	 */
 	public boolean hasUser(User usr){
 		if (usr == null) return false;
 		else return usr.equals(this.pc) || getReviewers().contains(usr) || getSPCs().contains(usr);
 	}
 	
+	/**
+	 * This method finds all roles of a User
+	 * added by Mitchell Alpert
+	 * 
+	 * @param usr The user to look up
+	 * @return a list of that user's roles
+	 */
 	public List<String> getRoles(User usr) {
 		List<String> ret = new ArrayList<String>();
 		
@@ -325,6 +353,12 @@ public class Conference extends Observable implements Serializable{
 		return ret;
 	}
 	
+	/**
+	 * This method gets all papers of this conference
+	 * added by Mitchell Alpert
+	 * 
+	 * @return a list of papers
+	 */
 	public List<Paper> getAllPapers() {
 		return this.papers;
 	}

@@ -4,10 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represent the review (and its components) associated to a paper.
+ * 
+ * @author Mitchell Alpert
+ * @version 5/19/2014
+ *
+ */
 public class Review implements Serializable{
 	
 	/**
-	 * 
+	 * Serial version identification
 	 */
 	private static final long serialVersionUID = 7055683803564457286L;
 
@@ -45,14 +52,29 @@ public class Review implements Serializable{
 
 	}
 
+	/**
+	 * Get the rating of the review.
+	 * 
+	 * @return the rating of the review.
+	 */
 	public List<Integer> getRating() {
 		return rating;
 	}
 	
+	/**
+	 * Get the Sub-Program Chair (SPC) comment(s).
+	 * 
+	 * @return the comment(s) made by the SPC.
+	 */
 	public String getSpcComment() {
 		return spcComments;
 	}
 
+	/**
+	 * Get the comment(s) made by the author.
+	 * 
+	 * @return the comment(s) made by the author.
+	 */
 	public List<String> getAuthorComments() {
 		return authorComments;
 	}

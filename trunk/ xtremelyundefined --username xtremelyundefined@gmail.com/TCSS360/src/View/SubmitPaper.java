@@ -33,6 +33,14 @@ import Model.ManagementSystem;
 import Model.Paper;
 import Model.User;
 
+/**
+ * This class is used to show the paper submission pop-up box
+ * in order to submit the paper to the conference.
+ * 
+ * @author Andreas Tarmidi
+ * @version 5/30/2014
+ *
+ */
 public class SubmitPaper extends JFrame {
 	public static final String CANCEL = "Cancel";
 	public static final String SUBMIT = "Submit paper";
@@ -41,23 +49,54 @@ public class SubmitPaper extends JFrame {
 	public static final int FIELD_WIDTH = 20;
 	public static final int FIELD_HIGH = 1;
 
+	/**
+	 * Creates text field for author's information and his/her paper details.
+	 */
 	private JTextField nameField, emailField, paperTopicField, paperTitleField,
 	keywordField, fileChooserField;
+	/**
+	 * Creates text area for the paper's abstract.
+	 */
 	private JTextArea abstractField;
+	/**
+	 * Creates button to do action for the paper / close the window.
+	 */
 	private JButton cancel, submit, chooseFile, removeFile;
+	/**
+	 * The Action Listener.
+	 */
 	private MyActionListener listener = new MyActionListener();
+	/**
+	 * The file chooser.
+	 */
 	JFileChooser fileChooser = new JFileChooser();
-
+	
+	/**
+	 * The user (author) using this submission.
+	 */
 	private User the_author;
+	/**
+	 * The conference to send the paper to.
+	 */
 	private Conference the_conf;
+	/**
+	 * The paper for submission.
+	 */
 	private Paper old_paper;
 
-	public SubmitPaper(Conference the_conf, User the_author) {
+	/*public SubmitPaper(Conference the_conf, User the_author) {
 		this.the_author = the_author;
 		this.the_conf = the_conf;
 		buildUI();
-	}
+	}*/
 	
+	/**
+	 * Construct the SubmitPaper pop-up window.
+	 * 
+	 * @param the_conf Conference
+	 * @param the_author User Author
+	 * @param the_paper Paper
+	 */
 	public SubmitPaper(Conference the_conf, User the_author, Paper the_paper) {
 		this.the_author = the_author;
 		this.the_conf = the_conf;
@@ -65,12 +104,22 @@ public class SubmitPaper extends JFrame {
 		buildUI();
 	}
 
+	/**
+	 * Set the pop-up window size
+	 * 
+	 * @param width Window Width
+	 * @param height Window Height
+	 * @param comp Component
+	 */
 	private void setPreferedSize(int width, int height, Component... comp) {
 		for (int i = 0; i < comp.length; i++) {
 			comp[i].setPreferredSize(new Dimension(width, height));
 		}
 	}
 
+	/**
+	 * Build the GUI
+	 */
 	public void buildUI() {
 		if (this.old_paper == null) {
 			nameField = new JTextField(the_author.getName());

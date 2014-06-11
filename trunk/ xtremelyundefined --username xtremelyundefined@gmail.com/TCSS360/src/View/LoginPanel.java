@@ -159,7 +159,7 @@ public class LoginPanel extends JPanel {
 			}
 			
 		});
-		login.setIcon(new ImageIcon("src/View/login.png"));
+		login.setIcon(new ImageIcon("src/supportingFiles/login.png"));
 		buttonPanel.add(login);
 		//panel.setBorder(BorderFactory.createLineBorder(Color.black));
 	}

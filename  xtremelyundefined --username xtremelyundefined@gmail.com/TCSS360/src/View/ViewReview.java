@@ -31,34 +31,43 @@ import Model.Review;
 /**
  * This class is used to View the Reviews made by the Reviewer
  *
- * @author
- * @version
+ * @author Mithell Alpert
+ * @version 5/24/14
  *
  */
 @SuppressWarnings("serial")
 public class ViewReview extends JFrame{
 
 	/**
-	 * The panel.
+	 * The panel displaying all of the review information
 	 */
 	JPanel panel;
 	/**
-	 * The message prompts.
+	 * List of prompts for all of the review questions
 	 */
 	List<String> prompts;
+	
 	/**
-	 * The Sub Program Chair assign to view this Review.
+	 * Boolean to indicate whether the confidential SPC comments
+	 * should be shown.
 	 */
 	boolean spc;
 
+	/**
+	 * The height of the comment boxes
+	 */
 	private static final int TEXT_HEIGHT = 50;
+	
+	/**
+	 * The width of the text boxes
+	 */
 	private static final int TEXT_WIDTH = 500;
 	
 	/**
 	 * Constructs the ViewReview class
 	 * 
 	 * @param rev The Reviewer
-	 * @param spc The Sub Program Chair
+	 * @param spc true if the user should see the SPC comments
 	 */
 	public ViewReview(Review rev, boolean spc) {
 		super("Completed Review");
@@ -142,7 +151,7 @@ public class ViewReview extends JFrame{
 	/**
 	 * This is the collection of question prompted for the Review
 	 * 
-	 * @return prompts
+	 * @return List<String> the questino prompts
 	 */
 	private List<String> initializePrompts() {
 		List<String> prompts = new ArrayList<String>();
@@ -167,10 +176,11 @@ public class ViewReview extends JFrame{
 	}
 	
 	/**
-	 * Creates the scrollbar for scrolling down the ViewReview window
+	 * Returns a scrollpane that holds the comments that the reviewer provided.
+	 * Scrolls incase they wrote longer comments.
 	 * 
-	 * @param str
-	 * @return scroll
+	 * @param str the comment
+	 * @return JScrollPane the scroll pane holding the comments
 	 */
 	private JScrollPane newText(String str){
 		JTextArea txt = new JTextArea(str);

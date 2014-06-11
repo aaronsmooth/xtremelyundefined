@@ -35,17 +35,58 @@ import javax.swing.border.EtchedBorder;
 
 import Model.User;
 
+/**
+ * Dialog allowing the SPC to submit a recommendation
+ * for a paper.
+ * 
+ * @author Mitchell Alpert
+ * @version 5/22/2014
+ *
+ */
 @SuppressWarnings("serial")
 public class SubmitRecommendation extends JFrame {
+	
+	/**
+	 * Height of the text boxes
+	 */
 	public static final int TEXT_HEIGHT = 30;
+	
+	/**
+	 * Width of the text boxres
+	 */
 	public static final int TEXT_WIDTH = 30;
+	
+	/**
+	 * Height of the window
+	 */
 	public static final int WINDOW_HEIGHT = 300;
+	
+	/**
+	 * Width of the window
+	 */
 	public static final int WINDOW_WIDTH = 500;
 	
+	/**
+	 * The paper that the recommendation is being made on
+	 */
 	private Paper paper;
+	
+	/**
+	 * ButtonGroup for the scores so that only one
+	 * can be selected.
+	 */
 	private ButtonGroup btng;
+	
+	/**
+	 * The text area for the rationale
+	 */
 	private JTextArea txt;
 	
+	/**
+	 * Constructor.
+	 * 
+	 * @param thepaper the paper being reviewed
+	 */
 	public SubmitRecommendation(Paper thepaper) {
 		super();
 		paper = thepaper;
@@ -59,6 +100,12 @@ public class SubmitRecommendation extends JFrame {
 		setVisible(true);
 	}
 	
+	/**
+	 * Creates the panel with the score buttons and the rationale
+	 * text area
+	 * 
+	 * @return JPanel the panel
+	 */
 	public JPanel createPanel() {
 		
 		final JPanel panel = new JPanel();

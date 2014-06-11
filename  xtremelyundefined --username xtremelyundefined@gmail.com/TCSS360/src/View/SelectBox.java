@@ -23,11 +23,31 @@ import javax.swing.SwingUtilities;
 import Model.Paper;
 import Model.User;
 
+/**
+ * This class serves as a generic selection window. It takes a 
+ * list of users and sends a property change with the user
+ * that was picked.
+ * 
+ * @author Mitchell Alpert
+ * @version 5/22/14
+ *
+ */
 @SuppressWarnings("serial")
 public class SelectBox extends JFrame {
 	
+	/**
+	 * The combo box used to make the selection
+	 */
 	private JComboBox<User> choice;
+	
+	/**
+	 * Text representing what is being selected
+	 */
 	private String type;
+	
+	/**
+	 * The current paper that is being effected
+	 */
 	private Paper currentPaper;
 	
 	/**
@@ -50,6 +70,15 @@ public class SelectBox extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * Creates the panel holding the combobox and the the 
+	 * submit, cancel buttons
+	 * 
+	 * @param objs list of users to be put in the combobox
+	 * @param name the string to use to indiciate what is being
+	 * 				selected
+	 * @return JPanel panel with the dropdown
+	 */
 	private JPanel createPanel(List<User> objs, String name) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
@@ -77,6 +106,13 @@ public class SelectBox extends JFrame {
 		return panel;
 	}
 
+	/**
+	 * Confers a List of Uses to an array of Users so
+	 * it can be used in the combobox
+	 * 
+	 * @param list List of Users
+	 * @return User[] array of Users
+	 */
 	private User[] createSelectOptions(List<User> list){
 		User[] options = new User[list.size()];
 		for (int i = 0; i < options.length; i++) {
@@ -85,6 +121,13 @@ public class SelectBox extends JFrame {
 		return options ;
 	}
 
+	/**
+	 * Defines the action for the Submit button. If the user
+	 * clicks submit, it fires the appropriate property change
+	 * 
+	 * @author Mitchell Alpert
+	 *
+	 */
 	private class ButtonListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
@@ -95,6 +138,13 @@ public class SelectBox extends JFrame {
 		
 	}
 	
+	/**
+	 * Defines the action for the Cancel button. If the 
+	 * user clicks cancel, this window closes.
+	 * 
+	 * @author Mitchell Alpert
+	 *
+	 */
 	private class CancelListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {

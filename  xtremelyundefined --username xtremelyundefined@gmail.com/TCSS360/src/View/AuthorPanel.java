@@ -1,7 +1,14 @@
 package View;
 
-//import TextBubbleBorder;
-
+/**
+ * This class represents the display for users logged in as an Author. 
+ * The display shows all papers submitted by this user for the conference
+ * that they selected and allows them to submit, edit and delete papers.
+ * 
+ * @author Randy Butts
+ * @author Modified by - Mitchell Alpert, Aaron Nelson
+ * @version  5/22/2014
+ */
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -34,13 +41,32 @@ import Model.ManagementSystem;
 import Model.Paper;
 import Model.Review;
 
+@SuppressWarnings("serial")
 public class AuthorPanel extends JPanel {
+	
+	/**
+	 * The name of the user logged in as an author
+	 */
 	private String author;
 	
+	/**
+	 * The current MangementSystem
+	 */
 	private ManagementSystem mySystem;
 	
+	/**
+	 * The current paper as the display is looping
+	 * through the available papers
+	 */
 	private Paper currentPaper;
 	
+	/**
+	 * Constructor that takes the current system 
+	 * and constructs the panel displaying information
+	 * for the author
+	 * 
+	 * @param theSystem the current System
+	 */
 	public AuthorPanel(ManagementSystem theSystem){
 		mySystem = theSystem;
 		author = theSystem.getCurrentUser().getName();
@@ -338,7 +364,6 @@ public class AuthorPanel extends JPanel {
 			        try {
 						Desktop.getDesktop().open(myFile);
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
@@ -346,11 +371,11 @@ public class AuthorPanel extends JPanel {
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					// TODO Auto-generated method stub
-			  AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
-			  view1.setBorder(brdr);		
+					AbstractBorder brdr = new TextBubbleBorder(Color.BLUE,2,6,0);
+					view1.setBorder(brdr);		
 					repaint();
 				}
-	
+
 				@Override
 				public void mouseExited(MouseEvent e) {
 					// TODO Auto-generated method stub
@@ -452,6 +477,13 @@ public class AuthorPanel extends JPanel {
 	    return panelManuscript;
 	}
 	
+	/**
+	 * Private MouseListener that defines the actions associated
+	 * with the Remove paper icon
+	 * 
+	 * @author Aaron Nelson
+	 *
+	 */
 	private class removeMouseAdapter implements MouseListener {
 	    	//Open the Submit Paper frame with all the old information filled in
 			@Override
@@ -489,6 +521,14 @@ public class AuthorPanel extends JPanel {
 			}
 	    	
 	}
+	
+	/**
+	 * MouseListener that defines the actions taken 
+	 * when the user clicks the "view review" icon
+	 * 
+	 * @author Mitchell Alpert
+	 *
+	 */
 	
 	private class ViewListen extends MouseAdapter {
 		public void mouseClicked(MouseEvent arg0) {

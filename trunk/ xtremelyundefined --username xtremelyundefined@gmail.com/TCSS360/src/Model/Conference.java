@@ -185,7 +185,7 @@ public class Conference extends Observable implements Serializable{
 	/**
 	 * This method is used to submit a paper to the conference
 	 * @param a_paper
-	 * @return
+	 * @return true if the paper is submitted successfully; otherwise false.
 	 */
 	public boolean submitPaper(Paper a_paper) {
 		boolean isSuccess = false;
@@ -252,7 +252,7 @@ public class Conference extends Observable implements Serializable{
 	 * This method finds all papers assigned to a SPC
 	 * 
 	 * @param a_user
-	 * @return
+	 * @return a list of papers assigned to a SPC.
 	 */
 	public List<Paper> getPapersBySPC(User a_user) {
 		if (a_user == null) {

@@ -8,10 +8,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * This class represent the paper and its component that will be submitted to a conference.
+ * 
+ * @author Mitchell Alpert
+ * @modified Aaron Nelson
+ * @version 5/19/2014
+ */
 public class Paper implements Serializable{
 	
 	/**
-	 * 
+	 *  Serial version identification.
 	 */
 	private static final long serialVersionUID = -7053416395295120578L;
 
@@ -125,6 +132,11 @@ public class Paper implements Serializable{
 		}
 	}
 	
+	/**
+	 * Get the review made by a specified reviewer
+	 * @param reviewer who made the review(s)
+	 * @return a review made by the reviewer.
+	 */
 	public Review getReview(User reviewer) {
 		return reviewerMap.get(reviewer);
 	}
@@ -211,42 +223,89 @@ public class Paper implements Serializable{
 		return this.spc;
 	}
 	
+	/**
+	 * Get the title of the paper.
+	 * @return the title of the paper.
+	 */
 	public String getTitle(){
 		return title;
 	}
 	
+	/**
+	 *  Get the assigned reviewer(s) of this paper.
+	 * @return a set of reviewers reviewing this paper.
+	 */
 	public Set<User> getReviewers() {
 		return this.reviewerMap.keySet();
 	}
 	
+	/**
+	 *  Get the rating assigned to the paper.
+	 * @return the rating of the paper.
+	 */
 	public int getRating() {
 		return this.spcRating;
 	}
 	
+	/**
+	 * Get the rationale.
+	 * 
+	 * @return the rationale.
+	 */
 	public String getRationale() {
 		return this.spcRationale;
 	}
 	
+	/**
+	 *  Get the acceptance status of the paper.
+	 * @return yes if approve, no if not approve or undecided.
+	 */
 	public Approval getAcceptanceStatus() {
 		return this.isAccepted;
 	}
 	
+	/**
+	 *  Check if the Reviewer has completed the review.
+	 *  
+	 * @param reviewer reviewer of the paper.
+	 * @return true if the reviewer has reviewed the paper; otherwise, false.
+	 */
 	public boolean hasReviewerCompletedReview(User reviewer) {
 		return this.reviewerMap.get(reviewer) != null;
 	}
 	
+	/**
+	 * Get the filepath of the paper.
+	 * 
+	 * @return the filepath.
+	 */
 	public String getFilePath() {
 		return this.filePath;
 	}
 	
+	/**
+	 * Get the topic of the paper.
+	 * 
+	 * @return the topic of the paper.
+	 */
 	public String getTopic() {
 		return this.topic;
 	}
 	
+	/**
+	 * Get the keywords associated the paper.
+	 * 
+	 * @return the keywords of the paper.
+	 */
 	public String getKeywords() {
 		return this.keywords;
 	}
 	
+	/**
+	 * Get the abstract about the paper.
+	 * 
+	 * @return the abstract about the paper.
+	 */
 	public String getAbstract() {
 		return this.paperAbstract;
 	}

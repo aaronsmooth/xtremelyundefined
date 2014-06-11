@@ -28,15 +28,38 @@ import javax.swing.SwingUtilities;
 
 import Model.Review;
 
+/**
+ * This class is used to View the Reviews made by the Reviewer
+ *
+ * @author
+ * @version
+ *
+ */
 @SuppressWarnings("serial")
 public class ViewReview extends JFrame{
 
+	/**
+	 * The panel.
+	 */
 	JPanel panel;
+	/**
+	 * The message prompts.
+	 */
 	List<String> prompts;
+	/**
+	 * The Sub Program Chair assign to view this Review.
+	 */
 	boolean spc;
+
 	private static final int TEXT_HEIGHT = 50;
 	private static final int TEXT_WIDTH = 500;
 	
+	/**
+	 * Constructs the ViewReview class
+	 * 
+	 * @param rev The Reviewer
+	 * @param spc The Sub Program Chair
+	 */
 	public ViewReview(Review rev, boolean spc) {
 		super("Completed Review");
 		this.spc = spc;
@@ -116,6 +139,11 @@ public class ViewReview extends JFrame{
 		setVisible(true);
 	}
 	
+	/**
+	 * This is the collection of question prompted for the Review
+	 * 
+	 * @return prompts
+	 */
 	private List<String> initializePrompts() {
 		List<String> prompts = new ArrayList<String>();
 		prompts.add( "Can the content be directly applied by classroom instructors or curriculum designers?");
@@ -138,6 +166,12 @@ public class ViewReview extends JFrame{
 		
 	}
 	
+	/**
+	 * Creates the scrollbar for scrolling down the ViewReview window
+	 * 
+	 * @param str
+	 * @return scroll
+	 */
 	private JScrollPane newText(String str){
 		JTextArea txt = new JTextArea(str);
 		txt.setBorder(BorderFactory.createEtchedBorder());

@@ -40,9 +40,16 @@ public class PaperTest {
 	 */
 	Conference conf;
 	
+	/**
+	 * Exception.
+	 */
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 	
+	/**
+	 * Initialized all the neccessary fields to be used for testing.
+	 * @throws Exception
+	 */
 	@Before
 	public void setUp() throws Exception {
 		usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
@@ -53,6 +60,9 @@ public class PaperTest {
 		conf = new Conference("alocation", "adate", "adeadline", null, "aname");
 	}
 	
+	/**
+	 * Test the getAcceptanceStatus() funtionality.
+	 */
 	@Test
 	public void acceptanceStatusTest() {
 		assertSame(ppr.getAcceptanceStatus(), Approval.UNDECIDED);
@@ -61,12 +71,18 @@ public class PaperTest {
 		assertNotSame(ppr.getAcceptanceStatus(), Approval.UNDECIDED);
 	}
 	
+	/**
+	 * Test the getAuthor() functionality.
+	 */
 	@Test
 	public void authorTest() {
 		assertSame(ppr2.getAuthor(), usr);
 		assertNotSame(ppr.getAuthor(), usr2);
 	}
 	
+	/**
+	 * Test the getDecision() functionality.
+	 */
 	@Test
 	public void decisionTest() {
 		assertSame(ppr.getAcceptanceStatus(), ppr.getDecision());
@@ -74,6 +90,9 @@ public class PaperTest {
 		assertSame(ppr.getAcceptanceStatus(), ppr.getDecision());
 	}
 	
+	/**
+	 * Test the getRating() functionality.
+	 */
 	@Test
 	public void ratingTest() {
 		assertNotNull(ppr.getRating());
@@ -82,6 +101,9 @@ public class PaperTest {
 		assertSame(ppr.getRating(), 10);
 	}
 	
+	/**
+	 * Test the getRationale() functionality.
+	 */
 	@Test
 	public void rationaleTest() {
 		assertNull(ppr.getRationale());
@@ -89,6 +111,9 @@ public class PaperTest {
 		assertSame(ppr.getRationale(),  "GOOD!");
 	}
 	
+	/**
+	 * Test the getReviewers(), isAreviwer() and hasReviewerCompletedReview(0 functionality.
+	 */
 	@Test
 	public void reviewerTest() {
 		assertSame(ppr.getReviewers().size(), 0);
@@ -113,6 +138,9 @@ public class PaperTest {
 		assertTrue(ppr.hasReviewerCompletedReview(usr2));
 	}
 	
+	/**
+	 * Test the getSPC() functionality.
+	 */
 	@Test
 	public void spcTest() {
 		assertNull(ppr.getSPC());
@@ -123,6 +151,9 @@ public class PaperTest {
 		ppr.setSPC(null);
 	}
 	
+	/**
+	 * Test the getTitle(0 functionality.
+	 */
 	@Test
 	public void titleTest() {
 		assertSame(ppr.getTitle(), "thisisthetitle");

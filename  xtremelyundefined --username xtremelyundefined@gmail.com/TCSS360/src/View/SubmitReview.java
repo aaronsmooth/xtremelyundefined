@@ -33,7 +33,7 @@ import Model.Review;
 import Model.User;
 
 /**
- * This creates the dialog for a review to review a paper.
+ * This creates the dialog for a reviewer to review a paper.
  * 
  * @author Mitchell Alpert
  * @version 5/22/2014

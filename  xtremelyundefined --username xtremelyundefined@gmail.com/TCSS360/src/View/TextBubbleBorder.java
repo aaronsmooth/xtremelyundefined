@@ -14,6 +14,10 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.border.AbstractBorder;
 
+/**
+ * This class only serves to make a round shaped corner for the borders
+ * 
+ */
 public class TextBubbleBorder extends AbstractBorder {
 
     private Color color;

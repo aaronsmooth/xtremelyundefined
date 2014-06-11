@@ -14,6 +14,13 @@ import java.util.Observer;
 
 import javax.swing.JOptionPane;
 
+/**
+ * This class contains a list of conference(s) and user(s) and a serialize method
+ * to save the state of the conference and the user's activity.
+ * 
+ * @author Mitchell Alpert
+ * @version 5/19/2014
+ */
 public class ManagementSystem extends Observable implements Serializable, PropertyChangeListener{
 
 	/**
@@ -207,19 +214,33 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 	
 		
 	}
-	
+	/**
+	 *  Set the current user from a specified user.
+	 * @param usr to be set as the current user.
+	 */
 	public void setUser(User usr) {
 		currentUser = usr;
 	}
 	
+	/**
+	 *  Set the current conference from a specified conference.
+	 * @param cnf to be set as the current conference.
+	 */
 	public void setConference(Conference cnf) {
 		currentConference = cnf;
 	}
 
+	/**
+	 * Get the current user of this conference.
+	 * @return the current user of the conference.
+	 */
 	public User getCurrentUser() {
 		return currentUser;
 	}
 	
+	/**
+	 * This method serializes this conference and its accompanying components.
+	 */
     public void serialize() {
     	try{
     		FileOutputStream  out = new FileOutputStream(FILE);

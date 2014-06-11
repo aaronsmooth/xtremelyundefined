@@ -17,18 +17,41 @@ import Model.User;
 /**
  * This class tests method functionality of the Conference.java class.
  * 
- * @author TeamUndefined
+ * @author Aaron Nelson
+ * @modified Mitchell Alpert
  * @version 6/1/2014
  *
  */
 
 public class ConferenceTest  {
-
+    /**
+     * Conference
+     */
 	private Conference conf;
+	
+	/**
+	 *  Paper #1 used for testing.
+	 */
 	private Paper ppr;
+	
+	/**
+	 *  Paper #2 used for testing.
+	 */
 	private Paper ppr2;
+	
+	/**
+	 *  User #1 used for testing.
+	 */
 	private User usr;
+	
+	/**
+	 *  User #2 used for testing.
+	 */
 	private User usr2;
+	
+	/**
+	 *  User #3 used for testing.
+	 */
 	private User usr3;
 	
 	/**

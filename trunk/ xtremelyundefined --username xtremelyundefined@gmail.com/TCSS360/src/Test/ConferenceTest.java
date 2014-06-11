@@ -31,9 +31,17 @@ public class ConferenceTest  {
 	private User usr2;
 	private User usr3;
 	
+	/**
+	 *  Exception.
+	 */
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 	
+	/**
+	 * Initialized the necessary field used for testing.
+	 * 
+	 * @throws Exception 
+	 */
 	@Before
 	public void setUp() throws Exception {
 		usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
@@ -44,6 +52,9 @@ public class ConferenceTest  {
 		conf = new Conference("alocation", "adate", "adeadline", null, "aname");	
 	}
 
+	/**
+	 * Test the functionality of adding a reviewer.
+	 */
 	@Test
 	public void addReviewerTest() {
 		conf.addReviewer(usr);
@@ -61,6 +72,9 @@ public class ConferenceTest  {
 		conf.addReviewer(null);
 	}
 	
+	/**
+	 * Test the functionality of adding a Sub-Program Chair.
+	 */
 	@Test
 	public void addSPCTest() {
 		conf.addReviewer(usr);
@@ -78,6 +92,9 @@ public class ConferenceTest  {
 		conf.addSPC(null);
 	}
 	
+	/**
+	 * Test the functionality related to submitting and retrieving papers.
+	 */
 	@Test
 	public void PaperTest() {
 		assertTrue(conf.submitPaper(ppr));
@@ -97,6 +114,9 @@ public class ConferenceTest  {
 		
 	}
 	
+	/**
+	 *  Test the getAuthored functionality.
+	 */
 	@Test
 	public void getAuthoredTest() {
 		assertTrue(conf.submitPaper(ppr));
@@ -106,11 +126,17 @@ public class ConferenceTest  {
 		assertSame(conf.getAuthored(usr).get(1), ppr2);
 	}
 	
+	/**
+	 * Test the getName() functionality.
+	 */
 	@Test
 	public void getNameTest() {
 		assertTrue(conf.getName() == "aname");
 	}
 	
+	/**
+	 * Test the getPapersBySPC() functionality.
+	 */
 	@Test
 	public void getPapersBySPCTest() {
 		conf.addReviewer(usr2);
@@ -120,6 +146,9 @@ public class ConferenceTest  {
 		assertSame(conf.getPapersBySPC(usr2).get(0), ppr);
 	}
 	
+	/**
+	 * Test the getPapersToReview() functionality.
+	 */
 	@Test
 	public void getPapersToReview() {
 		conf.addReviewer(usr2);
@@ -129,18 +158,27 @@ public class ConferenceTest  {
 		
 	}
 	
+	/**
+	 * Test the getPC() functionality.
+	 */
 	@Test
 	public void getPCTest() {
 		conf.setPC(usr3);
 		assertSame(conf.getPC(), usr3);
 	}
 	
+	/**
+	 * Test the getReviewers() functionality.
+	 */
 	@Test
 	public void getReviewersTest() {
 		conf.addReviewer(usr2);
 		assertSame(conf.getReviewers().get(0), usr2);
 	}
 	
+	/**
+	 * Test the getRoles() functionality of the conference.
+	 */
 	@Test
 	public void getRolesTest() {
 		List<String> myList = new ArrayList<String>();
@@ -157,6 +195,9 @@ public class ConferenceTest  {
 		assertSame(conf.getRoles(usr).get(2), myList.get(2));
 	}
 	
+	/**
+	 * Test the getSPC() functionality of the conference.
+	 */
 	@Test
 	public void getSPCTest() {
 		conf.addReviewer(usr);
@@ -164,6 +205,9 @@ public class ConferenceTest  {
 		assertSame(conf.getSPCs().get(0), usr);
 	}
 	
+	/**
+	 * Test the hasUser() functionality.
+	 */
 	@Test
 	public void hasUserTest() {
 		conf.setPC(usr);
@@ -172,6 +216,9 @@ public class ConferenceTest  {
 		assertFalse(conf.hasUser(usr2));
 	}
 	
+	/**
+	 * Test the removePaper() functionality.
+	 */
 	@Test
 	public void removePaperTest() {
 		conf.submitPaper(ppr);
@@ -183,12 +230,18 @@ public class ConferenceTest  {
 		conf.removePaper(null);
 	}
 	
+	/**
+	 * Test the setPC() functionality.
+	 */
 	@Test
 	public void setPCTest() {
 		exception.expect(IllegalArgumentException.class);
 		conf.setPC(null);
 	}
 
+	/**
+	 * Test the getName() functionality.
+	 */
 	@Test
 	public void toStringTest() {
 		assertSame(conf.getName(), "aname");

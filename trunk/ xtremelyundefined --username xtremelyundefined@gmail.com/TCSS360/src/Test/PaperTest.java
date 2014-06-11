@@ -19,15 +19,25 @@ import Model.User;
 /**
  * This class tests method functionality of the Paper.java class.
  * 
- * @author TeamUndefined
+ * @author Aaron Nelson
  * @version 6/1/2014
  *
  */
 
 public class PaperTest {
-	
+	/**
+	 * Users to be used for testing.
+	 */
 	User usr, usr2, usr3;
+	
+	/**
+	 * Papers to be used for testing.
+	 */
 	Paper ppr, ppr2, ppr3;
+	
+	/**
+	 * Conference.
+	 */
 	Conference conf;
 	
 	@Rule

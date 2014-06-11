@@ -15,20 +15,43 @@ import Model.User;
 /**
  * This class tests method functionality of the ManagementSystem.java class.
  * 
- * @author TeamUndefined
+ * @author Aaron Nelson
  * @version 6/1/2014
  *
  */
 
 public class ManagementSystemTest {
+	/**
+	 * Users to be used for testing.
+	 */
 	User usr, usr2, usr3;
+	
+	/**
+	 * Papers to be used for testing.
+	 */
 	Paper ppr, ppr2;
+	
+	/**
+	 *  Conference to be used for testing.
+	 */
 	Conference conf;
+	
+	/**
+	 * Management System
+	 */
 	ManagementSystem system;
 
+	/**
+	 * Exception.
+	 */
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 	
+	/**
+	 * Initialized all the necessary fields to be used for testing.
+	 * 
+	 * @throws Exception
+	 */
 	@Before
 	public void setUp() throws Exception {
 		usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
@@ -40,6 +63,9 @@ public class ManagementSystemTest {
 		system = new ManagementSystem();
 	}
 	
+	/**
+	 * Test the getConferences() and hasConference() functionality.
+	 */
 	@Test
 	public void ConferenceTest() {
 		system.addConference(conf);
@@ -53,6 +79,9 @@ public class ManagementSystemTest {
 		
 	}
 	
+	/**
+	 * Test the getUser() functionality.
+	 */
 	@Test
 	public void UserTest() {
 		system.addUser(usr);

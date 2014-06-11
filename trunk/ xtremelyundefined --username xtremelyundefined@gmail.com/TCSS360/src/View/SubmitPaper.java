@@ -84,11 +84,12 @@ public class SubmitPaper extends JFrame {
 	 */
 	private Paper old_paper;
 
-	/*public SubmitPaper(Conference the_conf, User the_author) {
+	
+	public SubmitPaper(Conference the_conf, User the_author) {
 		this.the_author = the_author;
 		this.the_conf = the_conf;
 		buildUI();
-	}*/
+	}
 	
 	/**
 	 * Construct the SubmitPaper pop-up window.

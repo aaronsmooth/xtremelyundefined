@@ -84,7 +84,12 @@ public class SubmitPaper extends JFrame {
 	 */
 	private Paper old_paper;
 
-	
+	/**
+	 * Construct the window for the Author Panel
+	 * 
+	 * @param the_conf
+	 * @param the_author
+	 */
 	public SubmitPaper(Conference the_conf, User the_author) {
 		this.the_author = the_author;
 		this.the_conf = the_conf;

@@ -24,12 +24,40 @@ import Model.Paper;
 import Model.Review;
 import Model.User;
 
+/**
+ * This class is the default layout for a SPC. Allows the user
+ * to assign reviewers, view reviews, and make/view recommendations
+ * to the PC on a paper
+ * 
+ * @author Randy Butts
+ * @author Modified - Aaron Nelson
+ * @version 5/22/14
+ * 
+ *
+ */
 
+@SuppressWarnings("serial")
 public class SPCPanel extends JPanel {
 	
+	/**
+	 * The current system
+	 */
 	private ManagementSystem system;
+	
+	/**
+	 * The user logged in
+	 */
 	private User currentUser;
+	
+	/**
+	 * The list of papers assigned to this SPC
+	 */
 	private List<Paper> papers;
+	
+	/**
+	 * Current paper being used when 
+	 * generating a list of papers
+	 */
 	private Paper currentPaper;
 
 	
@@ -361,7 +389,18 @@ public class SPCPanel extends JPanel {
 			    }
 	 }
 	 
+	 /**
+	  * Defines the action when the view review icon is clicked. 
+	  * Opens all of the reviews for the paper clicked.
+	  * 
+	  * @author Aaron Nelson
+	  *
+	  */
 	 private class SPCView extends MouseAdapter {
+		 
+		 /**
+		  * {@inheritDoc}
+		  */
 		 @Override
 		 public void mouseClicked(MouseEvent arg0) {
 			 currentPaper = (Paper) ((PanelLabel) arg0.getSource()).getPaper();
@@ -371,7 +410,18 @@ public class SPCPanel extends JPanel {
 		 }
 	 }
 	 
+	 /**
+	  * Defines the action for the recommend icon. Opens the submit recommendation
+	  * dialog.
+	  * 
+	  * @author Mitchell Alpert
+	  *
+	  */
 	 private class SPCRecommend extends MouseAdapter {
+		 
+		 /**
+		  * {@inheritDoc}
+		  */
 		 @Override
 		 public void mouseClicked(MouseEvent arg0) {
 			 currentPaper = (Paper) ((PanelLabel) arg0.getSource()).getPaper();
@@ -380,8 +430,18 @@ public class SPCPanel extends JPanel {
 		 }
 	 }
 	 
+	 
+	 /**
+	  * Allows the user to assign an SPC. Opens a SelectBox with valid SPCs.
+	  * 
+	  * @author Mitchell Alpert
+	  *
+	  */
 	 private class SPCPick extends MouseAdapter {
 
+		 /**
+		  * {@inheritDoc}
+		  */
 		 @Override
 		 public void mouseClicked(MouseEvent arg0) {
 			 currentPaper = (Paper) ((PanelLabel) arg0.getSource()).getPaper();

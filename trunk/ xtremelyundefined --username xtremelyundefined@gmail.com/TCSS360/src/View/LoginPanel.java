@@ -24,16 +24,55 @@ import Model.Conference;
 import Model.ManagementSystem;
 import Model.User;
 
-
+/**
+ * This class displays the login panel where the user
+ * will enter their user name and select a conference and
+ * role. The correct default panel will then replace this one.
+ * 
+ * 
+ * @author Randy Butts
+ * @author Modified - Mitchell Alpert
+ * @version 5/22/2014
+ *
+ */
 @SuppressWarnings("serial")
 public class LoginPanel extends JPanel {
 
+	/**
+	 * The current ManagementSystem being used
+	 */
 	private ManagementSystem system;
+	
+	/**
+	 * The field for entering an email
+	 */
 	private JTextField email;
+	
+	/**
+	 * The user whose email is currently entered in 
+	 * the email field
+	 */
 	private User currentUser;
+	
+	/**
+	 * The drop down box to select which conference to 
+	 * work in
+	 */
 	private JComboBox<Conference> currentConference;
+	
+	/**
+	 * The drop down box to select which role you want to
+	 * log in as for the conference selected
+	 */
 	private JComboBox<String> role;
 	
+	/**
+	 * Constructor that takes the current system and 
+	 * displays the window for the user to select 
+	 * a conference and role
+	 * 
+	 * @param system the current MangementSystem
+	 */
 	public LoginPanel(final ManagementSystem system){
 		
 		JPanel loginpanel = new JPanel(), buttonPanel = new JPanel(), welcomePanel = new JPanel();	

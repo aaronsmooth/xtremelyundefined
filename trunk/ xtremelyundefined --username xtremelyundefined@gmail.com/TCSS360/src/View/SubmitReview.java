@@ -32,19 +32,62 @@ import Model.Paper;
 import Model.Review;
 import Model.User;
 
+/**
+ * This creates the dialog for a review to review a paper.
+ * 
+ * @author Mitchell Alpert
+ * @version 5/22/2014
+ */
+
 @SuppressWarnings("serial")
 public class SubmitReview extends JFrame {
+	
+	/**
+	 * The height of the text boxes
+	 */
 	private static final int TEXT_HEIGHT = 50;
+	
+	/**
+	 * The width of the text boxes
+	 */
 	private static final int TEXT_WIDTH = 500;
+	
+	/**
+	 * The number of questions that were ranked 1-5 without
+	 * 5 separate prompts
+	 */
 	private static final int LAST_QUESTION = 21;
 	
+	/**
+	 * The paper being reviewed
+	 */
 	private Paper paper;
+	
+	/**
+	 * The user doing the review
+	 */
 	private User currentUser;
+	
+	/**
+	 * A list of all the buttons in the form
+	 */
 	private List<JRadioButton> radiobuttons;
+	
+	/**
+	 * A list of button groups in the form. Used
+	 * to determine if a selection for each score
+	 * was made
+	 */
 	private List<ButtonGroup> btngrps;
+	
+	/**
+	 * List of comment fields
+	 */
 	private List<JTextArea> comments;
 	
-	
+	/**
+	 * The instruction string
+	 */
 	private String instructions = "Instructions to Reviewers:\n\n "
 			+ "Please provide a numeric rating on a 5-point scale for each question,along with a brief \n "
 			+ "rationale for each numeric rating. In doing so, please discuss both the strengths and \n"
@@ -55,8 +98,17 @@ public class SubmitReview extends JFrame {
 			+ "and how helpful a positive one can be; please try to bear that in mind when \n"
 			+ "you are writing yours.";
 	
+	/**
+	 * Array of prompts
+	 */
 	private String[] prompts = new String[34]; //number of prompts needed
 	
+	/**
+	 * Constructor 
+	 * 
+	 * @param thepaper the paper being reviewed
+	 * @param theuser the user doing the review
+	 */
 	public SubmitReview(Paper thepaper, User theuser) {
 		super();
 		paper = thepaper;
@@ -80,6 +132,11 @@ public class SubmitReview extends JFrame {
 		setVisible(true);
 	}
 	
+	/**
+	 * Fills the prompts array with the prompt strings. The prompts are grouped in 3s: 1) the prompt
+	 * itself 2) the label for a score of 5 3) the label for a score of 1. After prompt[LAST_QUESTION], it is
+	 * is a question followed by 5 prompts.
+	 */
 	private void initializePrompts() {
 		prompts[0] = "Can the content be directly applied by classroom instructors or curriculum designers?";
 		prompts[1] = "Directly and obviously applicable";
@@ -120,6 +177,11 @@ public class SubmitReview extends JFrame {
 		
 	}
 	
+	/**
+	 * Creates the south panel that holds the buttons
+	 * 
+	 * @return JPanel panel with submit and cancel buttons
+	 */
 	private JPanel createSouthPanel() {
 		JPanel panel = new JPanel(new FlowLayout());
 		JButton submit = new JButton("Submit");
@@ -131,6 +193,11 @@ public class SubmitReview extends JFrame {
 		return panel;
 	}
 	
+	/**
+	 * Creates a text area used for comments. 
+	 * 
+	 * @return JScrollPane text area for comments
+	 */
 	private JScrollPane newText(){
 		JTextArea txt = new JTextArea();
 		txt.setBorder(BorderFactory.createEtchedBorder());
@@ -147,6 +214,11 @@ public class SubmitReview extends JFrame {
 		return scroll;
 	}
 	
+	/**
+	 * Creates the panel that has all the prompts, scores and comment areas
+	 * 
+	 * @return ScrollPane pane with all the inputs
+	 */
 	private ScrollPane createCenterPane() {
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -368,6 +440,14 @@ public class SubmitReview extends JFrame {
 		return scroll;
 	}
 	
+	/**
+	 * Creates a label from the given text, but ensures that it is 5x5
+	 * and wraps the text.
+	 * 
+	 * @param text the text for the label
+	 * @param bkg the background color for the label
+	 * @return JTextArea textarea used as a label
+	 */
 	private static JTextArea createLabel(String text, Color bkg) {
 		JTextArea txt = new JTextArea(text);
 		txt.setWrapStyleWord(true);
@@ -379,6 +459,13 @@ public class SubmitReview extends JFrame {
 
 	}
 
+	/**
+	 * Defines the action for the Submit button. Opens a confirmation dialog before actually
+	 * submitting the review
+	 * 
+	 * @author Mitchell Alpert
+	 *
+	 */
 	private class SubmitAction implements ActionListener {
 		boolean allChosen = true;
 

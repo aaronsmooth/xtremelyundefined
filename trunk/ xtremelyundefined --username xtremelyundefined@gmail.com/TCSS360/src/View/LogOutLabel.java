@@ -11,9 +11,25 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.AbstractBorder;
 
+/**
+ * This class creates a JLabel that changes color to blue when you
+ * mouse over it and when it is clicked, it tells the main panel 
+ * to load the login screen. This can be used in any of the display
+ * panels.
+ * 
+ * @author Mitchell Alpert
+ * @version 5/22/14
+ *
+ */
 @SuppressWarnings("serial")
 public class LogOutLabel extends JLabel {
 	
+	/**
+	 * Creates the logout label with the supplied text
+	 * allowing for use with different labels
+	 * 
+	 * @param text text of the label
+	 */
 	LogOutLabel(String text) {
 		super(text);
 		

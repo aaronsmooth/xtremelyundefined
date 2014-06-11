@@ -26,12 +26,34 @@ import Model.Paper;
 import Model.Review;
 import Model.User;
 
+/**
+ * This panel is the default vie for a user logged in as a 
+ * Reviewer. Allows the user to review a paper and to view 
+ * the review they submitted.
+ * 
+ * @author Randy Butts
+ * @author Modified - Aaaron Nelson, Mitchell Alpert
+ * @version 5/22/14
+ *
+ */
+@SuppressWarnings("serial")
 public class ReviewerPanel extends JPanel{
 	
-	private String Author;// = "JOE SCHMOE";
+	/**
+	 * The name of the author of a paper
+	 */
+	private String Author;
 	
+	/**
+	 * The current system.
+	 */
 	private ManagementSystem mySystem;
 	
+	/**
+	 * The current paper being used to 
+	 * generate a row of displayed papers
+	 * 
+	 */
 	private Paper currentPaper;
 	
 	/**
@@ -39,18 +61,6 @@ public class ReviewerPanel extends JPanel{
 	 */
 	public ReviewerPanel(ManagementSystem theSystem){
 		
-		//User usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
-		//User usr2 = new User(56, "jon", "doe", "doe@gmail.com");
-		//Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath", "topic");
-		//Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath", "topic");
-		
-		//Conference conf = theSystem.getConference();
-		//theSystem.getConference().submitPaper(ppr);
-		//theSystem.getConference().submitPaper(ppr2);
-		//theSystem.getConference().addReviewer(theSystem.getCurrentUser());
-		//ppr2.review(theSystem.getCurrentUser(), null);
-		
-		//theSystem.addConference(conf);
 		Author = theSystem.getCurrentUser().getName();
 		mySystem = theSystem;
 		setLayout(new BorderLayout());
@@ -312,7 +322,18 @@ public class ReviewerPanel extends JPanel{
 	    
 	    return panelManuscript;
 	}
+	/**
+	 * Defines the action taken when the submit review
+	 * button is clicked.
+	 * 
+	 * @author Aaron Nelson
+	 *
+	 */
 	private class SubmitListen extends MouseAdapter {
+		
+		/**
+		 * {@inheritDoc}
+		 */
 		public void mouseClicked(MouseEvent arg0) {
 			
 			SubmitReview mySR =	new SubmitReview((Paper) ((PanelLabel)arg0.getSource()).getPaper(), mySystem.getCurrentUser());
@@ -320,7 +341,17 @@ public class ReviewerPanel extends JPanel{
 		}	
 	}
 	
+	/**
+	 * Defines the action taken when the view review button is clicked
+	 * 
+	 * @author Mitchell Alpert
+	 *
+	 */
 	private class ViewListen extends MouseAdapter {
+		
+		/**
+		 * {@inheritDoc}
+		 */
 		public void mouseClicked(MouseEvent arg0) {
 			Review rev = ((((PanelLabel) arg0.getSource())).getPaper().getReview(mySystem.getCurrentUser()));
 			if (rev != null) {

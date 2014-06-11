@@ -29,54 +29,92 @@ import Model.ManagementSystem;
 import Model.Paper;
 import Model.User;
 
-
+/**
+ * This is the panel that displays the information for a user
+ * logged in a Program Chair. Displays all of the papers for
+ * the conference that the user is in charge of. Also allows the
+ * user to assign papers to SPCs and shows who has been assigned, who
+ * is supposed to review the papers, see the reviews done, see the SPC
+ * recommendation and allows the PC to make a decision on a paper.
+ * 
+ * @author Randy Butts
+ * @author Modified - Mitchell Alpert
+ * @version 5/22/14
+ *
+ */
 @SuppressWarnings("serial")
 public class PCPanel extends JPanel {
 	
+	/**
+	 * The name of the author of a paper
+	 */
 	private String Author;
 
+	/**
+	 * The current paper being used when 
+	 * printing the list of papers
+	 */
 	private Paper currentPaper;
 	
+	/**
+	 * Current ManagementSystem
+	 */
 	private ManagementSystem mySystem;
 	
+	/**
+	 * List of all papers in this conference
+	 */
 	private List<Paper> myPapers; 
 	
+	/**
+	 * Start of the list being displayed.
+	 */
 	private int start;
 	
+	/**
+	 * End of the list being displayed
+	 */
 	private int end;
 	
+	/**
+	 * Number of papers to be displayed at a time
+	 */
 	private int size;
 	
+	/**
+	 * True if you've gone forward in the list
+	 */
 	private boolean forward;
 	
+	/**
+	 * True if you've gone backward in the list
+	 */
 	private boolean backward;
 	
+	/**
+	 * Panel for the middle of the screen
+	 */
 	private JPanel midPanel;
 	
+	/**
+	 * Panel for the bottom
+	 */
 	private JPanel bottomPanel;
 	
+	/**
+	 * Panel holding the list of papers
+	 */
 	private JPanel manuscriptPanel;
 	
+	/**
+	 * Panel for the forward and backward arrows
+	 */
 	private JPanel arrowsPanel;
 	
 	/**
 	 * Constructor.
 	 */
 	public PCPanel(ManagementSystem theSystem){
-	   /* User usr = new User(55, "joe", "schmoe", "schmoe@gmail.com");
-		User usr2 = new User(56, "jon", "doe", "doe@gmail.com");
-		Paper ppr = new Paper(usr, "thisisthetitle", "thekeywords", "theabstact", "filepath");
-		Paper ppr2 = new Paper(usr, "alsoatitle", "alsokeywords", "alsoanabstact", "alsoafilepath");
-		Conference conf = theSystem.getConference();
-		boolean state;
-		boolean state1 = theSystem.getConference().submitPaper(ppr2);
-		theSystem.addConference(conf);
-		
-		for(int i = 0; i < 10; i++){
-			User usri = new User(5+i, "joe"+i, "schmoe", "schmoe@gmail.com");
-			Paper ppri = new Paper(usri, "thisisthetitle" + i, "thekeywords" + i, "theabstact", "filepath", "topic" + i);
-			state = theSystem.getConference().submitPaper(ppri);
-		} */
 		
 		mySystem = theSystem;
 		myPapers = (this.mySystem.getConference()).getAllPapers();
@@ -562,8 +600,20 @@ public class PCPanel extends JPanel {
 			    p.add(Status1, gridRemove1);
 			    }
 	 }
+	 
+	 /**
+	  * Defines the action taken when the user clicks
+	  * to assign an SPC. Opens a SelectBox filled
+	  * with the names of possible SPCs.
+	  * 
+	  * @author Randy Butts
+	  *
+	  */
 	 private class PCPick extends MouseAdapter {
-
+		 
+		 /**
+		  * {@inheritDoc}
+		  */
 		 @Override
 		 public void mouseClicked(MouseEvent arg0) {
 
@@ -575,7 +625,19 @@ public class PCPanel extends JPanel {
 		 }
 	 }
 	 
+	 /**
+	  * Allows the user to make a final decision on a paper by
+	  * clicking the icon. Cycles through the three Approval 
+	  * values.
+	  * 
+	  * @author Mitchell Alpert
+	  *
+	  */
 	 private class AcceptAction extends MouseAdapter {
+		 
+		 /**
+		  * {@inheritDoc}
+		  */
 		 @Override
 		 public void mouseClicked(MouseEvent arg0) {
 			PanelLabel src = (PanelLabel) arg0.getSource();

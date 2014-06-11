@@ -2,6 +2,13 @@ package Model;
 
 import java.io.Serializable;
 
+/**
+ * This class represents the user and its associated field(s)
+ * 
+ * @author Mitchell Alpert
+ * @version 5/19/2014
+ *
+ */
 public class User implements Comparable<User>, Serializable{
 	
 	/**

@@ -17,24 +17,75 @@ import javax.swing.border.AbstractBorder;
 /**
  * This class only serves to make a round shaped corner for the borders
  * 
+ * @author Andrew Thompson
+ * URL: http://stackoverflow.com/questions/15025092/border-with-rounded-corners-transparency
+ * 
+ * @modified Randy Butts 
+ * Added java documentations.
  */
 public class TextBubbleBorder extends AbstractBorder {
-
+    /**
+     * Color
+     */
     private Color color;
+    
+    /**
+     * Thickness of the line.
+     */
     private int thickness = 4;
+    
+    /**
+     * Radius.
+     */
     private int radii = 8;
+    
+    /**
+     * Pointer.
+     */
     private int pointerSize = 7;
+    
+    /**
+     * Insets.
+     */
     private Insets insets = null;
+    
+    /**
+     * Stroke.
+     */
     private BasicStroke stroke = null;
+    
+    /**
+     * StrokePad.
+     */
     private int strokePad;
+    
+    /**
+     * PointerPad.
+     */
     private int pointerPad = 4;
+    
+    /**
+     * RenderingHints.
+     */
     RenderingHints hints;
 
+    /**
+     * Constructor.
+     * @param color color of the border.
+     */
     TextBubbleBorder(
             Color color) {
         new TextBubbleBorder(color, 4, 8, 7);
     }
 
+    /**
+     *  Constructor with parameters.
+     *  
+     * @param color color of the border.
+     * @param thickness thickness of the border.
+     * @param radii radius of the border.
+     * @param pointerSize  size of the pointer.
+     */
     TextBubbleBorder(
             Color color, int thickness, int radii, int pointerSize) {
         this.thickness = thickness;
@@ -54,16 +105,26 @@ public class TextBubbleBorder extends AbstractBorder {
         insets = new Insets(pad, pad, bottomPad, pad);
     }
 
+    /**
+     * Get the border insets.
+     */
     @Override
     public Insets getBorderInsets(Component c) {
         return insets;
     }
-
+    
+    /**
+     * Get Border Insets with parameters.
+     */
     @Override
     public Insets getBorderInsets(Component c, Insets insets) {
         return getBorderInsets(c);
     }
-
+     
+    
+    /**
+     * Paints the border on the component.
+     */
     @Override
     public void paintBorder(
             Component c,

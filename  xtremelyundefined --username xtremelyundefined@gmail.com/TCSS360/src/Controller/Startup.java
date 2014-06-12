@@ -17,7 +17,8 @@ import Model.User;
  * This class takes the specially formatted CSV file and initially populates
  * a ManagementSystem with conferences and Users and then serializes it.
  * 
- * @author TeamXtremelyUndefined
+ * @author Mitchell Alpert
+ * @author Modified by - Aaron Nelson
  *
  */
 public class Startup {

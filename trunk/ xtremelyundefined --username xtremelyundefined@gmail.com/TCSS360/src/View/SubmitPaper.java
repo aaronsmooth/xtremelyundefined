@@ -38,6 +38,7 @@ import Model.User;
  * in order to submit the paper to the conference.
  * 
  * @author Andreas Tarmidi
+ * @author Modified By - Aaron Nelson
  * @version 5/30/2014
  *
  */

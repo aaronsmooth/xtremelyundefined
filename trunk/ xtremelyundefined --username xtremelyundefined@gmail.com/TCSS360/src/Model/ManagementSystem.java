@@ -28,6 +28,9 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 	 */
 	private static final long serialVersionUID = 3328234716102456578L;
 	
+	/**
+	 * The location of the serializable file
+	 */
 	public static final String FILE = "src/supportingFiles/managementsystem.ser";
 	
 	/**
@@ -82,6 +85,12 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 		return null;
 	}
 	
+	/**
+	 * This method gets a user based on an email address
+	 * 
+	 * @param email A unique email address
+	 * @return The user that the email address belongs to
+	 */
 	public User getUser(String email) {
 		for (User u : users) {
 			if (u.getEmail().equalsIgnoreCase(email)) {
@@ -158,10 +167,21 @@ public class ManagementSystem extends Observable implements Serializable, Proper
 		return false;
 	}
 	
+	/**
+	 * This method gets the current conference of the
+	 * current log in session
+	 * 
+	 * @return The current conference
+	 */
 	public Conference getConference() {
 		return currentConference;
 	}
 	
+	/**
+	 * This method gets all conferences in the system
+	 * 
+	 * @return The list of all the conferences
+	 */
 	public List<Conference> getConferences() {
 		return conferences;
 	}
